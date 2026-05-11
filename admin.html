@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Panel — DigiEarn</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;
+  --green:#00C853;--gd:#00922B;--gl:#E6F9EE;
+  --red:#DC2626;--rl:#FEF2F2;
+  --amber:#F59E0B;--al:#FFFBEB;--adk:#92400E;
+  --text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;
+  --bg:#F9F8F6;--white:#fff;--r:12px;
+  --dark:#0F0B1E;
+}
+*{font-family:'Space Grotesk',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+
+/* ── LOGIN ── */
+.login-wrap{width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0F0B1E,#1a1040)}
+.login-card{background:var(--white);border-radius:24px;padding:2.5rem;width:100%;max-width:400px;margin:1rem}
+.login-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;text-align:center;margin-bottom:4px}
+.login-logo span{color:var(--p)}
+.login-tag{text-align:center;font-size:12px;font-weight:700;background:var(--rl);color:var(--red);padding:4px 14px;border-radius:999px;display:inline-block;margin-bottom:1.5rem}
+.login-wrap-inner{text-align:center}
+.lf{margin-bottom:1rem;text-align:left}
+.lf label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.lf input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;outline:none;transition:border-color .2s}
+.lf input:focus{border-color:var(--p)}
+.login-btn{width:100%;padding:13px;background:var(--p);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;transition:background .2s}
+.login-btn:hover{background:var(--pd)}
+.login-err{font-size:13px;color:var(--red);text-align:center;margin-bottom:.75rem;display:none}
+
+/* ── LAYOUT ── */
+.app{display:none;width:100%;min-height:100vh}
+.app.show{display:flex}
+.sidebar{width:240px;background:var(--dark);display:flex;flex-direction:column;min-height:100vh;flex-shrink:0}
+.s-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;padding:1.5rem 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-logo span{color:var(--p)}
+.s-atag{font-size:10px;background:var(--red);color:white;padding:2px 8px;border-radius:4px;margin-left:6px;font-weight:700;vertical-align:middle}
+.s-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.9rem 1.25rem .3rem}
+.s-item{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;font-size:14px;color:rgba(255,255,255,.5);cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
+.s-item:hover{color:white;background:rgba(255,255,255,.05)}
+.s-item.active{color:white;background:rgba(124,58,237,.2);border-left-color:var(--p)}
+.s-icon{font-size:17px;width:22px;text-align:center}
+.s-badge{margin-left:auto;background:var(--red);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px;min-width:20px;text-align:center}
+.s-logout{margin-top:auto;padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.07)}
+.logout-btn{width:100%;background:rgba(220,38,38,.15);color:#FCA5A5;border:1px solid rgba(220,38,38,.2);border-radius:var(--r);padding:9px;font-size:13px;font-weight:600;cursor:pointer}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:18px;font-weight:600}
+.admin-pill{background:var(--rl);color:var(--red);font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+.content{padding:1.75rem;overflow-y:auto;flex:1}
+
+/* ── SECTIONS ── */
+.section{display:none}
+.section.active{display:block}
+
+/* ── METRICS ── */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.75rem}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem}
+.metric.c-purple{background:var(--p);border-color:var(--p)}
+.metric.c-green{background:var(--green);border-color:var(--green)}
+.metric.c-red{background:var(--red);border-color:var(--red)}
+.metric.c-amber{background:var(--amber);border-color:var(--amber)}
+.metric[class*=c-] .ml,.metric[class*=c-] .ms{color:rgba(255,255,255,.75)}
+.metric[class*=c-] .mv{color:white}
+.ml{font-size:12px;color:var(--muted);margin-bottom:5px}
+.mv{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;line-height:1}
+.ms{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* ── CARDS ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.25rem;margin-bottom:1.25rem}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.card-title{font-size:15px;font-weight:600}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:9px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAFA}
+
+/* ── PILLS ── */
+.pill{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.pill-basic{background:var(--gl);color:var(--gd)}
+.pill-classic{background:var(--pl);color:var(--pd)}
+.pill-pending{background:var(--al);color:var(--adk)}
+.pill-paid{background:var(--gl);color:var(--gd)}
+.pill-rejected{background:var(--rl);color:var(--red)}
+.pill-active{background:var(--gl);color:var(--gd)}
+.pill-suspended{background:var(--rl);color:var(--red)}
+.pill-disabled{background:#F3F4F6;color:var(--muted)}
+.pill-credited{background:var(--gl);color:var(--gd)}
+
+/* ── BUTTONS ── */
+.btn{border:none;border-radius:8px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.btn:hover{opacity:.85}
+.btn-approve{background:var(--green);color:white}
+.btn-reject{background:var(--rl);color:var(--red)}
+.btn-view{background:var(--pl);color:var(--pd)}
+.btn-suspend{background:var(--al);color:var(--adk)}
+.btn-activate{background:var(--gl);color:var(--gd)}
+.btn-edit{background:#F3F4F6;color:var(--text)}
+.btn-delete{background:var(--rl);color:var(--red)}
+.btn-primary{background:var(--p);color:white;padding:10px 20px;border-radius:var(--r);font-size:13px}
+.btn-green{background:var(--green);color:white;padding:10px 20px;border-radius:var(--r);font-size:13px}
+.btn-row{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ── SEARCH + FILTER ── */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.search-input{padding:8px 14px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;outline:none;min-width:220px;flex:1}
+.search-input:focus{border-color:var(--p)}
+.filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.ftab{padding:6px 16px;border-radius:999px;border:1px solid var(--border);font-size:12px;font-weight:500;cursor:pointer;background:var(--white);color:var(--muted);transition:all .15s}
+.ftab.active{background:var(--p);color:white;border-color:var(--p)}
+
+/* ── FORMS ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-full{grid-column:1/-1}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:13px;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;outline:none;width:100%;background:var(--white);color:var(--text);transition:border-color .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--p)}
+.form-group textarea{resize:vertical;min-height:80px}
+
+/* ── CHART ── */
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 4px}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.chart-bar{width:100%;border-radius:6px 6px 0 0;min-height:4px;transition:height .4s}
+.chart-label{font-size:10px;color:var(--muted);text-align:center}
+.chart-val{font-size:10px;font-weight:600;color:var(--pd);text-align:center}
+
+/* ── INFO BOXES ── */
+.info-box{border-radius:var(--r);padding:10px 16px;font-size:13px;line-height:1.6;margin-bottom:1rem}
+.info-green{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
+.info-red{background:var(--rl);color:var(--red);border:1px solid #fca5a5}
+.info-purple{background:var(--pl);color:var(--pd);border:1px solid #C4B5FD}
+.info-amber{background:var(--al);color:var(--adk);border:1px solid #FCD34D}
+
+/* ── STAT ROWS ── */
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.stat-row:last-child{border-bottom:none}
+
+/* ── ANNOUNCEMENT ── */
+.ann-item{border:1px solid var(--border);border-radius:var(--r);padding:1rem;margin-bottom:10px}
+.ann-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.ann-meta{font-size:12px;color:var(--muted);margin-bottom:6px}
+.ann-body{font-size:13px;color:var(--text);line-height:1.6}
+
+/* ── TOGGLE SWITCH ── */
+.toggle-wrap{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500}
+.toggle{position:relative;width:44px;height:24px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--border);border-radius:999px;transition:.3s}
+.toggle-slider:before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+.toggle input:checked + .toggle-slider{background:var(--p)}
+.toggle input:checked + .toggle-slider:before{transform:translateX(20px)}
+
+/* ── SETTINGS ── */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.setting-item{display:flex;flex-direction:column;gap:5px}
+.setting-item label{font-size:13px;font-weight:600;color:var(--muted)}
+.setting-item input{padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;font-weight:600;outline:none;transition:border-color .2s}
+.setting-item input:focus{border-color:var(--p)}
+.day-pills{display:flex;gap:6px;flex-wrap:wrap}
+.day-pill{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;border:1.5px solid var(--border);background:var(--white);color:var(--muted)}
+.day-pill.on{background:var(--p);color:white;border-color:var(--p)}
+.day-pill.off{background:var(--rl);color:var(--red);border-color:#fca5a5}
+
+/* ── SPIN PRIZES CONFIG ── */
+.prize-list{display:flex;flex-direction:column;gap:8px}
+.prize-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:var(--r)}
+.prize-color{width:16px;height:16px;border-radius:50%;flex-shrink:0}
+.prize-label{flex:1;font-size:13px;font-weight:500}
+.prize-input{width:100px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;outline:none}
+.prize-input:focus{border-color:var(--p)}
+
+@media(max-width:900px){.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.two-col,.settings-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div class="login-wrap" id="login-screen">
+  <div class="login-card">
+    <div class="login-wrap-inner">
+      <div class="login-logo">Digi<span>Earn</span></div>
+      <br>
+      <span class="login-tag">🔐 Admin Panel — Authorized Access Only</span>
+    </div>
+    <br>
+    <div class="lf">
+      <label>Admin Email</label>
+      <input type="email" id="a-email" placeholder="admin@digiearn.com"/>
+    </div>
+    <div class="lf">
+      <label>Admin Password</label>
+      <input type="password" id="a-pass" placeholder="Enter password"/>
+    </div>
+    <div class="login-err" id="login-err">❌ Incorrect credentials. Try again.</div>
+    <button class="login-btn" onclick="doLogin()">Login to Admin Panel</button>
+  </div>
+</div>
+
+<!-- ── ADMIN APP ── -->
+<div class="app" id="app">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="s-logo">Digi<span>Earn</span><span class="s-atag">ADMIN</span></div>
+
+    <div style="flex:1;overflow-y:auto">
+      <div class="s-sec">Overview</div>
+      <div class="s-item active" onclick="nav('dashboard',this)"><span class="s-icon">⊞</span> Dashboard</div>
+
+      <div class="s-sec">People</div>
+      <div class="s-item" onclick="nav('users',this)"><span class="s-icon">👥</span> All Users</div>
+      <div class="s-item" onclick="nav('withdrawals',this)"><span class="s-icon">💸</span> Withdrawals <span class="s-badge" id="sb-w">0</span></div>
+
+      <div class="s-sec">Content</div>
+      <div class="s-item" onclick="nav('courses',this)"><span class="s-icon">📚</span> Courses</div>
+      <div class="s-item" onclick="nav('tasks',this)"><span class="s-icon">✅</span> Daily Tasks</div>
+      <div class="s-item" onclick="nav('spin',this)"><span class="s-icon">🎰</span> Spin Prizes</div>
+
+      <div class="s-sec">Engage</div>
+      <div class="s-item" onclick="nav('announce',this)"><span class="s-icon">📣</span> Announcements</div>
+
+      <div class="s-sec">System</div>
+      <div class="s-item" onclick="nav('settings',this)"><span class="s-icon">⚙️</span> Settings</div>
+    </div>
+
+    <div class="s-logout">
+      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <span class="admin-pill">🔐 Admin Mode</span>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div class="section active" id="sec-dashboard">
+        <div class="metrics">
+          <div class="metric c-purple"><div class="ml">Total Revenue</div><div class="mv" id="d-revenue">₦0</div><div class="ms">All registrations</div></div>
+          <div class="metric c-green"><div class="ml">Total Members</div><div class="mv" id="d-members">0</div><div class="ms" id="d-member-split">0 Basic · 0 Classic</div></div>
+          <div class="metric c-red"><div class="ml">Pending Withdrawals</div><div class="mv" id="d-pending">0</div><div class="ms">Awaiting approval</div></div>
+          <div class="metric c-amber"><div class="ml">Total Paid Out</div><div class="mv" id="d-paidout">₦0</div><div class="ms">To members</div></div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Revenue (This Week)</div></div>
+            <div class="chart-bars" id="rev-chart"></div>
+            <br>
+            <div class="stat-row"><span style="color:var(--muted)">Basic registrations (₦7,000 each)</span><span id="ds-basic" style="font-weight:600">0</span></div>
+            <div class="stat-row"><span style="color:var(--muted)">Classic registrations (₦12,000 each)</span><span id="ds-classic" style="font-weight:600">0</span></div>
+            <div class="stat-row"><span style="color:var(--muted)">Course enrollments</span><span id="ds-enrollments" style="font-weight:600">0</span></div>
+            <div class="stat-row"><span style="color:var(--muted)">Spin prizes given</span><span id="ds-spins" style="font-weight:600">0</span></div>
+            <div class="stat-row"><span style="color:var(--muted)">Referral bonuses paid</span><span id="ds-refs" style="font-weight:600">0</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div class="card-title">Pending Withdrawals</div><button class="btn btn-primary" onclick="nav('withdrawals',null)">View All</button></div>
+            <div id="d-recent-w">
+              <div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">No pending withdrawals</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Recent Registrations</div></div>
+            <div id="d-recent-users">
+              <div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">Loading...</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Quick Actions</div></div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <button class="btn btn-primary" style="text-align:left;padding:12px 16px;border-radius:var(--r)" onclick="nav('withdrawals',null)">💸 Review Withdrawal Requests</button>
+              <button class="btn btn-green" style="text-align:left;padding:12px 16px;border-radius:var(--r)" onclick="nav('announce',null)">📣 Send Announcement to Members</button>
+              <button class="btn btn-edit" style="text-align:left;padding:12px 16px;border-radius:var(--r);background:var(--pl);color:var(--pd)" onclick="nav('courses',null)">📚 Add New Course</button>
+              <button class="btn btn-edit" style="text-align:left;padding:12px 16px;border-radius:var(--r)" onclick="nav('settings',null)">⚙️ Update Platform Settings</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ USERS ══ -->
+      <div class="section" id="sec-users">
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">All Registered Members</div>
+            <span style="font-size:13px;color:var(--muted)" id="user-count">0 members</span>
+          </div>
+          <div class="toolbar">
+            <input class="search-input" placeholder="🔍 Search name or email..." oninput="searchUsers(this.value)"/>
+            <div class="filter-tabs">
+              <button class="ftab active" onclick="filterUsers('all',this)">All</button>
+              <button class="ftab" onclick="filterUsers('basic',this)">Basic</button>
+              <button class="ftab" onclick="filterUsers('classic',this)">Classic</button>
+              <button class="ftab" onclick="filterUsers('active',this)">Active</button>
+              <button class="ftab" onclick="filterUsers('suspended',this)">Suspended</button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Plan</th><th>Balance</th><th>Bonus</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="users-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ WITHDRAWALS ══ -->
+      <div class="section" id="sec-withdrawals">
+        <div class="info-box info-amber">⚠️ Review each request carefully before approving. Once approved, send the payment manually to the member's bank account, then mark as Paid.</div>
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">Withdrawal Requests</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:13px;font-weight:600;color:var(--red)" id="w-pending-count">0 pending</span>
+              <span style="font-size:13px;color:var(--muted)" id="w-total-amount">Total: ₦0</span>
+            </div>
+          </div>
+          <div class="toolbar">
+            <input class="search-input" placeholder="🔍 Search member..." oninput="searchWithdrawals(this.value)"/>
+            <div class="filter-tabs">
+              <button class="ftab active" onclick="filterW('pending',this)">Pending</button>
+              <button class="ftab" onclick="filterW('paid',this)">Paid</button>
+              <button class="ftab" onclick="filterW('rejected',this)">Rejected</button>
+              <button class="ftab" onclick="filterW('all',this)">All</button>
+            </div>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Member</th><th>Amount</th><th>Bank</th><th>Account No.</th><th>Account Name</th><th>Plan</th><th>Requested</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="w-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ COURSES ══ -->
+      <div class="section" id="sec-courses">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title">All Courses</div>
+              <span style="font-size:13px;color:var(--muted)" id="course-count-label">0 courses</span>
+            </div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>#</th><th>Title</th><th>Category</th><th>Price</th><th>Students</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="courses-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">➕ Add New Course</div></div>
+            <div class="form-grid">
+              <div class="form-group form-full"><label>Course Title *</label><input id="c-title" placeholder="e.g. Digital Marketing Masterclass"/></div>
+              <div class="form-group"><label>Category *</label>
+                <select id="c-cat">
+                  <option value="">Select category</option>
+                  <option>Digital Marketing</option>
+                  <option>Graphic Design</option>
+                  <option>Video Editing</option>
+                  <option>Coding & Web Dev</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Price (₦) *</label><input type="number" id="c-price" placeholder="e.g. 15000"/></div>
+              <div class="form-group"><label>Duration</label><input id="c-duration" placeholder="e.g. 6 weeks"/></div>
+              <div class="form-group"><label>Instructor</label><input id="c-instructor" placeholder="Instructor name"/></div>
+              <div class="form-group"><label>Level</label>
+                <select id="c-level"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>Beginner–Advanced</option></select>
+              </div>
+              <div class="form-group form-full"><label>Description</label><textarea id="c-desc" placeholder="Brief course description..."></textarea></div>
+              <div class="form-full"><button class="btn btn-primary" style="width:100%;padding:12px" onclick="addCourse()">➕ Add Course</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ TASKS ══ -->
+      <div class="section" id="sec-tasks">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Daily Tasks</div><button class="btn btn-primary" onclick="saveTaskChanges()">Save Changes</button></div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>#</th><th>Task Name</th><th>Basic Pay (₦)</th><th>Classic Pay (₦)</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody id="tasks-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">➕ Add New Task</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="form-group"><label>Task Name *</label><input id="t-name" placeholder="e.g. Watch YouTube Short"/></div>
+              <div class="form-group"><label>Description</label><input id="t-desc" placeholder="Brief description"/></div>
+              <div class="form-group"><label>Icon (emoji)</label><input id="t-icon" placeholder="e.g. 🎬" style="width:80px"/></div>
+              <div class="form-group"><label>Basic Pay (₦) *</label><input type="number" id="t-basic" placeholder="e.g. 50"/></div>
+              <div class="form-group"><label>Classic Pay (₦) *</label><input type="number" id="t-classic" placeholder="e.g. 200"/></div>
+              <button class="btn btn-primary" style="width:100%;padding:12px" onclick="addTask()">➕ Add Task</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SPIN ══ -->
+      <div class="section" id="sec-spin">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><div class="card-title">Spin Prize Configuration</div><button class="btn btn-primary" onclick="saveSpinPrizes()">Save Prizes</button></div>
+            <div class="info-box info-purple">Configure what members can win when they spin the wheel. The wheel picks randomly from all active prizes.</div>
+            <div class="prize-list" id="prize-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <div class="card-title">Spin Results Log</div>
+              <span style="font-size:13px;color:var(--muted)" id="spin-total-label">Total cash: ₦0</span>
+            </div>
+            <div class="tbl-wrap">
+              <table>
+                <thead><tr><th>Member</th><th>Prize</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+                <tbody id="spin-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ ANNOUNCEMENTS ══ -->
+      <div class="section" id="sec-announce">
+        <div class="two-col">
+          <div class="card">
+            <div class="card-head"><div class="card-title">📣 Send Announcement</div></div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div class="form-group"><label>Title *</label><input id="ann-title" placeholder="e.g. Exciting news for all members!"/></div>
+              <div class="form-group"><label>Send To *</label>
+                <select id="ann-target">
+                  <option value="all">All Members</option>
+                  <option value="basic">Basic Members Only</option>
+                  <option value="classic">Classic Members Only</option>
+                  <option value="students">Course Students Only</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Type</label>
+                <select id="ann-type">
+                  <option value="info">ℹ️ Information</option>
+                  <option value="promo">🎉 Promotion</option>
+                  <option value="warning">⚠️ Warning</option>
+                  <option value="maintenance">🔧 Maintenance</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Message *</label><textarea id="ann-msg" placeholder="Write your message here..." style="min-height:120px"></textarea></div>
+              <button class="btn btn-green" style="width:100%;padding:13px;font-size:14px;font-weight:700" onclick="sendAnnouncement()">📣 Send Announcement</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div class="card-title">Past Announcements</div><span style="font-size:13px;color:var(--muted)" id="ann-count">0 sent</span></div>
+            <div id="ann-history"><div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">No announcements yet.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SETTINGS ══ -->
+      <div class="section" id="sec-settings">
+
+        <!-- PRICING -->
+        <div class="card">
+          <div class="card-head"><div class="card-title">💰 Pricing & Earnings</div><button class="btn btn-primary" onclick="saveSettings()">Save All Settings</button></div>
+          <div class="settings-grid">
+            <div class="setting-item"><label>Basic Registration Price (₦)</label><input type="number" id="s-basic-price" value="7000"/></div>
+            <div class="setting-item"><label>Classic Registration Price (₦)</label><input type="number" id="s-classic-price" value="12000"/></div>
+            <div class="setting-item"><label>Basic Daily Earning Limit (₦)</label><input type="number" id="s-basic-limit" value="500"/></div>
+            <div class="setting-item"><label>Classic Daily Earning Limit (₦)</label><input type="number" id="s-classic-limit" value="2000"/></div>
+            <div class="setting-item"><label>Basic Signup Bonus ($)</label><input type="number" id="s-basic-bonus" value="5"/></div>
+            <div class="setting-item"><label>Classic Signup Bonus ($)</label><input type="number" id="s-classic-bonus" value="10"/></div>
+            <div class="setting-item"><label>Basic Min. Withdrawal ($)</label><input type="number" id="s-basic-min" value="45"/></div>
+            <div class="setting-item"><label>Classic Min. Withdrawal ($)</label><input type="number" id="s-classic-min" value="40"/></div>
+            <div class="setting-item"><label>Basic Referral Bonus (₦)</label><input type="number" id="s-basic-ref" value="500"/></div>
+            <div class="setting-item"><label>Classic Referral Bonus (₦)</label><input type="number" id="s-classic-ref" value="1000"/></div>
+            <div class="setting-item"><label>USD → NGN Exchange Rate</label><input type="number" id="s-rate" value="1500"/></div>
+            <div class="setting-item"><label>Platform Fee on Courses (%)</label><input type="number" id="s-fee" value="10"/></div>
+          </div>
+        </div>
+
+        <!-- WITHDRAWAL WINDOW -->
+        <div class="card">
+          <div class="card-head"><div class="card-title">🏦 Withdrawal Window</div></div>
+          <div style="display:flex;flex-direction:column;gap:1rem">
+            <div>
+              <div style="font-size:13px;font-weight:600;margin-bottom:8px">Open Days</div>
+              <div class="day-pills">
+                <div class="day-pill on" onclick="toggleDay(this)">Mon</div>
+                <div class="day-pill on" onclick="toggleDay(this)">Tue</div>
+                <div class="day-pill on" onclick="toggleDay(this)">Wed</div>
+                <div class="day-pill on" onclick="toggleDay(this)">Thu</div>
+                <div class="day-pill on" onclick="toggleDay(this)">Fri</div>
+                <div class="day-pill off" onclick="toggleDay(this)">Sat</div>
+                <div class="day-pill off" onclick="toggleDay(this)">Sun</div>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <div class="setting-item"><label>Open Time</label><input type="time" id="s-open" value="10:00"/></div>
+              <div class="setting-item"><label>Close Time</label><input type="time" id="s-close" value="16:00"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FEATURE TOGGLES -->
+        <div class="card">
+          <div class="card-head"><div class="card-title">🔧 Feature Toggles</div></div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Daily Tasks Enabled</div>
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Weekly Spin Enabled</div>
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Course Enrollments Open</div>
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> Referral System Active</div>
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox" checked/><span class="toggle-slider"></span></label> New Registrations Open</div>
+            <div class="toggle-wrap"><label class="toggle"><input type="checkbox"/><span class="toggle-slider"></span></label> Maintenance Mode</div>
+          </div>
+        </div>
+
+        <!-- ADMIN CREDENTIALS -->
+        <div class="card">
+          <div class="card-head"><div class="card-title">🔐 Admin Credentials</div></div>
+          <div class="info-box info-amber">⚠️ Change these from the defaults before going live!</div>
+          <div class="settings-grid">
+            <div class="setting-item"><label>Admin Email</label><input type="email" id="s-admin-email" value="admin@digiearn.com"/></div>
+            <div class="setting-item"><label>Admin Password</label><input type="password" id="s-admin-pass" value="DigiAdmin2026!"/></div>
+          </div>
+          <br>
+          <button class="btn btn-primary" style="padding:10px 24px" onclick="saveCredentials()">Update Credentials</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let ADMIN_EMAIL = localStorage.getItem('dg_admin_email') || 'admin@digiearn.com';
+let ADMIN_PASS  = localStorage.getItem('dg_admin_pass')  || 'DigiAdmin2026!';
+
+// ── DATA STORES ───────────────────────────────────────────────────
+let allUsers = [], allWithdrawals = [], allCourses = [], allTasks = [], allSpins = [], allAnnouncements = [];
+let userFilter = 'all', wFilter = 'pending';
+
+// ── SAMPLE DATA (replace with real Supabase queries) ─────────────
+function seedData() {
+  allUsers = [
+    {id:1,name:'Kofi Chambers',email:'kofi@example.com',phone:'08012345678',plan:'classic',balance_usd:42.50,bonus:10,joined:'May 1, 2026',status:'active'},
+    {id:2,name:'Amaka Obi',email:'amaka@example.com',phone:'08023456789',plan:'basic',balance_usd:18.00,bonus:5,joined:'May 3, 2026',status:'active'},
+    {id:3,name:'Tunde Adeyemi',email:'tunde@example.com',phone:'08034567890',plan:'classic',balance_usd:55.00,bonus:10,joined:'Apr 28, 2026',status:'active'},
+    {id:4,name:'Ngozi Eze',email:'ngozi@example.com',phone:'08045678901',plan:'basic',balance_usd:12.00,bonus:5,joined:'May 5, 2026',status:'active'},
+    {id:5,name:'Emeka Nwosu',email:'emeka@example.com',phone:'08056789012',plan:'classic',balance_usd:38.00,bonus:10,joined:'Apr 25, 2026',status:'suspended'},
+    {id:6,name:'Funmi Adebayo',email:'funmi@example.com',phone:'08067890123',plan:'basic',balance_usd:46.00,bonus:5,joined:'Apr 20, 2026',status:'active'},
+    {id:7,name:'Chidi Okonkwo',email:'chidi@example.com',phone:'08078901234',plan:'basic',balance_usd:22.00,bonus:5,joined:'May 2, 2026',status:'active'},
+  ];
+
+  allWithdrawals = [
+    {id:1,user:'Tunde Adeyemi',email:'tunde@example.com',amount:67500,bank:'GTBank',account:'0123456789',account_name:'Tunde A.',plan:'classic',date:'May 8, 2026',status:'pending'},
+    {id:2,user:'Amaka Obi',email:'amaka@example.com',amount:27000,bank:'Access Bank',account:'0987654321',account_name:'Amaka O.',plan:'basic',date:'May 7, 2026',status:'pending'},
+    {id:3,user:'Kofi Chambers',email:'kofi@example.com',amount:45000,bank:'Zenith Bank',account:'1234509876',account_name:'Kofi C.',plan:'classic',date:'May 6, 2026',status:'pending'},
+    {id:4,user:'Funmi Adebayo',email:'funmi@example.com',amount:22500,bank:'UBA',account:'9876543210',account_name:'Funmi A.',plan:'basic',date:'May 5, 2026',status:'paid'},
+    {id:5,user:'Chidi Okonkwo',email:'chidi@example.com',amount:15000,bank:'Kuda',account:'5678901234',account_name:'Chidi O.',plan:'basic',date:'May 4, 2026',status:'paid'},
+    {id:6,user:'Ngozi Eze',email:'ngozi@example.com',amount:10000,bank:'Opay',account:'4567890123',account_name:'Ngozi E.',plan:'basic',date:'May 3, 2026',status:'rejected'},
+  ];
+
+  allCourses = [
+    {id:1,title:'Digital Marketing Masterclass',cat:'Digital Marketing',price:15000,students:48,duration:'8 weeks',level:'Beginner–Advanced',status:'active'},
+    {id:2,title:'Web Development Bootcamp',cat:'Coding & Web Dev',price:25000,students:62,duration:'12 weeks',level:'Beginner–Advanced',status:'active'},
+    {id:3,title:'Graphic Design with Canva',cat:'Graphic Design',price:12000,students:31,duration:'6 weeks',level:'Beginner',status:'active'},
+    {id:4,title:'Video Editing Pro',cat:'Video Editing',price:12000,students:24,duration:'5 weeks',level:'Beginner',status:'active'},
+    {id:5,title:'Social Media Marketing',cat:'Digital Marketing',price:10000,students:19,duration:'5 weeks',level:'Beginner',status:'active'},
+  ];
+
+  allTasks = [
+    {id:1,icon:'📺',name:'Watch Ad Video',desc:'Watch a 30-second ad',basic:50,classic:200,status:'active'},
+    {id:2,icon:'📋',name:'Fill Daily Survey',desc:'Answer 5 questions',basic:100,classic:400,status:'active'},
+    {id:3,icon:'❤️',name:'Like & Follow Task',desc:'Like 3 posts, follow 2',basic:50,classic:200,status:'active'},
+    {id:4,icon:'🎬',name:'Watch YouTube Video',desc:'Watch 2-min video',basic:75,classic:300,status:'active'},
+    {id:5,icon:'🔁',name:'Share Social Post',desc:'Share to your timeline',basic:75,classic:300,status:'active'},
+    {id:6,icon:'📝',name:'Write a Review',desc:'Leave a product review',basic:150,classic:600,status:'active'},
+  ];
+
+  allSpins = [
+    {user:'Kofi Chambers',prize:'Cash',amount:5000,date:'May 6, 2026',status:'credited'},
+    {user:'Tunde Adeyemi',prize:'Free Course',amount:0,date:'May 6, 2026',status:'credited'},
+    {user:'Amaka Obi',prize:'Cash',amount:2000,date:'May 6, 2026',status:'credited'},
+    {user:'Ngozi Eze',prize:'Try Again',amount:0,date:'May 6, 2026',status:'—'},
+    {user:'Funmi Adebayo',prize:'Cash',amount:10000,date:'May 5, 2026',status:'credited'},
+    {user:'Chidi Okonkwo',prize:'50% Discount',amount:0,date:'May 5, 2026',status:'credited'},
+  ];
+}
+
+// ── LOGIN ─────────────────────────────────────────────────────────
+function doLogin() {
+  const email = document.getElementById('a-email').value.trim();
+  const pass  = document.getElementById('a-pass').value;
+  if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').classList.add('show');
+    seedData();
+    loadDashboard();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+
+['a-email','a-pass'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+});
+
+function doLogout() {
+  document.getElementById('app').classList.remove('show');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('a-email').value = '';
+  document.getElementById('a-pass').value = '';
+  document.getElementById('login-err').style.display = 'none';
+}
+
+// ── NAV ───────────────────────────────────────────────────────────
+const TITLES = {dashboard:'Dashboard',users:'All Members',withdrawals:'Withdrawal Requests',courses:'Courses',tasks:'Daily Tasks',spin:'Spin Prizes & Results',announce:'Announcements',settings:'Platform Settings'};
+
+function nav(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.s-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else {
+    document.querySelectorAll('.s-item').forEach(i => { if(i.textContent.trim().toLowerCase().includes(id.toLowerCase().split('-')[0])) i.classList.add('active'); });
+  }
+  document.getElementById('topbar-title').textContent = TITLES[id] || id;
+  if (id==='users') renderUsers();
+  if (id==='withdrawals') renderWithdrawals();
+  if (id==='courses') renderCourses();
+  if (id==='tasks') renderTasks();
+  if (id==='spin') renderSpin();
+  if (id==='announce') renderAnnouncements();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────
+function loadDashboard() {
+  const basic   = allUsers.filter(u=>u.plan==='basic').length;
+  const classic = allUsers.filter(u=>u.plan==='classic').length;
+  const revenue = basic*7000 + classic*12000;
+  const pending = allWithdrawals.filter(w=>w.status==='pending');
+  const paidout = allWithdrawals.filter(w=>w.status==='paid').reduce((s,w)=>s+w.amount,0);
+  const spinCash = allSpins.filter(s=>s.status==='credited'&&s.prize==='Cash').reduce((s,x)=>s+x.amount,0);
+
+  document.getElementById('d-revenue').textContent   = '₦'+revenue.toLocaleString();
+  document.getElementById('d-members').textContent   = allUsers.length;
+  document.getElementById('d-member-split').textContent = basic+' Basic · '+classic+' Classic';
+  document.getElementById('d-pending').textContent   = pending.length;
+  document.getElementById('d-paidout').textContent   = '₦'+paidout.toLocaleString();
+  document.getElementById('ds-basic').textContent    = basic;
+  document.getElementById('ds-classic').textContent  = classic;
+  document.getElementById('ds-enrollments').textContent = allCourses.reduce((s,c)=>s+c.students,0);
+  document.getElementById('ds-spins').textContent    = allSpins.filter(s=>s.status==='credited').length;
+  document.getElementById('ds-refs').textContent     = '₦'+(allUsers.length*500).toLocaleString();
+  document.getElementById('sb-w').textContent        = pending.length;
+
+  // Chart
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const vals=[84000,120000,48000,156000,96000,0,0];
+  const max=Math.max(...vals)||1;
+  document.getElementById('rev-chart').innerHTML=days.map((d,i)=>`
+    <div class="chart-bar-wrap">
+      <div class="chart-val">${vals[i]?'₦'+(vals[i]/1000).toFixed(0)+'k':''}</div>
+      <div class="chart-bar" style="height:${vals[i]?(vals[i]/max*90+10):4}px;background:${vals[i]?'var(--p)':'var(--border)'}"></div>
+      <div class="chart-label">${d}</div>
+    </div>`).join('');
+
+  // Recent withdrawals on dashboard
+  document.getElementById('d-recent-w').innerHTML = pending.length ? pending.slice(0,4).map(w=>`
+    <div class="stat-row">
+      <div><div style="font-weight:500;font-size:13px">${w.user}</div><div style="font-size:11px;color:var(--muted)">${w.bank} · ${w.account}</div></div>
+      <div style="text-align:right"><div style="font-weight:700;font-size:14px">₦${w.amount.toLocaleString()}</div><span class="pill pill-pending">pending</span></div>
+    </div>`).join('') : '<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">✅ No pending withdrawals</div>';
+
+  // Recent users
+  document.getElementById('d-recent-users').innerHTML = allUsers.slice(0,5).map(u=>`
+    <div class="stat-row">
+      <div><div style="font-weight:500;font-size:13px">${u.name}</div><div style="font-size:11px;color:var(--muted)">${u.email}</div></div>
+      <div style="text-align:right"><span class="pill pill-${u.plan}">${u.plan}</span><div style="font-size:11px;color:var(--muted);margin-top:3px">${u.joined}</div></div>
+    </div>`).join('');
+}
+
+// ── USERS ─────────────────────────────────────────────────────────
+function renderUsers(list=null) {
+  let data = list || filterUsersList();
+  document.getElementById('user-count').textContent = data.length+' members';
+  document.getElementById('users-tbody').innerHTML = data.length ? data.map((u,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${u.name}</strong></td>
+      <td style="color:var(--muted);font-size:12px">${u.email}</td>
+      <td style="color:var(--muted);font-size:12px">${u.phone}</td>
+      <td><span class="pill pill-${u.plan}">${u.plan}</span></td>
+      <td style="font-weight:600">$${u.balance_usd.toFixed(2)}</td>
+      <td style="color:var(--muted)">$${u.bonus}</td>
+      <td style="color:var(--muted);font-size:12px">${u.joined}</td>
+      <td><span class="pill pill-${u.status}">${u.status}</span></td>
+      <td><div class="btn-row">
+        <button class="btn btn-view" onclick="viewUser(${u.id})">View</button>
+        <button class="btn ${u.status==='active'?'btn-suspend':'btn-activate'}" onclick="toggleUser(${u.id})">${u.status==='active'?'Suspend':'Activate'}</button>
+      </div></td>
+    </tr>`).join('') : '<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">No users found.</td></tr>';
+}
+
+function filterUsersList() {
+  if (userFilter==='all') return allUsers;
+  if (userFilter==='basic'||userFilter==='classic') return allUsers.filter(u=>u.plan===userFilter);
+  return allUsers.filter(u=>u.status===userFilter);
+}
+
+function filterUsers(f, el) {
+  userFilter = f;
+  document.querySelectorAll('#sec-users .ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderUsers();
+}
+
+function searchUsers(q) {
+  const filtered = allUsers.filter(u=>u.name.toLowerCase().includes(q.toLowerCase())||u.email.toLowerCase().includes(q.toLowerCase()));
+  renderUsers(filtered);
+}
+
+function viewUser(id) {
+  const u = allUsers.find(x=>x.id===id);
+  if(u) alert(`👤 Member Details\n\nName: ${u.name}\nEmail: ${u.email}\nPhone: ${u.phone}\nPlan: ${u.plan}\nBalance: $${u.balance_usd}\nBonus: $${u.bonus}\nStatus: ${u.status}\nJoined: ${u.joined}`);
+}
+
+function toggleUser(id) {
+  const u = allUsers.find(x=>x.id===id);
+  if (!u) return;
+  const action = u.status==='active'?'suspend':'activate';
+  if (confirm(`${action.charAt(0).toUpperCase()+action.slice(1)} ${u.name}?`)) {
+    u.status = u.status==='active'?'suspended':'active';
+    renderUsers();
+    alert(`✅ ${u.name} has been ${action}d.`);
+  }
+}
+
+// ── WITHDRAWALS ───────────────────────────────────────────────────
+function renderWithdrawals(list=null) {
+  let data = list || filterWList();
+  const pending = allWithdrawals.filter(w=>w.status==='pending');
+  const totalPending = pending.reduce((s,w)=>s+w.amount,0);
+  document.getElementById('w-pending-count').textContent = pending.length+' pending';
+  document.getElementById('w-total-amount').textContent = 'Pending total: ₦'+totalPending.toLocaleString();
+  document.getElementById('w-tbody').innerHTML = data.length ? data.map((w,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${w.user}</strong><div style="font-size:11px;color:var(--muted)">${w.email}</div></td>
+      <td style="font-weight:700;font-size:15px">₦${w.amount.toLocaleString()}</td>
+      <td>${w.bank}</td>
+      <td style="font-family:monospace;font-weight:600">${w.account}</td>
+      <td>${w.account_name}</td>
+      <td><span class="pill pill-${w.plan}">${w.plan}</span></td>
+      <td style="color:var(--muted);font-size:12px">${w.date}</td>
+      <td><span class="pill pill-${w.status}">${w.status}</span></td>
+      <td><div class="btn-row">${w.status==='pending'
+        ? `<button class="btn btn-approve" onclick="approveW(${w.id})">✓ Approve</button><button class="btn btn-reject" onclick="rejectW(${w.id})">Reject</button>`
+        : `<span style="font-size:12px;color:var(--muted)">${w.status==='paid'?'✅ Paid':'❌ Rejected'}</span>`
+      }</div></td>
+    </tr>`).join('') : '<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">No withdrawals found.</td></tr>';
+}
+
+function filterWList() {
+  if (wFilter==='all') return allWithdrawals;
+  return allWithdrawals.filter(w=>w.status===wFilter);
+}
+
+function filterW(f, el) {
+  wFilter = f;
+  document.querySelectorAll('#sec-withdrawals .ftab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  renderWithdrawals();
+}
+
+function searchWithdrawals(q) {
+  const filtered = allWithdrawals.filter(w=>w.user.toLowerCase().includes(q.toLowerCase())||w.email.toLowerCase().includes(q.toLowerCase()));
+  renderWithdrawals(filtered);
+}
+
+function approveW(id) {
+  const w = allWithdrawals.find(x=>x.id===id);
+  if(!w) return;
+  if(confirm(`✅ Approve ₦${w.amount.toLocaleString()} withdrawal for ${w.user}?\n\nBank: ${w.bank}\nAccount: ${w.account}\nAccount Name: ${w.account_name}\n\nMake sure you have sent the payment before clicking OK.`)) {
+    w.status = 'paid';
+    document.getElementById('sb-w').textContent = allWithdrawals.filter(x=>x.status==='pending').length;
+    renderWithdrawals();
+    alert('✅ Marked as paid! Member will be notified.');
+  }
+}
+
+function rejectW(id) {
+  const w = allWithdrawals.find(x=>x.id===id);
+  if(!w) return;
+  const reason = prompt(`Reason for rejecting ${w.user}'s withdrawal?\n(This will be shown to the member)`);
+  if(reason !== null) {
+    w.status = 'rejected';
+    document.getElementById('sb-w').textContent = allWithdrawals.filter(x=>x.status==='pending').length;
+    renderWithdrawals();
+    alert('❌ Withdrawal rejected. Reason saved: '+reason);
+  }
+}
+
+// ── COURSES ───────────────────────────────────────────────────────
+function renderCourses() {
+  document.getElementById('course-count-label').textContent = allCourses.length+' courses';
+  document.getElementById('courses-tbody').innerHTML = allCourses.map((c,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${c.title}</strong></td>
+      <td style="color:var(--muted)">${c.cat}</td>
+      <td style="font-weight:600">₦${c.price.toLocaleString()}</td>
+      <td>${c.students} students</td>
+      <td style="color:var(--muted)">${c.duration}</td>
+      <td><span class="pill pill-${c.status}">${c.status}</span></td>
+      <td><div class="btn-row">
+        <button class="btn btn-edit" onclick="alert('Edit: ${c.title}')">Edit</button>
+        <button class="btn btn-reject" onclick="removeCourse(${c.id})">Remove</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function addCourse() {
+  const title = document.getElementById('c-title').value.trim();
+  const cat   = document.getElementById('c-cat').value;
+  const price = parseInt(document.getElementById('c-price').value);
+  if(!title||!cat||!price){alert('Please fill in Title, Category and Price.');return;}
+  const newCourse = {
+    id: allCourses.length+1, title, cat,
+    price, students:0,
+    duration: document.getElementById('c-duration').value||'TBD',
+    level: document.getElementById('c-level').value,
+    status:'active'
+  };
+  allCourses.push(newCourse);
+  renderCourses();
+  ['c-title','c-cat','c-price','c-duration','c-instructor','c-desc'].forEach(id=>{document.getElementById(id).value='';});
+  alert('✅ Course "'+title+'" added successfully!');
+}
+
+function removeCourse(id) {
+  const c = allCourses.find(x=>x.id===id);
+  if(c && confirm('Remove "'+c.title+'"? This cannot be undone.')) {
+    allCourses = allCourses.filter(x=>x.id!==id);
+    renderCourses();
+  }
+}
+
+// ── TASKS ─────────────────────────────────────────────────────────
+function renderTasks() {
+  document.getElementById('tasks-tbody').innerHTML = allTasks.map((t,i)=>`
+    <tr>
+      <td style="color:var(--muted)">${i+1}</td>
+      <td><strong>${t.icon} ${t.name}</strong><div style="font-size:11px;color:var(--muted)">${t.desc}</div></td>
+      <td><input type="number" value="${t.basic}" style="width:80px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px" onchange="allTasks[${i}].basic=parseInt(this.value)"/></td>
+      <td><input type="number" value="${t.classic}" style="width:80px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:13px" onchange="allTasks[${i}].classic=parseInt(this.value)"/></td>
+      <td><span class="pill pill-${t.status}">${t.status}</span></td>
+      <td><div class="btn-row">
+        <button class="btn ${t.status==='active'?'btn-suspend':'btn-activate'}" onclick="toggleTask(${i})">${t.status==='active'?'Disable':'Enable'}</button>
+        <button class="btn btn-reject" onclick="removeTask(${i})">Remove</button>
+      </div></td>
+    </tr>`).join('');
+}
+
+function toggleTask(i){allTasks[i].status=allTasks[i].status==='active'?'disabled':'active';renderTasks();}
+function removeTask(i){if(confirm('Remove task "'+allTasks[i].name+'"?')){allTasks.splice(i,1);renderTasks();}}
+
+function saveTaskChanges(){alert('✅ Task changes saved successfully!');}
+
+function addTask() {
+  const name = document.getElementById('t-name').value.trim();
+  const basic = parseInt(document.getElementById('t-basic').value);
+  const classic = parseInt(document.getElementById('t-classic').value);
+  if(!name||!basic||!classic){alert('Please fill in Task Name, Basic Pay and Classic Pay.');return;}
+  allTasks.push({id:allTasks.length+1,icon:document.getElementById('t-icon').value||'✅',name,desc:document.getElementById('t-desc').value||'',basic,classic,status:'active'});
+  renderTasks();
+  ['t-name','t-desc','t-icon','t-basic','t-classic'].forEach(id=>{document.getElementById(id).value='';});
+  alert('✅ Task "'+name+'" added!');
+}
+
+// ── SPIN ──────────────────────────────────────────────────────────
+const SPIN_CONFIG = [
+  {color:'#7C3AED',label:'₦5,000 Cash Prize',type:'cash',value:5000,active:true},
+  {color:'#00C853',label:'₦10,000 Cash Prize',type:'cash',value:10000,active:true},
+  {color:'#5B21B6',label:'Free Any Course',type:'course',value:0,active:true},
+  {color:'#185FA5',label:'₦2,000 Cash Prize',type:'cash',value:2000,active:true},
+  {color:'#f5576c',label:'50% Discount Coupon',type:'discount',value:50,active:true},
+  {color:'#43e97b',label:'Free Beginner Course',type:'course_basic',value:0,active:true},
+  {color:'#F59E0B',label:'₦3,000 Cash Prize',type:'cash',value:3000,active:true},
+  {color:'#B0B0B0',label:'Try Again Next Week',type:'none',value:0,active:true},
+];
+
+function renderSpin() {
+  const totalCash = allSpins.filter(s=>s.prize==='Cash'&&s.status==='credited').reduce((s,x)=>s+x.amount,0);
+  document.getElementById('spin-total-label').textContent='Total cash given: ₦'+totalCash.toLocaleString();
+
+  document.getElementById('prize-list').innerHTML = SPIN_CONFIG.map((p,i)=>`
+    <div class="prize-item">
+      <div class="prize-color" style="background:${p.color}"></div>
+      <div class="prize-label">${p.label}</div>
+      ${p.type==='cash'?`<input class="prize-input" type="number" value="${p.value}" placeholder="Amount ₦" onchange="SPIN_CONFIG[${i}].value=parseInt(this.value)"/>`:'<span style="font-size:12px;color:var(--muted)">No cash value</span>'}
+      <label class="toggle" title="Enable/disable this prize"><input type="checkbox" ${p.active?'checked':''} onchange="SPIN_CONFIG[${i}].active=this.checked"/><span class="toggle-slider"></span></label>
+    </div>`).join('');
+
+  document.getElementById('spin-tbody').innerHTML = allSpins.map(s=>`
+    <tr>
+      <td><strong>${s.user}</strong></td>
+      <td>${s.prize}</td>
+      <td style="font-weight:600">${s.amount?'₦'+s.amount.toLocaleString():'—'}</td>
+      <td style="color:var(--muted);font-size:12px">${s.date}</td>
+      <td><span class="pill pill-${s.status==='credited'?'paid':'pending'}">${s.status}</span></td>
+    </tr>`).join('');
+}
+
+function saveSpinPrizes(){alert('✅ Spin prize configuration saved!');}
+
+// ── ANNOUNCEMENTS ─────────────────────────────────────────────────
+function renderAnnouncements() {
+  document.getElementById('ann-count').textContent = allAnnouncements.length+' sent';
+  document.getElementById('ann-history').innerHTML = allAnnouncements.length
+    ? allAnnouncements.slice().reverse().map(a=>`
+      <div class="ann-item">
+        <div class="ann-title">${a.title}</div>
+        <div class="ann-meta">Sent to: ${a.target} · ${a.type} · ${a.date}</div>
+        <div class="ann-body">${a.msg}</div>
+      </div>`).join('')
+    : '<div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">No announcements yet.</div>';
+}
+
+function sendAnnouncement() {
+  const title  = document.getElementById('ann-title').value.trim();
+  const target = document.getElementById('ann-target').value;
+  const type   = document.getElementById('ann-type').value;
+  const msg    = document.getElementById('ann-msg').value.trim();
+  if(!title||!msg){alert('Please enter a title and message.');return;}
+  allAnnouncements.push({title,target,type,msg,date:new Date().toLocaleDateString()});
+  document.getElementById('ann-title').value='';
+  document.getElementById('ann-msg').value='';
+  renderAnnouncements();
+  alert('✅ Announcement sent to '+target+'!\n\nTitle: '+title);
+}
+
+// ── SETTINGS ─────────────────────────────────────────────────────
+function toggleDay(el){el.classList.toggle('on');el.classList.toggle('off');}
+function saveSettings(){alert('✅ All platform settings saved successfully!');}
+function saveCredentials(){
+  const email=document.getElementById('s-admin-email').value.trim();
+  const pass=document.getElementById('s-admin-pass').value;
+  if(!email||!pass){alert('Email and password cannot be empty.');return;}
+  ADMIN_EMAIL=email;ADMIN_PASS=pass;
+  localStorage.setItem('dg_admin_email',email);
+  localStorage.setItem('dg_admin_pass',pass);
+  alert('✅ Admin credentials updated! Use the new credentials next time you log in.');
+}
+</script>
+</body>
+</html>

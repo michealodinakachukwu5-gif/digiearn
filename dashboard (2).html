@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — DigiEarn</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#7C3AED;#7C3AED;--gold-dark:#5B21B6;#5B21B6;--gold-light:#F5F3FF;#F5F3FF;--green:#00C853;--green-dark:#00922B;--green-light:#E6F9EE;--text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;--bg:#F9F8F6;--white:#FFFFFF;--radius:12px;--red:#DC2626;--red-light:#FEF2F2}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--text);display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;min-height:100vh}
+.s-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;padding:0 1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
+.s-logo span{color:var(--gold)}
+.s-nav{padding:1rem 0;flex:1}
+.s-item{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+.s-item:hover,.s-item.active{background:rgba(255,255,255,.08);color:white}
+.s-item.active{border-left-color:var(--gold)}
+.s-icon{font-size:17px;width:22px;text-align:center}
+.s-badge{margin-left:auto;background:var(--gold);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px}
+.s-user{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
+.s-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:14px;flex-shrink:0}
+.s-name{font-size:13px;font-weight:500;color:white}
+.s-plan{font-size:11px;color:rgba(255,255,255,.5)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-size:18px;font-weight:600}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.plan-badge{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--gold-light);color:var(--gold-dark)}
+.withdraw-btn{background:var(--green);color:white;padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.withdraw-btn:disabled{opacity:.5;cursor:not-allowed}
+.content{padding:1.75rem;overflow-y:auto;flex:1}
+.greeting{margin-bottom:1.5rem}
+.greeting h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:3px}
+.greeting p{font-size:14px;color:var(--muted)}
+
+/* WITHDRAWAL WINDOW BANNER */
+.window-banner{border-radius:var(--radius);padding:10px 16px;font-size:13px;font-weight:500;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
+.window-open{background:var(--green-light);color:var(--green-dark);border:1px solid #6ee7a7}
+.window-closed{background:var(--red-light);color:var(--red);border:1px solid #fca5a5}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.75rem}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
+.metric-label{font-size:12px;color:var(--muted);margin-bottom:5px}
+.metric-value{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1}
+.metric-sub{font-size:12px;color:var(--muted);margin-top:3px}
+.metric.gold-card{background:var(--gold);border-color:var(--gold)}
+.metric.gold-card .metric-label,.metric.gold-card .metric-sub{color:rgba(255,255,255,.75)}
+.metric.gold-card .metric-value{color:white}
+.progress-bar{height:6px;background:rgba(255,255,255,.3);border-radius:999px;margin-top:8px;overflow:hidden}
+.progress-fill{height:100%;border-radius:999px;background:white;transition:width .5s}
+.two-col{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;margin-bottom:1.25rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.25rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.card-title{font-size:15px;font-weight:600}
+.task-list{display:flex;flex-direction:column;gap:10px}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color .15s}
+.task-item:hover{border-color:var(--gold)}
+.task-item.done{background:var(--green-light);border-color:#6ee7a7;cursor:default}
+.t-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ti-ad{background:#F5F3FF}.ti-survey{background:#EDE8FB}.ti-social{background:#E6F9EE}
+.t-name{font-size:14px;font-weight:500;margin-bottom:2px}
+.t-desc{font-size:12px;color:var(--muted)}
+.t-earn{font-size:14px;font-weight:700;color:var(--green-dark)}
+.t-status{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-top:3px;display:inline-block}
+.ts-available{background:var(--gold-light);color:var(--gold-dark)}
+.ts-done{background:var(--green-light);color:var(--green-dark)}
+.ref-box{background:var(--text);border-radius:14px;padding:1.25rem;color:white;margin-bottom:1rem}
+.ref-title{font-size:14px;font-weight:600;margin-bottom:6px}
+.ref-code-wrap{display:flex;gap:8px;margin-bottom:12px}
+.ref-code{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 12px;font-size:13px;font-family:monospace;color:white;font-weight:600;letter-spacing:.05em;word-break:break-all}
+.ref-copy{background:var(--gold);color:white;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap}
+.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ref-stat{background:rgba(255,255,255,.08);border-radius:8px;padding:.75rem;text-align:center}
+.ref-stat strong{display:block;font-family:'Syne',sans-serif;font-size:20px;color:var(--gold);font-weight:800}
+.ref-stat span{font-size:11px;color:rgba(255,255,255,.55)}
+.tx-list{display:flex;flex-direction:column}
+.tx-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.tx-row:last-child{border-bottom:none}
+.tx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:10px}
+.dot-g{background:var(--green)}.dot-a{background:var(--gold)}.dot-r{background:var(--red)}
+.tx-left{display:flex;align-items:center}
+.tx-name{font-weight:500}
+.tx-date{font-size:11px;color:var(--muted)}
+.tx-in{color:var(--green-dark);font-weight:700}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:var(--white);border-radius:20px;padding:1.75rem;width:100%;max-width:420px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
+.form-group input,.form-group select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);outline:none}
+.form-group input:focus{border-color:var(--green)}
+.info-box{border-radius:var(--radius);padding:10px 14px;font-size:13px;margin-bottom:1rem;line-height:1.6}
+.info-green{background:var(--green-light);color:var(--green-dark);border:1px solid #6ee7a7}
+.info-red{background:var(--red-light);color:var(--red);border:1px solid #fca5a5}
+.info-gold{background:var(--gold-light);color:var(--gold-dark);border:1px solid #A78BFA}
+.modal-btn{width:100%;padding:12px;background:var(--green);color:white;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.modal-btn:disabled{opacity:.5;cursor:not-allowed}
+.modal-cancel{width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;cursor:pointer;margin-top:8px;font-family:'Space Grotesk',sans-serif;color:var(--text)}
+
+@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.sidebar{display:none}}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="s-logo">Digi<span>Earn</span></div>
+  <div class="s-nav">
+    <div class="s-item active"><span class="s-icon">⊞</span> Dashboard</div>
+    <div class="s-item"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></div>
+    <div class="s-item"><span class="s-icon">💰</span> Earnings</div>
+    <div class="s-item"><span class="s-icon">👥</span> Referrals</div>
+    <div class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</div>
+    <div class="s-item"><span class="s-icon">📜</span> History</div>
+    <div class="s-item"><span class="s-icon">👤</span> Profile</div>
+    <div class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</div>
+  </div>
+  <div class="s-user">
+    <div class="s-avatar" id="user-initials">--</div>
+    <div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="page-title">Dashboard</div>
+    <div class="topbar-right">
+      <span class="plan-badge" id="plan-badge">--</span>
+      <button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="greeting">
+      <h1 id="greeting-text">Good day! 👋</h1>
+      <p id="greeting-sub">Complete your tasks to earn today.</p>
+    </div>
+
+    <!-- Withdrawal window status -->
+    <div class="window-banner" id="window-banner">
+      <span id="window-icon">⏳</span>
+      <span id="window-msg">Checking withdrawal window...</span>
+    </div>
+
+    <div class="metrics">
+      <div class="metric gold-card">
+        <div class="metric-label">Total Earnings (USD)</div>
+        <div class="metric-value" id="total-usd">$0.00</div>
+        <div class="metric-sub" id="progress-text">$0 of $45 target</div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Total Earnings (NGN)</div>
+        <div class="metric-value" id="total-ngn">₦0</div>
+        <div class="metric-sub">At current rate</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Today's Earnings</div>
+        <div class="metric-value" id="today-earn">₦0</div>
+        <div class="metric-sub" id="daily-limit">Limit: ₦500/day</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Referral Bonus</div>
+        <div class="metric-value" id="ref-earn">₦0</div>
+        <div class="metric-sub">From referrals</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Today's Tasks</div>
+          <span style="font-size:13px;color:var(--muted)" id="tasks-counter">0/6 done</span>
+        </div>
+        <div class="task-list" id="task-list"></div>
+      </div>
+
+      <div>
+        <div class="ref-box">
+          <div class="ref-title">Your Referral Link 🔗</div>
+          <div class="ref-code-wrap">
+            <div class="ref-code" id="ref-code">Loading...</div>
+            <button class="ref-copy" onclick="copyRef()">Copy</button>
+          </div>
+          <div class="ref-stats">
+            <div class="ref-stat"><strong id="ref-count">0</strong><span>Referrals</span></div>
+            <div class="ref-stat"><strong id="ref-bonus">₦0</strong><span>Bonus earned</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title">Recent Activity</div></div>
+          <div class="tx-list" id="tx-list">
+            <div class="tx-row"><div class="tx-left"><div class="tx-dot dot-a"></div><div><div class="tx-name">No activity yet</div><div class="tx-date">Complete tasks to earn</div></div></div><div style="color:var(--muted)">—</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WITHDRAW MODAL -->
+<div class="modal-overlay" id="withdraw-modal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">🏦 Withdraw Earnings</div>
+      <button class="modal-close" onclick="closeWithdraw()">×</button>
+    </div>
+    <div id="w-status-box" class="info-box info-green"></div>
+    <div class="form-group">
+      <label>Amount to Withdraw (₦)</label>
+      <input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/>
+    </div>
+    <div class="form-group">
+      <label>Your Bank</label>
+      <input type="text" id="w-bank" readonly/>
+    </div>
+    <div class="form-group">
+      <label>Account Number</label>
+      <input type="text" id="w-acct" readonly/>
+    </div>
+    <div class="form-group">
+      <label>Account Name</label>
+      <input type="text" id="w-acct-name" readonly/>
+    </div>
+    <div class="info-box info-gold">
+      ⏱ Withdrawals processed within 24 hours on business days.<br>
+      📅 Available: Mon–Fri · 10:00 AM – 4:00 PM only.<br>
+      💰 Basic minimum: $45 · Classic minimum: $40 (~₦90,000)
+    </div>
+    <button class="modal-btn" id="w-submit-btn" onclick="submitWithdrawal()">Request Withdrawal</button>
+    <button class="modal-cancel" onclick="closeWithdraw()">Cancel</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const USD_RATE = 1500; // ₦1,500 per $1
+const FIRST_WITHDRAW_USD = 45;   // Basic: $45
+const CLASSIC_WITHDRAW_USD = 40;  // Classic: $40 (lower threshold)
+// No repeat threshold - same limit always applies
+const USD_RATE_NGN = USD_RATE;
+
+const TASKS = [
+  {id:1,icon:'📺',bg:'ti-ad',    name:'Watch Ad Video',      desc:'Watch a 30-second ad',         earn:{basic:50, classic:200}},
+  {id:2,icon:'📋',bg:'ti-survey',name:'Fill Daily Survey',    desc:'Answer 5 quick questions',     earn:{basic:100,classic:400}},
+  {id:3,icon:'❤️',bg:'ti-social',name:'Like & Follow Task',   desc:'Like 3 posts, follow 2 pages', earn:{basic:50, classic:200}},
+  {id:4,icon:'🎬',bg:'ti-ad',    name:'Watch YouTube Video',  desc:'Watch a 2-minute video',       earn:{basic:75, classic:300}},
+  {id:5,icon:'🔁',bg:'ti-social',name:'Share Social Post',    desc:'Share to your timeline',       earn:{basic:75, classic:300}},
+  {id:6,icon:'📝',bg:'ti-survey',name:'Write a Review',       desc:'Leave a product review',       earn:{basic:150,classic:600}},
+];
+
+let userData=null, userPlan='basic', completedTasks=new Set();
+let todayEarnings=0, totalNgn=0, refBonus=0;
+
+// ── WITHDRAWAL WINDOW CHECK ──────────────────────────────────────
+function isWithdrawalOpen(){
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun,1=Mon...5=Fri,6=Sat
+  const hour = now.getHours();
+  const min = now.getMinutes();
+  const isWeekday = day >= 1 && day <= 5;
+  const timeOk = (hour > 10) || (hour === 10 && min >= 0);
+  const timeEnd = hour < 16;
+  return isWeekday && timeOk && timeEnd;
+}
+
+function updateWithdrawalBanner(){
+  const banner = document.getElementById('window-banner');
+  const msg = document.getElementById('window-msg');
+  const icon = document.getElementById('window-icon');
+  const btn = document.getElementById('withdraw-btn');
+  const totalUsd = totalNgn / USD_RATE;
+
+  if(!isWithdrawalOpen()){
+    banner.className='window-banner window-closed';
+    icon.textContent='🔒';
+    msg.textContent='Withdrawal window closed. Opens Mon–Fri, 10:00 AM – 4:00 PM.';
+    btn.disabled=true;
+  } else if(totalUsd < MIN_WITHDRAW_USD){
+    banner.className='window-banner window-closed';
+    icon.textContent='💰';
+    const needed=(MIN_WITHDRAW_USD - totalUsd).toFixed(2);
+    msg.textContent=`You need $${needed} more to reach the $45 minimum (first withdrawal). Keep completing tasks!`;
+    btn.disabled=true;
+  } else {
+    banner.className='window-banner window-open';
+    icon.textContent='✅';
+    msg.textContent='Withdrawal window is OPEN! You can withdraw now (Mon–Fri, 10am–4pm).';
+    btn.disabled=false;
+  }
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
+async function init(){
+  const {data:{user}} = await supabase.auth.getUser();
+  if(!user){window.location.href='/index.html';return;}
+
+  userData = user.user_metadata;
+  userPlan = userData.plan||'basic';
+  const name = userData.full_name||'User';
+  const initials = name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+
+  document.getElementById('user-initials').textContent=initials;
+  document.getElementById('user-name').textContent=name;
+  document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
+  document.getElementById('plan-badge').textContent=userPlan==='classic'?'👑 Classic':'💼 Basic';
+  document.getElementById('daily-limit').textContent='Limit: '+(userPlan==='classic'?'₦2,000':'₦500')+'/day';
+
+  const hour=new Date().getHours();
+  const greet=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+  document.getElementById('greeting-text').textContent=greet+', '+name.split(' ')[0]+'! 👋';
+
+  totalNgn = userData.earnings_ngn||0;
+  refBonus = userData.ref_bonus||0;
+  updateMetrics();
+
+  const refCode=user.id.replace(/-/g,'').slice(0,8).toUpperCase();
+  document.getElementById('ref-code').textContent=refCode;
+  document.getElementById('ref-bonus').textContent='₦'+refBonus.toLocaleString();
+
+  document.getElementById('w-bank').value=userData.bank_name||'';
+  document.getElementById('w-acct').value=userData.account_number||'';
+  document.getElementById('w-acct-name').value=userData.account_name||'';
+
+  renderTasks();
+  updateWithdrawalBanner();
+  setInterval(updateWithdrawalBanner, 60000); // re-check every minute
+}
+
+function updateMetrics(){
+  const usd=(totalNgn/USD_RATE);
+  const pct=Math.min((usd/MIN_WITHDRAW_USD)*100,100);
+  document.getElementById('total-usd').textContent='$'+usd.toFixed(2);
+  document.getElementById('total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
+  document.getElementById('progress-fill').style.width=pct.toFixed(1)+'%';
+  const wc = userData.withdraw_count || 0;
+  const minT = wc===0 ? FIRST_WITHDRAW_USD : REPEAT_WITHDRAW_USD;
+  const pctT = Math.min((usd/minT)*100,100);
+  document.getElementById('progress-fill').style.width=pctT.toFixed(1)+'%';
+  document.getElementById('progress-text').textContent='$'+usd.toFixed(2)+' of $'+minRequired+' target';
+  document.getElementById('today-earn').textContent='₦'+todayEarnings.toLocaleString();
+  document.getElementById('tasks-counter').textContent=completedTasks.size+'/6 done';
+  document.getElementById('tasks-badge').textContent=6-completedTasks.size;
+  document.getElementById('ref-earn').textContent='₦'+refBonus.toLocaleString();
+  updateWithdrawalBanner();
+}
+
+function renderTasks(){
+  const list=document.getElementById('task-list');
+  list.innerHTML=TASKS.map(t=>`
+    <div class="task-item${completedTasks.has(t.id)?' done':''}" id="task-${t.id}" onclick="completeTask(${t.id})">
+      <div class="t-icon ${t.bg}">${t.icon}</div>
+      <div style="flex:1">
+        <div class="t-name">${t.name}</div>
+        <div class="t-desc">${t.desc}</div>
+      </div>
+      <div style="text-align:right">
+        <div class="t-earn">+₦${t.earn[userPlan]}</div>
+        <div class="t-status ${completedTasks.has(t.id)?'ts-done':'ts-available'}">${completedTasks.has(t.id)?'Done ✓':'Start'}</div>
+      </div>
+    </div>`).join('');
+}
+
+function completeTask(id){
+  if(completedTasks.has(id)){alert('Already done today! Come back tomorrow.');return;}
+  const task=TASKS.find(t=>t.id===id);
+  const earn=task.earn[userPlan];
+  const limit=userPlan==='classic'?2000:500;
+  if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.\nYour limit: ₦'+limit.toLocaleString()+'/day');return;}
+
+  completedTasks.add(id);
+  todayEarnings+=earn;
+  totalNgn+=earn;
+  updateMetrics();
+  renderTasks();
+
+  // Add to activity feed
+  const txList=document.getElementById('tx-list');
+  if(txList.children.length===1&&txList.children[0].querySelector('.tx-dot.dot-a'))txList.innerHTML='';
+  const row=document.createElement('div');
+  row.className='tx-row';
+  row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-g"></div><div><div class="tx-name">${task.name}</div><div class="tx-date">Just now</div></div></div><div class="tx-in">+₦${earn}</div>`;
+  txList.prepend(row);
+
+  // Save to Supabase
+  supabase.auth.updateUser({data:{earnings_ngn:totalNgn}});
+}
+
+function copyRef(){
+  const code=document.getElementById('ref-code').textContent;
+  const url=window.location.origin+'/index.html?ref='+code;
+  navigator.clipboard.writeText(url).then(()=>alert('Referral link copied!\n\n'+url));
+}
+
+// ── WITHDRAWAL ────────────────────────────────────────────────────
+function openWithdraw(){
+  const totalUsd=totalNgn/USD_RATE;
+  const box=document.getElementById('w-status-box');
+  const btn=document.getElementById('w-submit-btn');
+  const open=isWithdrawalOpen();
+  const withdrawCount = userData.withdraw_count || 0;
+  const minRequired = (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+  const eligible = totalUsd >= minRequired;
+
+  if(!open){
+    box.className='info-box info-red';
+    box.textContent='🔒 Withdrawal window is closed. Available Mon–Fri, 10:00 AM – 4:00 PM only.';
+    btn.disabled=true;
+  } else if(!eligible){
+    box.className='info-box info-red';
+    box.textContent=`💰 You need $${(MIN_WITHDRAW_USD-totalUsd).toFixed(2)} more to reach the $45 minimum (first withdrawal). Keep earning!`;
+    btn.disabled=true;
+  } else {
+    box.className='info-box info-green';
+    box.textContent=`✅ Window is open! Balance: ₦${Math.round(totalNgn).toLocaleString()} ($${totalUsd.toFixed(2)}). Min this withdrawal: $${minRequired}. Enter amount below.`;
+    btn.disabled=false;
+  }
+  document.getElementById('withdraw-modal').classList.add('show');
+}
+
+function closeWithdraw(){document.getElementById('withdraw-modal').classList.remove('show')}
+
+async function submitWithdrawal(){
+  if(!isWithdrawalOpen()){alert('Withdrawal window is closed. Please try Mon–Fri between 10am and 4pm.');return;}
+  const totalUsd=totalNgn/USD_RATE;
+  const wCount = userData.withdraw_count || 0;
+  const minReq = (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+  if(totalUsd<minReq){alert('You need at least $'+minReq+' to withdraw.');return;}
+
+  const amount=parseInt(document.getElementById('w-amount').value);
+  if(!amount||amount<1000){alert('Minimum withdrawal amount is ₦1,000.');return;}
+  if(amount>totalNgn){alert('Insufficient balance. Your balance: ₦'+Math.round(totalNgn).toLocaleString());return;}
+
+  const btn=document.getElementById('w-submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
+
+  const {data:{user}}=await supabase.auth.getUser();
+  const {error}=await supabase.from('withdrawals').insert({
+    user_id:user.id,
+    amount,
+    bank:userData.bank_name,
+    account_number:userData.account_number,
+    account_name:userData.account_name,
+    status:'pending',
+    requested_at:new Date().toISOString()
+  });
+
+  if(error){
+    alert('Error: '+error.message);
+    btn.disabled=false;btn.textContent='Request Withdrawal';
+    return;
+  }
+
+  // Increment withdrawal count
+  await supabase.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
+  totalNgn -= amount;
+  userData.withdraw_count = (userData.withdraw_count||0)+1;
+  updateMetrics();
+  closeWithdraw();
+  alert('✅ Withdrawal request of ₦'+amount.toLocaleString()+' submitted!\n\nYou will receive payment within 24 hours to your '+userData.bank_name+' account.\n\nThank you for using DigiEarn!');
+  btn.disabled=false;btn.textContent='Request Withdrawal';
+}
+
+async function handleLogout(){
+  await supabase.auth.signOut();
+  window.location.href='/index.html';
+}
+
+init();
+</script>
+</body>
+</html>
