@@ -17,10 +17,10 @@
   --dark:#0F0B1E;
 }
 *{font-family:'Space Grotesk',sans-serif}
-body{background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+body{background:var(--bg);color:var(--text);min-height:100vh}
 
 /* ── LOGIN ── */
-.login-wrap{width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0F0B1E,#1a1040)}
+.login-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0F0B1E,#1a1040);z-index:1000}
 .login-card{background:var(--white);border-radius:24px;padding:2.5rem;width:100%;max-width:400px;margin:1rem}
 .login-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;text-align:center;margin-bottom:4px}
 .login-logo span{color:var(--p)}
@@ -620,12 +620,23 @@ function seedData() {
 function doLogin() {
   const email = document.getElementById('a-email').value.trim();
   const pass  = document.getElementById('a-pass').value;
+
+  if(!email || !pass) {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('login-err').textContent = 'Please enter email and password.';
+    return;
+  }
+
   if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
     document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').classList.add('show');
+    const app = document.getElementById('app');
+    app.classList.add('show');
+    app.style.display = 'flex';
     seedData();
     loadDashboard();
   } else {
+    document.getElementById('login-err').style.display = 'block';
+    document.getElementById('login-err').textContent = '❌ Incorrect email or password. Try again.';
     document.getElementById('login-err').style.display = 'block';
   }
 }
@@ -635,8 +646,12 @@ function doLogin() {
 });
 
 function doLogout() {
-  document.getElementById('app').classList.remove('show');
-  document.getElementById('login-screen').style.display = 'flex';
+  const app = document.getElementById('app');
+  app.classList.remove('show');
+  app.style.display = 'none';
+  const ls = document.getElementById('login-screen');
+  ls.style.display = 'flex';
+  ls.style.visibility = 'visible';
   document.getElementById('a-email').value = '';
   document.getElementById('a-pass').value = '';
   document.getElementById('login-err').style.display = 'none';
