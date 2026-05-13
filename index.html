@@ -82,7 +82,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2
 /* PAYMENT METHODS SECTION */
 .pay-section{background:var(--bg);padding:4rem 2rem;border-top:1px solid var(--border)}
 .pay-methods-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;max-width:700px;margin:0 auto}
-.pay-method-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
+.pay-method-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center;transition:border-color .15s}
+.pay-method-card:hover{border-color:var(--gold)}
 .pay-method-icon{font-size:28px;margin-bottom:6px}
 .pay-method-name{font-size:13px;font-weight:600}
 .pay-method-sub{font-size:11px;color:var(--muted)}
@@ -95,8 +96,8 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
 .footer-links a{font-size:13px;color:rgba(255,255,255,.5);text-decoration:none}
 
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
-.modal-overlay.show{display:flex}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}.modal-overlay.show{display:flex!important}
+.modal-overlay.show{display:flex !important}
 .modal{background:var(--white);border-radius:24px;padding:2rem;width:100%;max-width:480px;margin:auto}
 .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem}
 .modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
@@ -149,7 +150,7 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
     <a href="#plans">Plans</a>
     <a href="#withdraw">Withdraw</a>
   </div>
-  <button class="nav-cta" onclick="openModal()">Start Earning →</button>
+  <button class="nav-cta" onclick="openModal()" style="cursor:pointer">Start Earning →</button>
 </nav>
 
 <div class="hero">
@@ -235,12 +236,39 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
     <div class="section-title" style="margin-bottom:.5rem">Pay & get paid your way</div>
     <div class="section-sub">Register using any Nigerian payment method. Withdraw earnings to your bank.</div>
     <div class="pay-methods-grid">
-      <div class="pay-method-card"><div class="pay-method-icon">💳</div><div class="pay-method-name">Debit Card</div><div class="pay-method-sub">Visa / Mastercard</div></div>
-      <div class="pay-method-card"><div class="pay-method-icon">🏦</div><div class="pay-method-name">Bank Transfer</div><div class="pay-method-sub">Direct transfer</div></div>
-      <div class="pay-method-card"><div class="pay-method-icon">📱</div><div class="pay-method-name">USSD</div><div class="pay-method-sub">*737#, *919# etc</div></div>
-      <div class="pay-method-card"><div class="pay-method-icon">🟢</div><div class="pay-method-name">Opay</div><div class="pay-method-sub">Mobile wallet</div></div>
-      <div class="pay-method-card"><div class="pay-method-icon">🔵</div><div class="pay-method-name">Palmpay</div><div class="pay-method-sub">Mobile wallet</div></div>
-      <div class="pay-method-card"><div class="pay-method-icon">🟡</div><div class="pay-method-name">Kuda Bank</div><div class="pay-method-sub">Online banking</div></div>
+      <div class="pay-method-card">
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;height:36px">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/60px-Mastercard-logo.svg.png" style="height:28px;object-fit:contain"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/80px-Visa_Inc._logo.svg.png" style="height:20px;object-fit:contain"/>
+        </div>
+        <div class="pay-method-name" style="margin-top:6px">Debit Card</div><div class="pay-method-sub">Visa / Mastercard</div>
+      </div>
+      <div class="pay-method-card">
+        <div style="height:36px;display:flex;align-items:center;justify-content:center;font-size:30px">🏦</div>
+        <div class="pay-method-name" style="margin-top:6px">Bank Transfer</div><div class="pay-method-sub">All Nigerian banks</div>
+      </div>
+      <div class="pay-method-card">
+        <div style="height:36px;display:flex;align-items:center;justify-content:center;font-size:30px">📱</div>
+        <div class="pay-method-name" style="margin-top:6px">USSD</div><div class="pay-method-sub">*737#, *919# etc</div>
+      </div>
+      <div class="pay-method-card">
+        <div style="height:36px;display:flex;align-items:center;justify-content:center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2WF0FEKKJdHOiT3OliSYQF-oNjM8lPYHIYw&s" style="height:32px;object-fit:contain;border-radius:6px" onerror="this.outerHTML='<span style=font-size:28px>🟢</span>'"/>
+        </div>
+        <div class="pay-method-name" style="margin-top:6px">OPay</div><div class="pay-method-sub">Mobile wallet</div>
+      </div>
+      <div class="pay-method-card">
+        <div style="height:36px;display:flex;align-items:center;justify-content:center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZmVvwRhkrS3r5_HKSYiuMIUqRrpvSTgJdtA&s" style="height:32px;object-fit:contain;border-radius:6px" onerror="this.outerHTML='<span style=font-size:28px>🔵</span>'"/>
+        </div>
+        <div class="pay-method-name" style="margin-top:6px">PalmPay</div><div class="pay-method-sub">Mobile wallet</div>
+      </div>
+      <div class="pay-method-card">
+        <div style="height:36px;display:flex;align-items:center;justify-content:center">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5JFkbSZ4FGfRGRQhgxzJbIqhPsVPe2hxrZQ&s" style="height:32px;object-fit:contain;border-radius:6px" onerror="this.outerHTML='<span style=font-size:28px>🟣</span>'"/>
+        </div>
+        <div class="pay-method-name" style="margin-top:6px">Kuda Bank</div><div class="pay-method-sub">Online banking</div>
+      </div>
     </div>
     <p style="font-size:13px;color:var(--muted);margin-top:1rem">All payments processed securely by <strong>Paystack</strong> — Nigeria's most trusted payment gateway.</p>
   </div>
@@ -332,12 +360,31 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
     <div class="pay-selector">
       <label>How do you want to pay?</label>
       <div class="pay-opts">
-        <div class="pay-opt active" id="pm-card" onclick="setPayMethod('card')"><div class="pay-opt-icon">💳</div>Card</div>
-        <div class="pay-opt" id="pm-bank" onclick="setPayMethod('bank')"><div class="pay-opt-icon">🏦</div>Bank Transfer</div>
-        <div class="pay-opt" id="pm-ussd" onclick="setPayMethod('ussd')"><div class="pay-opt-icon">📱</div>USSD</div>
-        <div class="pay-opt" id="pm-opay" onclick="setPayMethod('opay')"><div class="pay-opt-icon">🟢</div>Opay</div>
-        <div class="pay-opt" id="pm-palmpay" onclick="setPayMethod('palmpay')"><div class="pay-opt-icon">🔵</div>Palmpay</div>
-        <div class="pay-opt" id="pm-kuda" onclick="setPayMethod('kuda')"><div class="pay-opt-icon">🟡</div>Kuda</div>
+        <div class="pay-opt active" id="pm-card" onclick="setPayMethod('card')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/120px-Mastercard-logo.svg.png" style="height:22px;object-fit:contain" onerror="this.style.display='none'"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/120px-Visa_Inc._logo.svg.png" style="height:16px;object-fit:contain;margin-left:2px" onerror="this.style.display='none'"/>
+          <div style="font-size:10px;margin-top:2px">Card</div>
+        </div>
+        <div class="pay-opt" id="pm-bank" onclick="setPayMethod('bank')">
+          <div style="font-size:22px">🏦</div>
+          <div style="font-size:10px;margin-top:2px">Bank Transfer</div>
+        </div>
+        <div class="pay-opt" id="pm-ussd" onclick="setPayMethod('ussd')">
+          <div style="font-size:22px">📱</div>
+          <div style="font-size:10px;margin-top:2px">USSD</div>
+        </div>
+        <div class="pay-opt" id="pm-opay" onclick="setPayMethod('opay')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/OPay_Logo.svg/120px-OPay_Logo.svg.png" style="height:24px;object-fit:contain" onerror="this.innerHTML='<div style=font-size:20px>🟢</div>'"/>
+          <div style="font-size:10px;margin-top:2px">OPay</div>
+        </div>
+        <div class="pay-opt" id="pm-palmpay" onclick="setPayMethod('palmpay')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/PalmPay_Logo.svg/120px-PalmPay_Logo.svg.png" style="height:24px;object-fit:contain" onerror="this.style.display='none'"/>
+          <div style="font-size:10px;margin-top:2px">PalmPay</div>
+        </div>
+        <div class="pay-opt" id="pm-kuda" onclick="setPayMethod('kuda')">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Kuda_Bank_Logo.svg/120px-Kuda_Bank_Logo.svg.png" style="height:24px;object-fit:contain" onerror="this.style.display='none'"/>
+          <div style="font-size:10px;margin-top:2px">Kuda</div>
+        </div>
       </div>
     </div>
 
@@ -378,6 +425,15 @@ const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
 const PAYSTACK_KEY = 'pk_test_617236d60a4f23b3c8237181ba7cf763833bfb96';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// Pre-fill referral code from URL on load
+document.addEventListener('DOMContentLoaded', function() {
+  const urlRef = new URLSearchParams(window.location.search).get('ref');
+  if(urlRef) {
+    var el = document.getElementById('reg-ref');
+    if(el) el.value = urlRef;
+  }
+});
+
 const PRICES = { basic:{NGN:7000,USD:7}, classic:{NGN:12000,USD:12} };
 let selectedPlan = 'basic';
 let selectedCurrency = 'NGN';
@@ -393,8 +449,22 @@ const CHANNELS = {
   kuda:    ['bank']
 };
 
-function openModal(plan='basic'){selectPlan(plan);document.getElementById('modal').classList.add('show')}
-function closeModal(){document.getElementById('modal').classList.remove('show')}
+function openModal(plan){
+  plan = plan || 'basic';
+  selectPlan(plan);
+  var m = document.getElementById('modal');
+  if(m){
+    m.classList.add('show');
+    m.style.display = 'flex';
+    m.style.zIndex = '9999';
+  } else {
+    console.error('Modal not found!');
+  }
+}
+function closeModal(){
+  var m = document.getElementById('modal');
+  if(m){ m.classList.remove('show'); m.style.display = 'none'; }
+}
 document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal()});
 
 function selectPlan(p){
@@ -487,9 +557,7 @@ function showSuccessPage(name,email,plan,bonus){
   document.body.innerHTML=`<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:'Space Grotesk',sans-serif;padding:2rem"><div style="background:white;border-radius:24px;padding:3rem;max-width:480px;width:100%;text-align:center"><div style="font-size:56px;margin-bottom:1rem">🎉</div><h1 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:.5rem">Welcome, ${name}!</h1><p style="color:#6B7280;margin-bottom:1.5rem;line-height:1.7">Your <strong>${plan.charAt(0).toUpperCase()+plan.slice(1)}</strong> account is created. Check <strong>${email}</strong> to confirm and activate.</p><div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1rem;font-size:14px;color:#5B21B6;font-weight:500">📧 Click the confirmation link in your email to activate.</div><div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#00922B">🏦 Withdrawals: Mon–Fri · 10am–4pm · Minimum $60</div><a href="/dashboard.html" style="display:block;background:#7C3AED;color:white;padding:14px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none">Go to Dashboard →</a></div></div>`;
 }
 
-// Pre-fill referral code from URL
-const urlRef = new URLSearchParams(window.location.search).get('ref');
-if(urlRef) document.addEventListener('DOMContentLoaded',()=>{const el=document.getElementById('reg-ref');if(el)el.value=urlRef;});
+
 </script>
 </body>
 </html>
