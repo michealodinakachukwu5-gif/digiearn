@@ -179,7 +179,19 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
     <div class="form-group"><label>Amount (₦)</label><input type="number" id="w-amount" placeholder="Enter amount"/></div>
     <div class="form-group"><label>Bank Name</label><input type="text" id="w-bank" readonly/></div>
     <div class="form-group"><label>Account Number</label><input type="text" id="w-acct" readonly/></div>
-    <div class="info-box info-purple">📅 Mon–Fri · 10am–4pm only<br>💰 Basic: $45 min · Classic: $40 min<br>⏱ Payment within 24 hours</div>
+    <div class="info-box info-purple">
+  📅 Mon–Fri · 10am–4pm only<br>
+  💰 Basic: $45 min · Classic: $40 min<br>
+  ⏱ Payment within 24 hours to your bank
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center">
+    <div style="background:#00B140;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">OPay</span></div>
+    <div style="background:#0066FF;border-radius:6px;padding:3px 7px"><span style="color:white;font-size:10px;font-weight:900">PalmPay</span></div>
+    <div style="background:#40196B;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">Kuda</span></div>
+    <svg width="32" height="20" viewBox="0 0 38 24"><circle cx="15" cy="12" r="10" fill="#EB001B"/><circle cx="23" cy="12" r="10" fill="#F79E1B"/><path d="M19 4.8a10 10 0 0 1 0 14.4A10 10 0 0 1 19 4.8z" fill="#FF5F00"/></svg>
+    <svg width="36" height="16" viewBox="0 0 60 20"><text x="0" y="16" font-family="Arial" font-weight="bold" font-size="18" fill="#1A1F71">VISA</text></svg>
+    <span style="font-size:12px;font-weight:600">+ All Nigerian Banks</span>
+  </div>
+</div>
     <button class="modal-btn" id="w-btn" onclick="submitWithdrawal()">Request Withdrawal</button>
     <button class="modal-cancel" onclick="closeWithdraw()">Cancel</button>
   </div>
