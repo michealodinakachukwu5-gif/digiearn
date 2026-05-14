@@ -478,75 +478,93 @@ function validate() {
 function showAlert(msg, type) {
   const el = document.getElementById('reg-alert');
   el.textContent = msg;
-  el.className = 'alert show alert-' + type;
+  el.className = 'alert show alert-' + (type === 'err' ? 'error' : type);
 }
 
 // ── REGISTER ──────────────────────────────────────────────────────
-async function handleRegister() {
+function handleRegister() {
   if(!validate()) return;
   const btn = document.getElementById('reg-btn');
-  btn.disabled = true; btn.textContent = 'Processing...';
+  if(btn){ btn.disabled = true; btn.textContent = 'Processing...'; }
 
-  const email    = document.getElementById('f-email').value.trim();
-  const first    = document.getElementById('f-first').value.trim();
-  const last     = document.getElementById('f-last').value.trim();
-  const phone    = document.getElementById('f-phone').value.trim();
-  const password = document.getElementById('f-pass').value;
-  const refCode  = document.getElementById('f-ref').value.trim().toUpperCase();
-  const bank     = document.getElementById('f-bank').value;
-  const acct     = document.getElementById('f-acct').value.trim();
-  const acctName = document.getElementById('f-acct-name').value.trim();
-  const amount   = PRICES[plan][cur];
+  const first    = document.getElementById('reg-first').value.trim();
+  const last     = document.getElementById('reg-last').value.trim();
+  const email    = document.getElementById('reg-email').value.trim();
+  const phone    = document.getElementById('reg-phone').value.trim();
+  const password = document.getElementById('reg-pass').value;
+  const refCode  = (document.getElementById('reg-ref').value||'').trim().toUpperCase();
+  const bank     = document.getElementById('reg-bank').value;
+  const acct     = document.getElementById('reg-acct').value.trim();
+  const acctName = document.getElementById('reg-acct-name').value.trim();
+  const plan     = selectedPlan;
+  const cur      = selectedCurrency;
+  const payM     = selectedPayMethod;
   const bonus    = plan === 'classic' ? 10 : 5;
+  const prices   = { basic: { NGN: 7000, USD: 7 }, classic: { NGN: 12000, USD: 12 } };
+  const amount   = prices[plan][cur];
 
-  try {
-    const handler = PaystackPop.setup({
-      key: PAYSTACK_KEY,
-      email,
-      amount: cur === 'NGN' ? amount * 100 : amount * 150000,
-      currency: 'NGN',
-      channels: CHANNELS[payM],
-      metadata: { plan, name: first+' '+last, phone },
-      callback: async function(response) {
-        const { data, error } = await sb.auth.signUp({
-          email, password,
-          options: {
-            data: {
-              full_name: first+' '+last,
-              phone, plan, bank_name: bank,
-              account_number: acct, account_name: acctName,
-              referral_code: refCode,
-              paystack_ref: response.reference,
-              earnings_usd: bonus, earnings_ngn: bonus * 1500,
-              signup_bonus_usd: bonus, withdraw_count: 0,
-              joined: new Date().toISOString()
-            },
-            emailRedirectTo: window.location.origin + '/earn-dashboard.html'
-          }
-        });
-        if(error) {
-          showAlert('Payment successful but account error: ' + error.message, 'err');
+  const CHANNELS = {
+    card:['card'], bank:['bank'], ussd:['ussd'],
+    opay:['bank'], palmpay:['bank'], kuda:['bank']
+  };
+
+  const handler = PaystackPop.setup({
+    key: PAYSTACK_KEY,
+    email: email,
+    amount: cur === 'NGN' ? amount * 100 : amount * 150000,
+    currency: 'NGN',
+    channels: CHANNELS[payM] || ['card'],
+    metadata: { plan: plan, name: first + ' ' + last, phone: phone },
+    callback: function(response) {
+      // Use regular function, not async - handle with promises
+      sb.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: first + ' ' + last,
+            phone: phone,
+            plan: plan,
+            bank_name: bank,
+            account_number: acct,
+            account_name: acctName,
+            referral_code: refCode,
+            paystack_ref: response.reference,
+            earnings_usd: bonus,
+            earnings_ngn: bonus * 1500,
+            signup_bonus_usd: bonus,
+            withdraw_count: 0,
+            joined: new Date().toISOString()
+          },
+          emailRedirectTo: window.location.origin + '/earn-dashboard.html'
+        }
+      }).then(function(result) {
+        if(result.error) {
+          showAlert('Payment done! Account error: ' + result.error.message + '. Contact support.', 'err');
+          if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
         } else {
           if(refCode) {
-            await sb.from('referrals').insert({
-              bonus: plan==='classic'?1000:500, plan, created_at: new Date().toISOString()
-            });
+            sb.from('referrals').insert({
+              bonus: plan === 'classic' ? 1000 : 500,
+              plan: plan,
+              created_at: new Date().toISOString()
+            }).then(function(){});
           }
           closeModal();
           showSuccessPage(first, email, plan, bonus);
         }
-        btn.disabled = false; btn.textContent = 'Pay & Register Now →';
-      },
-      onClose: function() {
-        btn.disabled = false; btn.textContent = 'Pay & Register Now →';
-      }
-    });
-    handler.openIframe();
-  } catch(err) {
-    showAlert('Error: ' + err.message, 'err');
-    btn.disabled = false; btn.textContent = 'Pay & Register Now →';
-  }
+      }).catch(function(err) {
+        showAlert('Error: ' + err.message, 'err');
+        if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
+      });
+    },
+    onClose: function() {
+      if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
+    }
+  });
+  handler.openIframe();
 }
+
 
 function showSuccessPage(name, email, plan, bonus) {
   document.body.innerHTML = `
