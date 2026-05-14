@@ -414,7 +414,17 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
 const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
 const PAYSTACK_KEY = 'pk_test_617236d60a4f23b3c8237181ba7cf763833bfb96';
-const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let sb = null;
+function getSupabase() {
+  if (!sb) {
+    try {
+      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch(e) {
+      console.error('Supabase init failed:', e);
+    }
+  }
+  return sb;
+}
 
 const PRICES = {basic:{NGN:7000,USD:7}, classic:{NGN:12000,USD:12}};
 const CHANNELS = {card:['card'],bank:['bank'],ussd:['ussd'],opay:['bank'],palmpay:['bank'],kuda:['bank']};
@@ -508,6 +518,12 @@ function handleRegister() {
     opay:['bank'], palmpay:['bank'], kuda:['bank']
   };
 
+  if (typeof PaystackPop === 'undefined') {
+    showAlert('Payment system not loaded. Please refresh the page and try again.', 'err');
+    if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
+    return;
+  }
+
   const handler = PaystackPop.setup({
     key: PAYSTACK_KEY,
     email: email,
@@ -517,7 +533,7 @@ function handleRegister() {
     metadata: { plan: plan, name: first + ' ' + last, phone: phone },
     callback: function(response) {
       // Use regular function, not async - handle with promises
-      sb.auth.signUp({
+      getSupabase().auth.signUp({
         email: email,
         password: password,
         options: {
@@ -544,7 +560,7 @@ function handleRegister() {
           if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
         } else {
           if(refCode) {
-            sb.from('referrals').insert({
+            getSupabase().from('referrals').insert({
               bonus: plan === 'classic' ? 1000 : 500,
               plan: plan,
               created_at: new Date().toISOString()
