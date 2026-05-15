@@ -4,188 +4,167 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>DigiEarn — Get Paid For Simple Tasks</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;
-  --green:#00C853;--gd:#00922B;--gl:#E6F9EE;
-  --text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;
-  --bg:#F9F8F6;--white:#fff;--r:12px;
-  --red:#DC2626;--rl:#FEF2F2;
-}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text)}
-/* NAV */
+:root{--p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;--green:#00C853;--gd:#00922B;--gl:#E6F9EE;--text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;--bg:#F9F8F6;--white:#fff;--r:12px;--red:#DC2626;--rl:#FEF2F2}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+a{text-decoration:none;color:inherit}
 nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}.logo span{color:var(--p)}
-.nav-links{display:flex;gap:1.5rem}.nav-links a{font-size:14px;color:var(--muted);text-decoration:none;font-weight:500}
-.nav-cta{background:var(--p);color:white;padding:9px 20px;border-radius:var(--r);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-/* HERO */
-.hero{padding:5rem 2rem 4rem;text-align:center;max-width:800px;margin:0 auto}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--pl);color:var(--pd);font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;margin-bottom:1.5rem;border:1px solid #C4B5FD}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(34px,5vw,60px);font-weight:800;line-height:1.1;margin-bottom:1.25rem;letter-spacing:-1px}
-.hero h1 span{color:var(--p)}
-.hero p{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:2.5rem;max-width:540px;margin-left:auto;margin-right:auto}
+.nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}.nav-logo span{color:var(--p)}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{font-size:14px;color:var(--muted);font-weight:500}
+.nav-cta{background:var(--p);color:white;padding:9px 22px;border-radius:var(--r);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.hero{background:linear-gradient(135deg,#0F0F1A,#1a1040);padding:5rem 2rem;text-align:center;color:white}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.2);color:#C4B5FD;font-size:13px;font-weight:600;padding:6px 16px;border-radius:999px;margin-bottom:1.5rem;border:1px solid rgba(124,58,237,.3)}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,60px);font-weight:800;line-height:1.1;margin-bottom:1.25rem;letter-spacing:-1px}
+.hero h1 span{color:#A78BFA}
+.hero p{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;max-width:540px;margin:0 auto 2.5rem}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--p);color:white;padding:13px 28px;border-radius:var(--r);font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.btn-p:hover{background:var(--pd)}
-.btn-out{background:transparent;color:var(--text);padding:13px 28px;border-radius:var(--r);font-size:15px;font-weight:600;border:2px solid var(--border);cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.btn-out:hover{border-color:var(--p);color:var(--p)}
-.hero-stats{display:flex;gap:2rem;justify-content:center;margin-top:3rem;flex-wrap:wrap}
-.hero-stat strong{display:block;font-family:'Syne',sans-serif;font-size:26px;font-weight:800}
-.hero-stat span{font-size:13px;color:var(--muted)}
-/* PLANS */
+.btn-p{background:var(--p);color:white;padding:13px 30px;border-radius:var(--r);font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.btn-o{background:rgba(255,255,255,.1);color:white;padding:13px 30px;border-radius:var(--r);font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3rem;flex-wrap:wrap}
+.hs strong{display:block;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white}
+.hs span{font-size:13px;color:rgba(255,255,255,.5)}
 .section{padding:4rem 2rem;max-width:1000px;margin:0 auto}
-.sec-label{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:8px}
-.sec-title{font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,40px);font-weight:800;margin-bottom:.75rem;letter-spacing:-.5px}
-.sec-sub{font-size:15px;color:var(--muted);margin-bottom:2.5rem;line-height:1.7}
-.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.plan-card{background:var(--white);border:2px solid var(--border);border-radius:20px;padding:2rem;position:relative}
-.plan-card.hot{border-color:var(--p)}
-.hot-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--p);color:white;font-size:12px;font-weight:700;padding:4px 16px;border-radius:999px;white-space:nowrap}
-.plan-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:1.25rem}
+.s-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:8px}
+.s-title{font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:.75rem;letter-spacing:-.5px}
+.s-sub{font-size:15px;color:var(--muted);margin-bottom:2.5rem;line-height:1.7}
+.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.plan-card{background:var(--white);border:2px solid var(--border);border-radius:20px;padding:2rem;position:relative;transition:border-color .2s}
+.plan-card.popular{border-color:var(--p)}
+.pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--p);color:white;font-size:12px;font-weight:700;padding:4px 18px;border-radius:999px;white-space:nowrap}
+.plan-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1.25rem}
 .pi-b{background:var(--gl)}.pi-c{background:var(--pl)}
 .plan-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px}
 .plan-price{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--p);line-height:1;margin-bottom:4px}
-.plan-price span{font-size:15px;font-weight:500;color:var(--muted)}
+.plan-price span{font-size:15px;font-weight:400;color:var(--muted)}
 .plan-earn{font-size:13px;color:var(--gd);font-weight:600;background:var(--gl);padding:5px 12px;border-radius:8px;display:inline-block;margin-bottom:1.25rem}
 .plan-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:1.75rem}
-.plan-features li{display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.4}
+.plan-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.5}
 .plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
-.plan-btn{width:100%;padding:13px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;border:none}
+.plan-btn{width:100%;padding:12px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;border:none}
 .pb-b{background:var(--gl);color:var(--gd)}.pb-b:hover{background:var(--green);color:white}
 .pb-c{background:var(--p);color:white}.pb-c:hover{background:var(--pd)}
-/* WITHDRAW INFO */
-.wi-wrap{padding:0 2rem 3rem;max-width:1000px;margin:0 auto}
-.wi-box{background:linear-gradient(135deg,#0F4C2A,#1a7a46);border-radius:20px;padding:2rem 2.5rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
-.wi-icon{font-size:40px;flex-shrink:0}
-.wi-text h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;margin-bottom:6px}
-.wi-text p{font-size:14px;color:rgba(255,255,255,.75);line-height:1.6}
-.wi-rules{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.wi-rule{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:6px 14px;font-size:13px;color:white;font-weight:500}
-/* PAYMENT METHODS */
-.pay-section{background:var(--white);padding:3.5rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:700px;margin:0 auto}
-.pay-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
-.pay-card-logo{height:44px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
-.pay-card-name{font-size:13px;font-weight:600;margin-bottom:2px}
-.pay-card-sub{font-size:11px;color:var(--muted)}
-/* TASKS */
-.tasks-section{padding:4rem 2rem;border-bottom:1px solid var(--border)}
-.tasks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;max-width:1000px;margin:0 auto}
-.task-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center}
+.tasks-section{background:var(--white);padding:4rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.tasks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-width:1000px;margin:0 auto}
+.task-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center}
 .task-icon{font-size:30px;margin-bottom:8px}
 .task-name{font-size:14px;font-weight:600;margin-bottom:3px}
-.task-earn{font-size:13px;color:var(--gd);font-weight:600}
-/* HOW */
-.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.how-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center}
-.how-num{width:42px;height:42px;border-radius:50%;background:var(--pl);color:var(--pd);font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
-.how-title{font-size:15px;font-weight:600;margin-bottom:6px}
-.how-desc{font-size:13px;color:var(--muted);line-height:1.6}
-/* REFERRAL */
-.ref-banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:24px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin:0 2rem 3rem;max-width:1000px;margin-left:auto;margin-right:auto}
-.ref-text h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white;margin-bottom:8px}
+.task-earn{font-size:12px;color:var(--gd);font-weight:600}
+.w-banner{background:linear-gradient(135deg,#00922B,#00C853);border-radius:18px;padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
+.w-icon{font-size:36px;flex-shrink:0}
+.w-text h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:white;margin-bottom:5px}
+.w-text p{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
+.w-rules{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.w-rule{background:rgba(255,255,255,.15);border-radius:8px;padding:5px 12px;font-size:12px;color:white;font-weight:500}
+.pay-section{background:var(--bg);padding:4rem 2rem;border-top:1px solid var(--border)}
+.pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:700px;margin:0 auto}
+.pay-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
+.pay-card-logo{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.pay-card-name{font-size:12px;font-weight:600;margin-bottom:2px}
+.pay-card-sub{font-size:11px;color:var(--muted)}
+.ref-banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:20px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.ref-text h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white;margin-bottom:6px}
 .ref-text p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6}
 .ref-amounts{display:flex;gap:14px}
-.ref-amt{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:1rem 1.5rem;text-align:center}
-.ref-amt strong{display:block;font-family:'Syne',sans-serif;font-size:22px;color:var(--p);font-weight:800}
-.ref-amt span{font-size:12px;color:rgba(255,255,255,.5)}
-footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
-.foot-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:8px}.foot-logo span{color:var(--p)}
-.foot-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-top:10px}
-.foot-links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none}
+.ref-amt{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.9rem 1.25rem;text-align:center}
+.ref-amt strong{display:block;font-family:'Syne',sans-serif;font-size:22px;color:#A78BFA;font-weight:800}
+.ref-amt span{font-size:11px;color:rgba(255,255,255,.5)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.step{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--pl);color:var(--pd);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.6}
+footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
+.f-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px}.f-logo span{color:var(--p)}
+.f-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:1rem}
+.f-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
+.f-links a{font-size:12px;color:rgba(255,255,255,.4)}
 
-/* ═══ MODAL ═══ */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
-.overlay.open{display:flex}
-.modal{background:var(--white);border-radius:20px;padding:1.75rem;width:100%;max-width:480px;margin:auto;position:relative;max-height:90vh;overflow-y:auto}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
-.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
-.close-btn{background:none;border:none;font-size:26px;cursor:pointer;color:var(--muted);line-height:1;padding:0 4px}
-/* Plan tabs */
-.plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem}
-.plan-tab{border:2px solid var(--border);border-radius:var(--r);padding:.75rem;text-align:center;cursor:pointer}
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;overflow-y:auto;padding:1rem}
+.overlay.show{display:flex;align-items:flex-start;justify-content:center}
+.modal{background:var(--white);border-radius:20px;padding:2rem;width:100%;max-width:480px;margin:auto;position:relative}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
+.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
+.modal-x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:0}
+.plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
+.plan-tab{border:2px solid var(--border);border-radius:var(--r);padding:.75rem;text-align:center;cursor:pointer;transition:all .15s}
 .plan-tab.on{border-color:var(--p);background:var(--pl)}
 .plan-tab-name{font-size:14px;font-weight:700}
-.plan-tab-price{font-size:13px;color:var(--muted)}
-/* Currency */
-.cur-row{display:flex;gap:8px;margin-bottom:1rem}
-.cur-btn{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;background:var(--white);font-family:'Space Grotesk',sans-serif;transition:all .15s}
+.plan-tab-price{font-size:12px;color:var(--muted)}
+.cur-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.cur-btn{padding:9px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;background:var(--white);font-family:'Space Grotesk',sans-serif;text-align:center}
 .cur-btn.on{border-color:var(--p);background:var(--pl);color:var(--pd)}
-/* Price box */
 .price-box{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:12px;text-align:center;margin-bottom:1.25rem}
-.price-box .amount{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--pd)}
+.price-box .amt{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--pd)}
 .price-box .desc{font-size:12px;color:var(--pd);margin-top:2px}
-/* Pay method */
-.pay-methods-label{font-size:13px;font-weight:600;margin-bottom:8px}
-.pay-method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
-.pay-m{border:1.5px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:62px;transition:all .15s}
-.pay-m.on{border-color:var(--p);background:var(--pl)}
-.pay-m-label{font-size:10px;font-weight:600;color:var(--muted)}
-/* Form */
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-label{font-size:13px;font-weight:600;margin-bottom:8px}
+.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
+.pay-opt{border:1.5px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:60px}
+.pay-opt.on{border-color:var(--p);background:var(--pl)}
+.pay-opt-label{font-size:10px;font-weight:600;color:var(--muted)}
 .fg{margin-bottom:.9rem}
 .fg label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
 .fg input,.fg select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--white)}
 .fg input:focus,.fg select:focus{border-color:var(--p)}
-.err{font-size:12px;color:var(--red);margin-top:3px;display:none}
-.err.show{display:block}
-.submit-btn{width:100%;padding:13px;background:var(--p);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;margin-top:4px}
-.submit-btn:hover{background:var(--pd)}
-.submit-btn:disabled{opacity:.6;cursor:not-allowed}
-.terms-note{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5}
-.alert{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:1rem;display:none}
-.alert.show{display:block}
-.alert-ok{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
+.two-fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pay-btn{width:100%;padding:13px;background:var(--p);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;margin-top:.5rem;transition:background .2s}
+.pay-btn:hover{background:var(--pd)}
+.pay-btn:disabled{opacity:.6;cursor:not-allowed}
+.terms{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5}
+.alert-box{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:1rem;display:none;line-height:1.5}
+.alert-box.show{display:block}
 .alert-err{background:var(--rl);color:var(--red);border:1px solid #fca5a5}
-@media(max-width:640px){.plans-grid,.form-row{grid-template-columns:1fr}.nav-links{display:none}.ref-banner{flex-direction:column}.pay-method-grid{grid-template-columns:repeat(2,1fr)}}
+.alert-ok{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
+@media(max-width:640px){.plans-grid,.two-fg{grid-template-columns:1fr}.nav-links{display:none}.ref-banner{flex-direction:column}.w-banner{flex-direction:column}.pay-opts{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Digi<span>Earn</span></div>
+  <div class="nav-logo">Digi<span>Earn</span></div>
   <div class="nav-links">
-    <a href="#plans">Plans</a>
     <a href="#tasks">Tasks</a>
+    <a href="#plans">Plans</a>
     <a href="#how">How it works</a>
-    <a href="#withdraw">Withdraw</a>
   </div>
-  <button class="nav-cta" onclick="openModal()">Start Earning →</button>
+  <button class="nav-cta" onclick="openModal('basic')">Start Earning →</button>
 </nav>
 
 <div class="hero">
   <div class="hero-badge">🇳🇬 Nigeria's #1 Digital Earning Platform</div>
-  <h1>Complete Tasks.<br>Earn Real <span>Money</span>.</h1>
-  <p>Watch ads, fill surveys, and complete social media tasks from your phone. Get paid directly to your Nigerian bank account.</p>
+  <h1>Complete Tasks.<br><span>Earn Real Money.</span></h1>
+  <p>Watch ads, fill surveys and complete social media tasks from your phone. Get paid directly to your Nigerian bank account.</p>
   <div class="hero-btns">
     <button class="btn-p" onclick="openModal('classic')">Join Classic — ₦12,000</button>
-    <button class="btn-out" onclick="openModal('basic')">Start Basic — ₦7,000</button>
+    <button class="btn-o" onclick="openModal('basic')">Start Basic — ₦7,000</button>
   </div>
   <div class="hero-stats">
-    <div class="hero-stat"><strong>8,400+</strong><span>Active earners</span></div>
-    <div class="hero-stat"><strong>₦42M+</strong><span>Paid out</span></div>
-    <div class="hero-stat"><strong>Daily</strong><span>Mon–Fri payouts</span></div>
+    <div class="hs"><strong>8,400+</strong><span>Active earners</span></div>
+    <div class="hs"><strong>₦42M+</strong><span>Paid out</span></div>
+    <div class="hs"><strong>Daily</strong><span>Mon–Fri payouts</span></div>
   </div>
 </div>
 
+<!-- PLANS -->
 <div class="section" id="plans">
-  <div class="sec-label">Choose your plan</div>
-  <div class="sec-title">Pick how much you want to earn</div>
-  <div class="sec-sub">One-time registration. Start earning from day one.</div>
+  <div class="s-label">Choose your plan</div>
+  <div class="s-title">Pick how much you want to earn</div>
+  <div class="s-sub">One-time registration fee. Start earning from day one.</div>
   <div class="plans-grid">
     <div class="plan-card">
       <div class="plan-icon pi-b">💼</div>
       <div class="plan-name">Basic</div>
       <div class="plan-price">₦7,000 <span>one-time</span></div>
-      <div class="plan-earn">Earn up to ₦500/day</div>
+      <div class="plan-earn">🎁 $5 signup bonus · Earn ₦500/day</div>
       <ul class="plan-features">
-        <li>🎁 $5 signup bonus instantly</li>
-        <li>Watch ads & videos daily</li>
-        <li>Fill surveys & forms</li>
+        <li>$5 signup bonus credited instantly</li>
+        <li>Watch ads &amp; videos</li>
+        <li>Fill surveys &amp; forms</li>
         <li>Social media tasks</li>
         <li>Withdraw from $45 (Mon–Fri, 10am–4pm)</li>
         <li>All Nigerian banks supported</li>
@@ -193,16 +172,16 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
       </ul>
       <button class="plan-btn pb-b" onclick="openModal('basic')">Register Basic</button>
     </div>
-    <div class="plan-card hot">
-      <div class="hot-badge">⭐ Most Popular</div>
+    <div class="plan-card popular">
+      <div class="pop-badge">⭐ Most Popular</div>
       <div class="plan-icon pi-c">👑</div>
       <div class="plan-name">Classic</div>
       <div class="plan-price">₦12,000 <span>one-time</span></div>
-      <div class="plan-earn">Earn up to ₦2,000/day</div>
+      <div class="plan-earn">🎁 $10 signup bonus · Earn ₦2,000/day</div>
       <ul class="plan-features">
-        <li>🎁 $10 signup bonus instantly</li>
+        <li>$10 signup bonus credited instantly</li>
         <li>Everything in Basic</li>
-        <li>4× more tasks every day</li>
+        <li>4× more tasks daily</li>
         <li>Priority task access</li>
         <li>Higher paying surveys</li>
         <li>Withdraw from $40 (Mon–Fri, 10am–4pm)</li>
@@ -214,91 +193,96 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
   </div>
 </div>
 
-<div class="wi-wrap" id="withdraw">
-  <div class="wi-box">
-    <div class="wi-icon">🏦</div>
-    <div class="wi-text">
+<!-- WITHDRAWAL INFO -->
+<div style="padding:0 2rem 2rem;max-width:1000px;margin:0 auto" id="withdraw">
+  <div class="w-banner">
+    <div class="w-icon">🏦</div>
+    <div class="w-text">
       <h3>Withdrawal Rules</h3>
-      <p>Withdraw directly to your Nigerian bank. All major banks and mobile wallets supported.</p>
-      <div class="wi-rules">
-        <div class="wi-rule">💰 Basic: $45 · Classic: $40</div>
-        <div class="wi-rule">📅 Mon – Fri only</div>
-        <div class="wi-rule">🕙 10:00 AM – 4:00 PM</div>
-        <div class="wi-rule">⏱ Paid within 24hrs</div>
+      <p>Earn up to your target and withdraw directly to your Nigerian bank account.</p>
+      <div class="w-rules">
+        <div class="w-rule">💰 Basic: min $45</div>
+        <div class="w-rule">👑 Classic: min $40</div>
+        <div class="w-rule">📅 Mon – Fri only</div>
+        <div class="w-rule">🕙 10:00 AM – 4:00 PM</div>
+        <div class="w-rule">⏱ Paid within 24hrs</div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="pay-section">
+<!-- PAYMENT METHODS -->
+<div class="pay-section" id="payment">
   <div style="max-width:700px;margin:0 auto;text-align:center">
-    <div class="sec-label">Payment & Withdrawal</div>
-    <div class="sec-title" style="margin-bottom:.5rem">Pay & get paid your way</div>
-    <div class="sec-sub">All Nigerian payment methods accepted.</div>
+    <div class="s-label">Accepted payments</div>
+    <div class="s-title" style="margin-bottom:.5rem">Pay &amp; get paid your way</div>
+    <div class="s-sub">Register and withdraw using any Nigerian payment method.</div>
     <div class="pay-grid">
       <div class="pay-card">
         <div class="pay-card-logo">
-          <svg width="70" height="30" viewBox="0 0 90 30"><circle cx="20" cy="15" r="13" fill="#EB001B"/><circle cx="36" cy="15" r="13" fill="#F79E1B"/><path d="M28 4.5a13 13 0 0 1 0 21A13 13 0 0 1 28 4.5z" fill="#FF5F00"/><text x="52" y="21" font-family="Arial" font-weight="bold" font-size="18" fill="#1A1F71">VISA</text></svg>
+          <svg width="60" height="30" viewBox="0 0 90 30"><circle cx="22" cy="15" r="13" fill="#EB001B"/><circle cx="38" cy="15" r="13" fill="#F79E1B"/><path d="M30 5.5a13 13 0 0 1 0 19A13 13 0 0 1 30 5.5z" fill="#FF5F00"/>
+          <text x="56" y="21" font-family="Arial" font-weight="bold" font-size="17" fill="#1A1F71">VISA</text></svg>
         </div>
         <div class="pay-card-name">Debit Card</div><div class="pay-card-sub">Visa / Mastercard</div>
       </div>
       <div class="pay-card">
-        <div class="pay-card-logo"><div style="font-size:34px">🏦</div></div>
+        <div class="pay-card-logo"><div style="font-size:30px">🏦</div></div>
         <div class="pay-card-name">Bank Transfer</div><div class="pay-card-sub">All Nigerian banks</div>
       </div>
       <div class="pay-card">
-        <div class="pay-card-logo"><div style="font-size:34px">📱</div></div>
+        <div class="pay-card-logo"><div style="font-size:30px">📱</div></div>
         <div class="pay-card-name">USSD</div><div class="pay-card-sub">*737#, *919# etc</div>
       </div>
       <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#00B140;border-radius:10px;padding:7px 14px"><span style="color:white;font-size:15px;font-weight:900">OPay</span></div></div>
+        <div class="pay-card-logo"><div style="background:#00B140;border-radius:8px;padding:5px 12px"><span style="color:white;font-size:14px;font-weight:900">OPay</span></div></div>
         <div class="pay-card-name">OPay</div><div class="pay-card-sub">Mobile wallet</div>
       </div>
       <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#0066FF;border-radius:10px;padding:7px 10px"><span style="color:white;font-size:13px;font-weight:900">PalmPay</span></div></div>
+        <div class="pay-card-logo"><div style="background:#0066FF;border-radius:8px;padding:5px 10px"><span style="color:white;font-size:12px;font-weight:900">PalmPay</span></div></div>
         <div class="pay-card-name">PalmPay</div><div class="pay-card-sub">Mobile wallet</div>
       </div>
       <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#40196B;border-radius:10px;padding:7px 14px"><span style="color:white;font-size:15px;font-weight:900">Kuda</span></div></div>
+        <div class="pay-card-logo"><div style="background:#40196B;border-radius:8px;padding:5px 14px"><span style="color:white;font-size:14px;font-weight:900">Kuda</span></div></div>
         <div class="pay-card-name">Kuda Bank</div><div class="pay-card-sub">Online banking</div>
       </div>
     </div>
-    <p style="font-size:13px;color:var(--muted);margin-top:1rem">All payments secured by <strong>Paystack</strong> — Nigeria's most trusted payment gateway.</p>
   </div>
 </div>
 
+<!-- TASKS -->
 <div class="tasks-section" id="tasks">
   <div style="max-width:1000px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:2rem">
-      <div class="sec-label">What you'll do</div>
-      <div class="sec-title">Simple tasks, real money</div>
-    </div>
+    <div class="s-label" style="text-align:center">What you will do</div>
+    <div class="s-title" style="text-align:center;margin-bottom:.5rem">Simple tasks, real money</div>
+    <div class="s-sub" style="text-align:center">Complete from your phone anytime.</div>
     <div class="tasks-grid">
       <div class="task-card"><div class="task-icon">📺</div><div class="task-name">Watch Ads</div><div class="task-earn">₦50–₦200 per ad</div></div>
-      <div class="task-card"><div class="task-icon">📋</div><div class="task-name">Fill Surveys</div><div class="task-earn">₦100–₦500 per survey</div></div>
-      <div class="task-card"><div class="task-icon">❤️</div><div class="task-name">Like & Follow</div><div class="task-earn">₦30–₦100 per task</div></div>
-      <div class="task-card"><div class="task-icon">🔁</div><div class="task-name">Share Posts</div><div class="task-earn">₦50–₦150 per share</div></div>
-      <div class="task-card"><div class="task-icon">📝</div><div class="task-name">Write Reviews</div><div class="task-earn">₦200–₦500 per review</div></div>
-      <div class="task-card"><div class="task-icon">🎬</div><div class="task-name">Watch Videos</div><div class="task-earn">₦50–₦300 per video</div></div>
+      <div class="task-card"><div class="task-icon">📋</div><div class="task-name">Fill Surveys</div><div class="task-earn">₦100–₦500 each</div></div>
+      <div class="task-card"><div class="task-icon">❤️</div><div class="task-name">Like &amp; Follow</div><div class="task-earn">₦30–₦100 each</div></div>
+      <div class="task-card"><div class="task-icon">🔁</div><div class="task-name">Share Posts</div><div class="task-earn">₦50–₦150 each</div></div>
+      <div class="task-card"><div class="task-icon">📝</div><div class="task-name">Write Reviews</div><div class="task-earn">₦200–₦500 each</div></div>
+      <div class="task-card"><div class="task-icon">🎬</div><div class="task-name">Watch Videos</div><div class="task-earn">₦50–₦300 each</div></div>
     </div>
   </div>
 </div>
 
+<!-- HOW IT WORKS -->
 <div class="section" id="how">
-  <div class="sec-label">Simple process</div>
-  <div class="sec-title">How it works</div>
-  <div class="how-grid">
-    <div class="how-card"><div class="how-num">1</div><div class="how-title">Register & Pay</div><div class="how-desc">Choose Basic or Classic, pay once via card, bank transfer, USSD, OPay or PalmPay.</div></div>
-    <div class="how-card"><div class="how-num">2</div><div class="how-title">Complete Tasks</div><div class="how-desc">Log in daily and complete available tasks — ads, surveys, and social media tasks.</div></div>
-    <div class="how-card"><div class="how-num">3</div><div class="how-title">Reach Your Target</div><div class="how-desc">Basic members withdraw from $45. Classic members withdraw from $40.</div></div>
-    <div class="how-card"><div class="how-num">4</div><div class="how-title">Withdraw Mon–Fri</div><div class="how-desc">Request between 10am–4pm. Money hits your bank within 24 hours.</div></div>
+  <div class="s-label">Simple process</div>
+  <div class="s-title">How it works</div>
+  <div class="steps-grid">
+    <div class="step"><div class="step-num">1</div><div class="step-title">Register &amp; Pay</div><div class="step-desc">Choose Basic or Classic, pay once via card, bank transfer, USSD, OPay or PalmPay.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-title">Complete Tasks</div><div class="step-desc">Log in daily and complete available tasks — ads, surveys, social media tasks.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-title">Reach Your Target</div><div class="step-desc">Basic withdraws from $45. Classic withdraws from $40. Earn daily to reach it faster.</div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-title">Withdraw Mon–Fri</div><div class="step-desc">Request between 10am–4pm on weekdays. Money hits your bank within 24 hours.</div></div>
   </div>
 </div>
 
+<!-- REFERRAL -->
 <div style="padding:0 2rem 4rem;max-width:1000px;margin:0 auto">
   <div class="ref-banner">
     <div class="ref-text">
-      <h2>Invite friends.<br>Earn more. 🔥</h2>
+      <h2>Invite friends. Earn more. 🔥</h2>
       <p>Share your referral link and earn a bonus every time someone registers.</p>
     </div>
     <div class="ref-amounts">
@@ -309,24 +293,21 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
 </div>
 
 <footer>
-  <div class="foot-logo">Digi<span>Earn</span></div>
-  <div style="font-size:14px;color:rgba(255,255,255,.45);margin-top:4px">Nigeria's trusted digital earning platform.</div>
-  <div class="foot-links">
-    <a href="#">Terms of Service</a><a href="#">Privacy Policy</a><a href="#">Contact Us</a><a href="#">FAQ</a>
-  </div>
-  <p style="font-size:12px;color:rgba(255,255,255,.25);margin-top:1.5rem">© 2026 DigiEarn. All rights reserved.</p>
+  <div class="f-logo">Digi<span>Earn</span></div>
+  <div class="f-sub">Nigeria's trusted digital earning platform.</div>
+  <div class="f-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a><a href="#">FAQ</a></div>
+  <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:1rem">© 2026 DigiEarn. All rights reserved.</p>
 </footer>
 
-<!-- ═══ REGISTRATION MODAL ═══ -->
+<!-- REGISTRATION MODAL -->
 <div class="overlay" id="reg-overlay">
   <div class="modal">
     <div class="modal-head">
       <div class="modal-title">Create Account</div>
-      <button class="close-btn" onclick="closeModal()">×</button>
+      <button class="modal-x" onclick="closeModal()">×</button>
     </div>
-    <div class="alert" id="reg-alert"></div>
+    <div class="alert-box" id="reg-alert"></div>
 
-    <!-- Plan selector -->
     <div class="plan-tabs">
       <div class="plan-tab on" id="tab-basic" onclick="setPlan('basic')">
         <div class="plan-tab-name">💼 Basic</div>
@@ -338,59 +319,55 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
       </div>
     </div>
 
-    <!-- Currency -->
     <div class="cur-row">
       <button class="cur-btn on" id="cur-ngn" onclick="setCur('NGN')">🇳🇬 Naira (₦)</button>
       <button class="cur-btn" id="cur-usd" onclick="setCur('USD')">🇺🇸 Dollar ($)</button>
     </div>
 
-    <!-- Price display -->
     <div class="price-box">
-      <div class="amount" id="price-display">₦7,000</div>
+      <div class="amt" id="price-display">₦7,000</div>
       <div class="desc">One-time registration · Lifetime access</div>
     </div>
 
-    <!-- Pay method -->
-    <div class="pay-methods-label">How do you want to pay?</div>
-    <div class="pay-method-grid">
-      <div class="pay-m on" id="pym-card" onclick="setPayM('card')">
-        <svg width="42" height="18" viewBox="0 0 90 30"><circle cx="18" cy="15" r="13" fill="#EB001B"/><circle cx="32" cy="15" r="13" fill="#F79E1B"/><path d="M25 4a13 13 0 0 1 0 22A13 13 0 0 1 25 4z" fill="#FF5F00"/><text x="50" y="21" font-family="Arial" font-weight="bold" font-size="18" fill="#1A1F71">VISA</text></svg>
-        <div class="pay-m-label">Card</div>
+    <div class="pay-label">How do you want to pay?</div>
+    <div class="pay-opts">
+      <div class="pay-opt on" id="po-card" onclick="setPay('card')">
+        <svg width="44" height="18" viewBox="0 0 90 30"><circle cx="22" cy="15" r="13" fill="#EB001B"/><circle cx="38" cy="15" r="13" fill="#F79E1B"/><path d="M30 5.5a13 13 0 0 1 0 19A13 13 0 0 1 30 5.5z" fill="#FF5F00"/><text x="56" y="21" font-family="Arial" font-weight="bold" font-size="17" fill="#1A1F71">VISA</text></svg>
+        <div class="pay-opt-label">Card</div>
       </div>
-      <div class="pay-m" id="pym-bank" onclick="setPayM('bank')">
-        <div style="font-size:24px">🏦</div>
-        <div class="pay-m-label">Bank Transfer</div>
+      <div class="pay-opt" id="po-bank" onclick="setPay('bank')">
+        <div style="font-size:22px">🏦</div>
+        <div class="pay-opt-label">Bank Transfer</div>
       </div>
-      <div class="pay-m" id="pym-ussd" onclick="setPayM('ussd')">
-        <div style="font-size:24px">📱</div>
-        <div class="pay-m-label">USSD</div>
+      <div class="pay-opt" id="po-ussd" onclick="setPay('ussd')">
+        <div style="font-size:22px">📱</div>
+        <div class="pay-opt-label">USSD</div>
       </div>
-      <div class="pay-m" id="pym-opay" onclick="setPayM('opay')">
-        <div style="background:#00B140;border-radius:6px;padding:4px 8px"><span style="color:white;font-size:12px;font-weight:900">OPay</span></div>
-        <div class="pay-m-label">OPay</div>
+      <div class="pay-opt" id="po-opay" onclick="setPay('opay')">
+        <div style="background:#00B140;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">OPay</span></div>
+        <div class="pay-opt-label">OPay</div>
       </div>
-      <div class="pay-m" id="pym-palmpay" onclick="setPayM('palmpay')">
-        <div style="background:#0066FF;border-radius:6px;padding:4px 6px"><span style="color:white;font-size:10px;font-weight:900">PalmPay</span></div>
-        <div class="pay-m-label">PalmPay</div>
+      <div class="pay-opt" id="po-palmpay" onclick="setPay('palmpay')">
+        <div style="background:#0066FF;border-radius:6px;padding:3px 6px"><span style="color:white;font-size:10px;font-weight:900">PalmPay</span></div>
+        <div class="pay-opt-label">PalmPay</div>
       </div>
-      <div class="pay-m" id="pym-kuda" onclick="setPayM('kuda')">
-        <div style="background:#40196B;border-radius:6px;padding:4px 8px"><span style="color:white;font-size:12px;font-weight:900">Kuda</span></div>
-        <div class="pay-m-label">Kuda</div>
+      <div class="pay-opt" id="po-kuda" onclick="setPay('kuda')">
+        <div style="background:#40196B;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">Kuda</span></div>
+        <div class="pay-opt-label">Kuda</div>
       </div>
     </div>
 
-    <!-- Form fields -->
-    <div class="form-row">
-      <div class="fg"><label>First Name *</label><input type="text" id="f-first" placeholder="John"/><div class="err" id="e-first">Required</div></div>
-      <div class="fg"><label>Last Name *</label><input type="text" id="f-last" placeholder="Doe"/><div class="err" id="e-last">Required</div></div>
+    <div class="two-fg">
+      <div class="fg"><label>First Name *</label><input type="text" id="r-first" placeholder="John"/></div>
+      <div class="fg"><label>Last Name *</label><input type="text" id="r-last" placeholder="Doe"/></div>
     </div>
-    <div class="fg"><label>Email Address *</label><input type="email" id="f-email" placeholder="you@example.com"/><div class="err" id="e-email">Enter a valid email</div></div>
-    <div class="fg"><label>Phone Number *</label><input type="tel" id="f-phone" placeholder="08012345678"/><div class="err" id="e-phone">Required</div></div>
-    <div class="fg"><label>Password *</label><input type="password" id="f-pass" placeholder="Minimum 8 characters"/><div class="err" id="e-pass">Min 8 characters</div></div>
-    <div class="fg"><label>Referral Code <span style="font-weight:400;color:var(--muted)">(optional)</span></label><input type="text" id="f-ref" placeholder="Enter referral code if you have one"/></div>
+    <div class="fg"><label>Email Address *</label><input type="email" id="r-email" placeholder="you@example.com"/></div>
+    <div class="fg"><label>Phone Number *</label><input type="tel" id="r-phone" placeholder="08012345678"/></div>
+    <div class="fg"><label>Password * (min 8 characters)</label><input type="password" id="r-pass" placeholder="Create a strong password"/></div>
+    <div class="fg"><label>Referral Code <span style="font-weight:400;color:var(--muted)">(optional)</span></label><input type="text" id="r-ref" placeholder="Enter referral code if you have one"/></div>
     <div class="fg">
       <label>Bank Name *</label>
-      <select id="f-bank">
+      <select id="r-bank">
         <option value="">Select your bank</option>
         <option>Access Bank</option><option>GTBank</option><option>First Bank</option>
         <option>UBA</option><option>Zenith Bank</option><option>Kuda Bank</option>
@@ -399,208 +376,202 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
         <option>Fidelity Bank</option><option>Stanbic IBTC</option><option>Polaris Bank</option>
         <option>Keystone Bank</option><option>Heritage Bank</option><option>Other</option>
       </select>
-      <div class="err" id="e-bank">Please select your bank</div>
     </div>
-    <div class="fg"><label>Account Number *</label><input type="text" id="f-acct" placeholder="10-digit account number" maxlength="10"/><div class="err" id="e-acct">Enter your 10-digit account number</div></div>
-    <div class="fg"><label>Account Name *</label><input type="text" id="f-acct-name" placeholder="Name on your bank account"/><div class="err" id="e-acct-name">Required</div></div>
+    <div class="fg"><label>Account Number * (10 digits)</label><input type="tel" id="r-acct" placeholder="0123456789" maxlength="10"/></div>
+    <div class="fg"><label>Account Name *</label><input type="text" id="r-acctname" placeholder="Name on your bank account"/></div>
 
-    <button class="submit-btn" id="reg-btn" onclick="handleRegister()">Pay & Register Now →</button>
-    <div class="terms-note">By registering you agree to our Terms of Service. Payments processed securely by Paystack. Withdrawals: Mon–Fri, 10am–4pm only.</div>
+    <button class="pay-btn" id="pay-btn" onclick="doRegister()">Pay &amp; Register Now →</button>
+    <div class="terms">By registering you agree to our Terms of Service. Payments secured by Paystack. Withdrawals: Mon–Fri 10am–4pm.</div>
   </div>
 </div>
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────────
-const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
-const PAYSTACK_KEY = 'pk_test_617236d60a4f23b3c8237181ba7cf763833bfb96';
-let sb = null;
-function getSupabase() {
-  if (!sb) {
-    try {
-      sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch(e) {
-      console.error('Supabase init failed:', e);
-    }
-  }
-  return sb;
-}
+var SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+var PAYSTACK_KEY = 'pk_test_617236d60a4f23b3c8237181ba7cf763833bfb96';
 
-const PRICES = {basic:{NGN:7000,USD:7}, classic:{NGN:12000,USD:12}};
-const CHANNELS = {card:['card'],bank:['bank'],ussd:['ussd'],opay:['bank'],palmpay:['bank'],kuda:['bank']};
-let plan = 'basic', cur = 'NGN', payM = 'card';
-
-// ── MODAL ─────────────────────────────────────────────────────────
-function openModal(p) {
-  if(p) setPlan(p);
-  document.getElementById('reg-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal() {
-  document.getElementById('reg-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('reg-overlay').addEventListener('click', function(e){
-  if(e.target === this) closeModal();
+var db = null;
+window.addEventListener('load', function() {
+  try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.log('Supabase:', e); }
 });
 
-// ── PLAN / CURRENCY / PAYMENT METHOD ─────────────────────────────
+var PRICES = { basic: { NGN: 7000, USD: 7 }, classic: { NGN: 12000, USD: 12 } };
+var CHANNELS = { card:['card'], bank:['bank'], ussd:['ussd'], opay:['bank'], palmpay:['bank'], kuda:['bank'] };
+var curPlan = 'basic', curCur = 'NGN', curPay = 'card';
+
+// ── MODAL ─────────────────────────────────────────────────────────
+function openModal(plan) {
+  setPlan(plan || 'basic');
+  document.getElementById('reg-overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('reg-alert').className = 'alert-box';
+}
+function closeModal() {
+  document.getElementById('reg-overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.getElementById('reg-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
 function setPlan(p) {
-  plan = p;
-  document.getElementById('tab-basic').classList.toggle('on', p==='basic');
-  document.getElementById('tab-classic').classList.toggle('on', p==='classic');
+  curPlan = p;
+  document.getElementById('tab-basic').classList.toggle('on', p === 'basic');
+  document.getElementById('tab-classic').classList.toggle('on', p === 'classic');
   updatePrice();
 }
 function setCur(c) {
-  cur = c;
-  document.getElementById('cur-ngn').classList.toggle('on', c==='NGN');
-  document.getElementById('cur-usd').classList.toggle('on', c==='USD');
+  curCur = c;
+  document.getElementById('cur-ngn').classList.toggle('on', c === 'NGN');
+  document.getElementById('cur-usd').classList.toggle('on', c === 'USD');
   updatePrice();
 }
-function setPayM(m) {
-  payM = m;
-  ['card','bank','ussd','opay','palmpay','kuda'].forEach(id => {
-    document.getElementById('pym-'+id).classList.toggle('on', id===m);
+function setPay(p) {
+  curPay = p;
+  ['card','bank','ussd','opay','palmpay','kuda'].forEach(function(id) {
+    document.getElementById('po-'+id).classList.toggle('on', id === p);
   });
 }
 function updatePrice() {
-  const a = PRICES[plan][cur];
-  const sym = cur==='NGN'?'₦':'$';
-  document.getElementById('price-display').textContent = sym + a.toLocaleString();
+  var amt = PRICES[curPlan][curCur];
+  var sym = curCur === 'NGN' ? '₦' : '$';
+  document.getElementById('price-display').textContent = sym + amt.toLocaleString();
 }
 
 // ── VALIDATION ────────────────────────────────────────────────────
-function showErr(id, show) { document.getElementById(id).classList.toggle('show', show); }
-function validate() {
-  let ok = true;
-  const check = (eid, cond) => { showErr(eid, !cond); if(!cond) ok = false; };
-  check('e-first', document.getElementById('f-first').value.trim());
-  check('e-last',  document.getElementById('f-last').value.trim());
-  check('e-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('f-email').value.trim()));
-  check('e-phone', document.getElementById('f-phone').value.trim());
-  check('e-pass',  document.getElementById('f-pass').value.length >= 8);
-  check('e-bank',  document.getElementById('f-bank').value);
-  check('e-acct',  document.getElementById('f-acct').value.replace(/\D/g,'').length === 10);
-  check('e-acct-name', document.getElementById('f-acct-name').value.trim());
-  return ok;
-}
-
 function showAlert(msg, type) {
-  const el = document.getElementById('reg-alert');
+  var el = document.getElementById('reg-alert');
   el.textContent = msg;
-  el.className = 'alert show alert-' + (type === 'err' ? 'error' : type);
+  el.className = 'alert-box show ' + (type === 'err' ? 'alert-err' : 'alert-ok');
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // ── REGISTER ──────────────────────────────────────────────────────
-function handleRegister() {
-  if(!validate()) return;
-  const btn = document.getElementById('reg-btn');
-  if(btn){ btn.disabled = true; btn.textContent = 'Processing...'; }
+function doRegister() {
+  var first    = (document.getElementById('r-first').value || '').trim();
+  var last     = (document.getElementById('r-last').value || '').trim();
+  var email    = (document.getElementById('r-email').value || '').trim();
+  var phone    = (document.getElementById('r-phone').value || '').trim();
+  var password = (document.getElementById('r-pass').value || '');
+  var refCode  = (document.getElementById('r-ref').value || '').trim().toUpperCase();
+  var bank     = (document.getElementById('r-bank').value || '');
+  var acct     = (document.getElementById('r-acct').value || '').trim();
+  var acctName = (document.getElementById('r-acctname').value || '').trim();
 
-  const first    = document.getElementById('reg-first').value.trim();
-  const last     = document.getElementById('reg-last').value.trim();
-  const email    = document.getElementById('reg-email').value.trim();
-  const phone    = document.getElementById('reg-phone').value.trim();
-  const password = document.getElementById('reg-pass').value;
-  const refCode  = (document.getElementById('reg-ref').value||'').trim().toUpperCase();
-  const bank     = document.getElementById('reg-bank').value;
-  const acct     = document.getElementById('reg-acct').value.trim();
-  const acctName = document.getElementById('reg-acct-name').value.trim();
-  const plan     = selectedPlan;
-  const cur      = selectedCurrency;
-  const payM     = selectedPayMethod;
-  const bonus    = plan === 'classic' ? 10 : 5;
-  const prices   = { basic: { NGN: 7000, USD: 7 }, classic: { NGN: 12000, USD: 12 } };
-  const amount   = prices[plan][cur];
+  if (!first)    { showAlert('Please enter your first name.', 'err'); return; }
+  if (!last)     { showAlert('Please enter your last name.', 'err'); return; }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email address.', 'err'); return; }
+  if (!phone)    { showAlert('Please enter your phone number.', 'err'); return; }
+  if (password.length < 8) { showAlert('Password must be at least 8 characters.', 'err'); return; }
+  if (!bank)     { showAlert('Please select your bank.', 'err'); return; }
+  if (acct.replace(/\D/g,'').length !== 10) { showAlert('Please enter your 10-digit account number.', 'err'); return; }
+  if (!acctName) { showAlert('Please enter your account name.', 'err'); return; }
 
-  const CHANNELS = {
-    card:['card'], bank:['bank'], ussd:['ussd'],
-    opay:['bank'], palmpay:['bank'], kuda:['bank']
-  };
+  var btn = document.getElementById('pay-btn');
+  btn.disabled = true;
+  btn.textContent = 'Loading payment...';
 
   if (typeof PaystackPop === 'undefined') {
     showAlert('Payment system not loaded. Please refresh the page and try again.', 'err');
-    if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
+    btn.disabled = false;
+    btn.textContent = 'Pay & Register Now →';
     return;
   }
 
-  const handler = PaystackPop.setup({
-    key: PAYSTACK_KEY,
-    email: email,
-    amount: cur === 'NGN' ? amount * 100 : amount * 150000,
-    currency: 'NGN',
-    channels: CHANNELS[payM] || ['card'],
-    metadata: { plan: plan, name: first + ' ' + last, phone: phone },
-    callback: function(response) {
-      // Use regular function, not async - handle with promises
-      getSupabase().auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            full_name: first + ' ' + last,
-            phone: phone,
-            plan: plan,
-            bank_name: bank,
-            account_number: acct,
-            account_name: acctName,
-            referral_code: refCode,
-            paystack_ref: response.reference,
-            earnings_usd: bonus,
-            earnings_ngn: bonus * 1500,
-            signup_bonus_usd: bonus,
-            withdraw_count: 0,
-            joined: new Date().toISOString()
-          },
-          emailRedirectTo: window.location.origin + '/earn-dashboard.html'
-        }
-      }).then(function(result) {
-        if(result.error) {
-          showAlert('Payment done! Account error: ' + result.error.message + '. Contact support.', 'err');
-          if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
-        } else {
-          if(refCode) {
-            getSupabase().from('referrals').insert({
-              bonus: plan === 'classic' ? 1000 : 500,
-              plan: plan,
-              created_at: new Date().toISOString()
-            }).then(function(){});
-          }
-          closeModal();
-          showSuccessPage(first, email, plan, bonus);
-        }
-      }).catch(function(err) {
-        showAlert('Error: ' + err.message, 'err');
-        if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
-      });
-    },
-    onClose: function() {
-      if(btn){ btn.disabled = false; btn.textContent = 'Pay & Register Now →'; }
-    }
-  });
-  handler.openIframe();
-}
+  var amount = PRICES[curPlan][curCur];
+  var paystackAmount = curCur === 'NGN' ? amount * 100 : amount * 150000;
+  var bonus = curPlan === 'classic' ? 10 : 5;
 
+  try {
+    var handler = PaystackPop.setup({
+      key: PAYSTACK_KEY,
+      email: email,
+      amount: paystackAmount,
+      currency: 'NGN',
+      channels: CHANNELS[curPay] || ['card'],
+      metadata: {
+        custom_fields: [
+          { display_name: 'Plan', variable_name: 'plan', value: curPlan },
+          { display_name: 'Name', variable_name: 'name', value: first + ' ' + last },
+          { display_name: 'Phone', variable_name: 'phone', value: phone }
+        ]
+      },
+      callback: function(response) {
+        btn.textContent = 'Creating account...';
+        if (!db) {
+          try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) {}
+        }
+        if (!db) {
+          closeModal();
+          showSuccessPage(first, email, curPlan, bonus);
+          return;
+        }
+        db.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              full_name: first + ' ' + last,
+              phone: phone,
+              plan: curPlan,
+              bank_name: bank,
+              account_number: acct,
+              account_name: acctName,
+              referral_code: refCode,
+              paystack_ref: response.reference,
+              earnings_usd: bonus,
+              earnings_ngn: bonus * 1500,
+              signup_bonus_usd: bonus,
+              withdraw_count: 0,
+              joined: new Date().toISOString()
+            },
+            emailRedirectTo: window.location.origin + '/earn-dashboard.html'
+          }
+        }).then(function(result) {
+          btn.disabled = false;
+          btn.textContent = 'Pay & Register Now →';
+          if (result.error) {
+            if (result.error.message.indexOf('already registered') > -1) {
+              showAlert('This email is already registered. Please log in instead.', 'err');
+            } else {
+              showAlert('Payment successful! Account issue: ' + result.error.message + '. Please contact support.', 'err');
+            }
+          } else {
+            closeModal();
+            showSuccessPage(first, email, curPlan, bonus);
+          }
+        }).catch(function(err) {
+          btn.disabled = false;
+          btn.textContent = 'Pay & Register Now →';
+          showAlert('An error occurred: ' + err.message, 'err');
+        });
+      },
+      onClose: function() {
+        btn.disabled = false;
+        btn.textContent = 'Pay & Register Now →';
+      }
+    });
+    handler.openIframe();
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'Pay & Register Now →';
+    showAlert('Payment error: ' + e.message + '. Please refresh and try again.', 'err');
+  }
+}
 
 function showSuccessPage(name, email, plan, bonus) {
-  document.body.innerHTML = `
-  <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:'Space Grotesk',sans-serif;padding:2rem">
-    <div style="background:white;border-radius:24px;padding:3rem;max-width:480px;width:100%;text-align:center;box-shadow:0 4px 40px rgba(0,0,0,.08)">
-      <div style="font-size:56px;margin-bottom:1rem">🎉</div>
-      <h1 style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:.5rem">Welcome, ${name}!</h1>
-      <p style="color:#6B7280;margin-bottom:1.25rem;line-height:1.7;font-size:14px">Your <strong>${plan.charAt(0).toUpperCase()+plan.slice(1)}</strong> account is ready. Check <strong>${email}</strong> to confirm and activate.</p>
-      <div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $${bonus} signup bonus has been credited to your account!</div>
-      <div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">🏦 Withdrawals: Mon–Fri · 10am–4pm · ${plan==='classic'?'$40':'$45'} minimum</div>
-      <a href="/earn-dashboard.html" style="display:block;background:#7C3AED;color:white;padding:14px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none">Go to Dashboard →</a>
-    </div>
-  </div>`;
+  document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:sans-serif;padding:2rem"><div style="background:white;border-radius:24px;padding:2.5rem;max-width:460px;width:100%;text-align:center;box-shadow:0 4px 40px rgba(0,0,0,.08)"><div style="font-size:52px;margin-bottom:1rem">🎉</div><h1 style="font-size:26px;font-weight:800;margin-bottom:.5rem">Welcome, ' + name.split(' ')[0] + '!</h1><p style="color:#6B7280;margin-bottom:1.25rem;line-height:1.7;font-size:14px">Your <strong>' + (plan === 'classic' ? 'Classic' : 'Basic') + '</strong> account has been created. Check your email at <strong>' + email + '</strong> and click the confirmation link to activate.</p><div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $' + bonus + ' signup bonus has been credited to your account!</div><div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">🏦 Withdrawals: Mon–Fri · 10am–4pm · ' + (plan === 'classic' ? 'Min $40' : 'Min $45') + '</div><a href="/earn-dashboard.html" style="display:block;background:#7C3AED;color:white;padding:13px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none">Go to Dashboard →</a></div></div>';
 }
 
-// Pre-fill referral from URL
-window.addEventListener('load', function() {
-  const ref = new URLSearchParams(window.location.search).get('ref');
-  if(ref) { const el = document.getElementById('f-ref'); if(el) el.value = ref; }
-});
+// Pre-fill referral code from URL
+(function() {
+  var ref = new URLSearchParams(window.location.search).get('ref');
+  if (ref) {
+    var el = document.getElementById('r-ref');
+    if (el) el.value = ref;
+  }
+})();
 </script>
 </body>
 </html>
