@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Learn Dashboard — DigiEarn</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;--green:#00C853;--gd:#00922B;--gl:#E6F9EE;--text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;--bg:#F9F8F6;--white:#fff;--r:12px;--amber:#F59E0B;--al:#FFFBEB}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+.sidebar{width:220px;background:#0F0B1E;display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;min-height:100vh}
+.s-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;padding:0 1.25rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.08)}
+.s-logo span{color:var(--p)}
+.s-mode{font-size:11px;background:rgba(124,58,237,.3);color:#C4B5FD;padding:3px 10px;border-radius:999px;margin-top:8px;display:inline-block;font-weight:600}
+.s-item{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;font-size:14px;color:rgba(255,255,255,.55);cursor:pointer;border-left:3px solid transparent;transition:all .15s}
+.s-item:hover,.s-item.active{color:white;background:rgba(255,255,255,.06)}
+.s-item.active{border-left-color:var(--p)}
+.s-icon{font-size:17px;width:22px;text-align:center}
+.switch-btn{margin:1rem 1.25rem 0;background:rgba(0,200,83,.15);color:#00C853;border:1px solid rgba(0,200,83,.3);border-radius:var(--r);padding:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;text-align:center}
+.s-user{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.08);margin-top:auto;display:flex;align-items:center;gap:10px}
+.s-avatar{width:36px;height:36px;border-radius:50%;background:var(--p);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:13px;flex-shrink:0}
+.main{flex:1;display:flex;flex-direction:column}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-size:18px;font-weight:600}
+.learn-badge{background:var(--pl);color:var(--pd);font-size:12px;font-weight:700;padding:4px 14px;border-radius:999px}
+.browse-btn{background:var(--p);color:white;padding:9px 18px;border-radius:var(--r);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.content{padding:1.75rem;overflow-y:auto;flex:1}
+.greeting{margin-bottom:1.5rem}
+.greeting h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:3px}
+.greeting p{font-size:14px;color:var(--muted)}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.75rem}
+.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem}
+.metric.purple{background:var(--p);border-color:var(--p)}
+.metric.purple .ml,.metric.purple .ms{color:rgba(255,255,255,.75)}
+.metric.purple .mv{color:white}
+.ml{font-size:12px;color:var(--muted);margin-bottom:5px}
+.mv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1}
+.ms{font-size:12px;color:var(--muted);margin-top:3px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 280px;gap:1.25rem;margin-bottom:1.25rem}
+.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.25rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.card-title{font-size:15px;font-weight:600}
+.card-link{font-size:13px;color:var(--p);cursor:pointer}
+.course-card{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:10px;cursor:pointer;transition:border-color .15s}
+.course-card:hover{border-color:var(--p)}
+.course-thumb{height:80px;display:flex;align-items:center;justify-content:center;font-size:32px;position:relative}
+.ct-dm{background:linear-gradient(135deg,#667eea,#764ba2)}
+.ct-co{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.ct-gd{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.ct-ve{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.course-body{padding:.75rem}
+.course-title-sm{font-size:13px;font-weight:600;margin-bottom:4px}
+.prog-bar{height:5px;background:var(--border);border-radius:999px;overflow:hidden;margin-bottom:4px}
+.prog-fill{height:100%;border-radius:999px;background:var(--p)}
+.prog-text{font-size:11px;color:var(--muted)}
+.continue-btn{background:var(--p);color:white;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;width:100%;margin-top:8px}
+.lesson-list{display:flex;flex-direction:column;gap:6px}
+.lesson-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13px;border:1px solid var(--border);transition:border-color .15s}
+.lesson-item:hover{border-color:var(--p)}
+.lesson-item.done{background:var(--gl);border-color:#6ee7a7}
+.lesson-num{width:22px;height:22px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;color:var(--muted)}
+.lesson-item.done .lesson-num{background:var(--green);color:white}
+.lesson-name{flex:1;font-weight:500}
+.lesson-dur{font-size:11px;color:var(--muted)}
+.mark-btn{background:var(--p);color:white;border:none;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.spin-mini{background:linear-gradient(135deg,#0F0B1E,#1a1040);border-radius:14px;padding:1.25rem;color:white}
+.sm-title{font-size:14px;font-weight:600;margin-bottom:4px}
+.sm-sub{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:1rem}
+.sm-wheel{display:flex;justify-content:center;margin-bottom:.75rem}
+.sm-btn{width:100%;background:var(--p);color:white;border:none;border-radius:var(--r);padding:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.sm-btn:disabled{opacity:.5;cursor:not-allowed}
+.sm-cd{font-size:12px;color:rgba(255,255,255,.4);text-align:center;margin-top:6px}
+.achievements{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ach{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:.75rem;text-align:center}
+.ach.unlocked{background:var(--pl);border-color:#C4B5FD}
+.ach-icon{font-size:22px;margin-bottom:4px}
+.ach-name{font-size:12px;font-weight:600}
+.cert-card{background:linear-gradient(135deg,var(--p),var(--pd));border-radius:14px;padding:1.25rem;color:white;text-align:center;margin-bottom:10px}
+.cert-icon{font-size:36px;margin-bottom:8px}
+.cert-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.cert-sub{font-size:12px;color:rgba(255,255,255,.65);margin-bottom:.75rem}
+.cert-btn{background:white;color:var(--pd);border:none;padding:7px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+.no-courses{text-align:center;padding:2rem;color:var(--muted)}
+.spin-result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center}
+.spin-result-overlay.show{display:flex}
+.sr-card{background:white;border-radius:20px;padding:2.5rem;max-width:360px;width:90%;text-align:center}
+.sr-emoji{font-size:52px;margin-bottom:.75rem}
+.sr-title{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:.5rem}
+.sr-sub{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+.sr-btn{background:var(--p);color:white;border:none;padding:11px 28px;border-radius:var(--r);font-size:14px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
+@media(max-width:1000px){.three-col{grid-template-columns:1fr 280px}.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.three-col{grid-template-columns:1fr}}
+</style>
+<!-- ═══ AD NETWORKS ═══ -->
+<!-- Adsterra -->
+<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
+<!-- AdMaven -->
+<script type="text/javascript" src="https://aclibrary.com/ac.js"></script>
+<!-- BidVertiser -->
+<script src="https://serve.bidvertiser.com/bdvr.ads.min.js" async></script>
+<!-- ════════════════ -->
+</head>
+<body>
+<div class="sidebar">
+  <div class="s-logo">Digi<span>Earn</span></div>
+  <div class="s-mode">🎓 Learn Mode</div>
+  <div style="padding:1rem 0;flex:1">
+    <div class="s-item active"><span class="s-icon">⊞</span> Dashboard</div>
+    <div class="s-item"><span class="s-icon">📚</span> My Courses</div>
+    <div class="s-item"><span class="s-icon">🎓</span> Certificates</div>
+    <div class="s-item"><span class="s-icon">🏆</span> Achievements</div>
+    <div class="s-item"><span class="s-icon">🎰</span> Weekly Spin</div>
+    <div class="s-item"><span class="s-icon">👤</span> Profile</div>
+    <div class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</div>
+    <button class="switch-btn" onclick="window.location.href='earn-dashboard.html'">💰 Switch to Earning</button>
+  </div>
+  <div class="s-user">
+    <div class="s-avatar" id="user-initials">--</div>
+    <div><div style="font-size:13px;font-weight:500;color:white" id="user-name">Loading...</div><div style="font-size:11px;color:rgba(255,255,255,.4)" id="user-plan">--</div></div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="page-title">🎓 Learning Dashboard</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="learn-badge" id="plan-badge">--</span>
+      <button class="browse-btn" onclick="window.location.href='learn.html'">Browse Courses →</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="greeting"><h1 id="greeting-text">Good day! 👋</h1><p>Keep learning — every lesson is an investment in your future.</p></div>
+
+    <div class="metrics">
+      <div class="metric purple"><div class="ml">Courses Enrolled</div><div class="mv" id="m-courses">2</div><div class="ms">Active learning</div></div>
+      <div class="metric"><div class="ml">Lessons Completed</div><div class="mv" id="m-lessons">0</div><div class="ms">Total progress</div></div>
+      <div class="metric"><div class="ml">Certificates Earned</div><div class="mv" id="m-certs">0</div><div class="ms">Download anytime</div></div>
+      <div class="metric"><div class="ml">Spin Winnings</div><div class="mv" id="m-spin">₦0</div><div class="ms">From weekly spins</div></div>
+    </div>
+
+    <div class="three-col">
+      <!-- COURSE LIST -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">My Courses</div><a class="card-link" href="learn.html">Browse more →</a></div>
+        <div id="course-list"></div>
+      </div>
+
+      <!-- LESSONS -->
+      <div class="card">
+        <div class="card-header"><div class="card-title" id="lesson-card-title">Lessons</div><span style="font-size:13px;color:var(--muted)" id="lesson-progress-label"></span></div>
+        <div class="lesson-list" id="lesson-list">
+          <div class="no-courses">👆 Select a course to view lessons</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div>
+        <!-- SPIN -->
+        <div class="spin-mini" style="margin-bottom:1rem">
+          <div class="sm-title">🎰 Weekly Spin</div>
+          <div class="sm-sub">Win cash or a free course every week!</div>
+          <div class="sm-wheel"><canvas id="mini-wheel" width="140" height="140"></canvas></div>
+          <button class="sm-btn" id="spin-btn" onclick="doSpin()">Spin Now!</button>
+          <div class="sm-cd" id="spin-cd">Checking...</div>
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+        <div class="card" style="margin-bottom:1rem">
+          <div class="card-header"><div class="card-title">Achievements</div></div>
+          <div class="achievements" id="achievements"></div>
+        </div>
+
+        <!-- CERTIFICATES -->
+        <div class="card">
+          <div class="card-header"><div class="card-title">Certificates</div></div>
+          <div id="certs-section"><div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">Complete a course to earn your certificate 🎓</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SPIN RESULT -->
+<div class="spin-result-overlay" id="sr-overlay">
+  <div class="sr-card">
+    <div class="sr-emoji" id="sr-emoji">🎉</div>
+    <div class="sr-title" id="sr-title">You won!</div>
+    <div class="sr-sub" id="sr-sub">Congratulations!</div>
+    <button class="sr-btn" onclick="document.getElementById('sr-overlay').classList.remove('show')">Awesome! 🎉</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL='https://xdqvrtzsjztwoydckcjt.supabase.co';
+const SUPABASE_KEY='sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const COURSES=[
+  {id:1,title:'Digital Marketing Masterclass',icon:'📣',thumb:'ct-dm',lessons:10,done:3},
+  {id:2,title:'Web Development Bootcamp',icon:'💻',thumb:'ct-co',lessons:10,done:1},
+];
+
+const LESSON_NAMES=['Introduction & Overview','Setting Up Your Tools','Core Concepts','Hands-on Practice','Real-world Examples','Advanced Techniques','Building a Project','Best Practices','Common Mistakes','Final Assessment'];
+
+const ACHIEVEMENTS_DATA=[
+  {icon:'🎓',name:'First Enrollment',unlocked:true},
+  {icon:'🔥',name:'7-Day Streak',unlocked:false},
+  {icon:'⚡',name:'10 Lessons Done',unlocked:false},
+  {icon:'🏆',name:'Course Complete',unlocked:false},
+  {icon:'🎰',name:'Spin Winner',unlocked:false},
+  {icon:'👥',name:'Referral Pro',unlocked:false},
+];
+
+const SPIN_SEGS=[
+  {label:'₦5,000',color:'#7C3AED',prize:'cash',amount:5000},
+  {label:'₦10,000',color:'#00C853',prize:'cash',amount:10000},
+  {label:'Free Course',color:'#5B21B6',prize:'course',amount:0},
+  {label:'₦2,000',color:'#185FA5',prize:'cash',amount:2000},
+  {label:'50% Off',color:'#f5576c',prize:'discount',amount:50},
+  {label:'Free Beginner',color:'#43e97b',prize:'course_basic',amount:0},
+  {label:'₦3,000',color:'#F59E0B',prize:'cash',amount:3000},
+  {label:'Try Again',color:'#B0B0B0',prize:'none',amount:0},
+];
+
+let selectedCourse=null,completedLessons={},totalLessons=0,spinWinnings=0,spinAngle=0,isSpinning=false;
+
+async function init(){
+  const {data:{user}}=await supabase.auth.getUser();
+  if(!user){window.location.href='/index.html';return;}
+  const ud=user.user_metadata;
+  const name=ud.full_name||'Student';
+  const plan=ud.plan||'basic';
+  spinWinnings=ud.spin_winnings_ngn||0;
+  const initials=name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('user-initials').textContent=initials;
+  document.getElementById('user-name').textContent=name;
+  document.getElementById('user-plan').textContent=plan.charAt(0).toUpperCase()+plan.slice(1)+' Member';
+  document.getElementById('plan-badge').textContent=plan==='classic'?'👑 Classic':'💼 Basic';
+  const h=new Date().getHours();
+  document.getElementById('greeting-text').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', '+name.split(' ')[0]+'! 👋';
+  document.getElementById('m-spin').textContent='₦'+spinWinnings.toLocaleString();
+  renderCourses();renderAchievements();drawMiniWheel(0);updateSpinCountdown();
+  setInterval(updateSpinCountdown,60000);
+}
+
+function renderCourses(){
+  const list=document.getElementById('course-list');
+  list.innerHTML=COURSES.map(c=>{
+    const pct=Math.round((c.done/c.lessons)*100);
+    return `<div class="course-card" onclick="selectCourse(${c.id})">
+      <div class="course-thumb ${c.thumb}">${c.icon}</div>
+      <div class="course-body">
+        <div class="course-title-sm">${c.title}</div>
+        <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+        <div class="prog-text">${c.done}/${c.lessons} lessons · ${pct}%</div>
+        <button class="continue-btn">Continue →</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectCourse(id){
+  selectedCourse=COURSES.find(c=>c.id===id);
+  if(!completedLessons[id])completedLessons[id]=new Set();
+  document.getElementById('lesson-card-title').textContent=selectedCourse.title;
+  renderLessons();
+}
+
+function renderLessons(){
+  if(!selectedCourse){document.getElementById('lesson-list').innerHTML='<div class="no-courses">👆 Select a course</div>';return;}
+  const done=completedLessons[selectedCourse.id]||new Set();
+  document.getElementById('lesson-progress-label').textContent=done.size+'/'+selectedCourse.lessons;
+  document.getElementById('lesson-list').innerHTML=LESSON_NAMES.slice(0,selectedCourse.lessons).map((l,i)=>`
+    <div class="lesson-item${done.has(i)?' done':''}">
+      <div class="lesson-num">${done.has(i)?'✓':i+1}</div>
+      <div class="lesson-name">${l}</div>
+      <div class="lesson-dur">${5+Math.floor(Math.random()*8)}min</div>
+      ${!done.has(i)?`<button class="mark-btn" onclick="markDone(${i})">Done</button>`:''}
+    </div>`).join('');
+}
+
+function markDone(i){
+  if(!selectedCourse)return;
+  const key=selectedCourse.id;
+  if(!completedLessons[key])completedLessons[key]=new Set();
+  completedLessons[key].add(i);
+  selectedCourse.done=completedLessons[key].size;
+  totalLessons++;
+  document.getElementById('m-lessons').textContent=totalLessons;
+  if(totalLessons>=10){ACHIEVEMENTS_DATA[2].unlocked=true;renderAchievements();}
+  if(selectedCourse.done>=selectedCourse.lessons){
+    ACHIEVEMENTS_DATA[3].unlocked=true;renderAchievements();
+    document.getElementById('m-certs').textContent=parseInt(document.getElementById('m-certs').textContent)+1;
+    showCertificate(selectedCourse.title);
+  }
+  renderCourses();renderLessons();
+  supabase.from('lesson_progress').insert({course_id:selectedCourse.id,lesson_index:i,completed_at:new Date().toISOString()});
+}
+
+function showCertificate(title){
+  const sec=document.getElementById('certs-section');
+  sec.innerHTML=`<div class="cert-card"><div class="cert-icon">🏆</div><div class="cert-title">${title}</div><div class="cert-sub">Awarded to you · ${new Date().toLocaleDateString()}</div><button class="cert-btn" onclick="alert('Certificate downloaded!')">Download PDF</button></div>`+sec.innerHTML;
+}
+
+function renderAchievements(){
+  document.getElementById('achievements').innerHTML=ACHIEVEMENTS_DATA.map(a=>`
+    <div class="ach${a.unlocked?' unlocked':''}">
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+    </div>`).join('');
+}
+
+// MINI SPIN WHEEL
+function drawMiniWheel(angle){
+  const canvas=document.getElementById('mini-wheel');
+  const ctx=canvas.getContext('2d');
+  const W=140,R=60,arc=(2*Math.PI)/SPIN_SEGS.length;
+  ctx.clearRect(0,0,W,W);
+  SPIN_SEGS.forEach((s,i)=>{
+    const st=angle+i*arc,en=st+arc;
+    ctx.beginPath();ctx.moveTo(W/2,W/2);ctx.arc(W/2,W/2,R,st,en);ctx.closePath();
+    ctx.fillStyle=s.color;ctx.fill();ctx.strokeStyle='white';ctx.lineWidth=1.5;ctx.stroke();
+    ctx.save();ctx.translate(W/2,W/2);ctx.rotate(st+arc/2);ctx.textAlign='right';
+    ctx.fillStyle='white';ctx.font='bold 8px Space Grotesk,sans-serif';ctx.fillText(s.label,R-5,3);ctx.restore();
+  });
+  ctx.beginPath();ctx.moveTo(W/2-6,2);ctx.lineTo(W/2+6,2);ctx.lineTo(W/2,14);ctx.closePath();
+  ctx.fillStyle='#7C3AED';ctx.fill();
+  ctx.beginPath();ctx.arc(W/2,W/2,12,0,2*Math.PI);ctx.fillStyle='white';ctx.fill();
+}
+
+function getWeekKey(){const d=new Date(),j=new Date(d.getFullYear(),0,1);return d.getFullYear()+'-W'+Math.ceil(((d-j)/86400000+j.getDay()+1)/7);}
+
+function updateSpinCountdown(){
+  const used=localStorage.getItem('lastSpinWeek')===getWeekKey();
+  const btn=document.getElementById('spin-btn'),cd=document.getElementById('spin-cd');
+  if(used){
+    btn.disabled=true;
+    const now=new Date(),nm=new Date(now);
+    nm.setDate(now.getDate()+(now.getDay()===0?1:8-now.getDay()));nm.setHours(0,0,0,0);
+    const diff=nm-now;
+    cd.textContent='Next spin in '+Math.floor(diff/86400000)+'d '+Math.floor((diff%86400000)/3600000)+'h';
+  } else {btn.disabled=false;cd.textContent='Your spin is ready!';}
+}
+
+function doSpin(){
+  if(isSpinning)return;
+  if(localStorage.getItem('lastSpinWeek')===getWeekKey()){alert('Already used this week! Come back next Monday.');return;}
+  isSpinning=true;document.getElementById('spin-btn').disabled=true;
+  const winIdx=Math.floor(Math.random()*SPIN_SEGS.length);
+  const arc=(2*Math.PI)/SPIN_SEGS.length;
+  const target=spinAngle+(2*Math.PI*(7+Math.random()*3))+(2*Math.PI-winIdx*arc)-arc/2;
+  const dur=4500,start=performance.now(),startA=spinAngle;
+  function animate(now){
+    const t=Math.min((now-start)/dur,1),ease=1-Math.pow(1-t,4);
+    spinAngle=startA+(target-startA)*ease;drawMiniWheel(spinAngle);
+    if(t<1)requestAnimationFrame(animate);
+    else{isSpinning=false;localStorage.setItem('lastSpinWeek',getWeekKey());updateSpinCountdown();showSpinResult(SPIN_SEGS[winIdx]);}
+  }
+  requestAnimationFrame(animate);
+}
+
+function showSpinResult(seg){
+  const icons={cash:'💰',course:'🎓',course_basic:'📚',discount:'🏷️',none:'😊'};
+  const titles={cash:'You won ₦'+seg.amount.toLocaleString()+'! 🎉',course:'Free Course! 🎓',course_basic:'Free Beginner Course!',discount:'50% Discount! 🏷️',none:'Better luck next week!'};
+  const subs={cash:'Credited to your account within 24 hours!',course:'Get FREE access to any course — code sent to your email.',course_basic:'FREE access to any beginner course — code in your email.',discount:'Use code SPIN50 at checkout.',none:'Your next spin is available next Monday!'};
+  document.getElementById('sr-emoji').textContent=icons[seg.prize]||'🎉';
+  document.getElementById('sr-title').textContent=titles[seg.prize]||'You won!';
+  document.getElementById('sr-sub').textContent=subs[seg.prize]||'Congratulations!';
+  document.getElementById('sr-overlay').classList.add('show');
+  if(seg.prize==='cash'){spinWinnings+=seg.amount;document.getElementById('m-spin').textContent='₦'+spinWinnings.toLocaleString();ACHIEVEMENTS_DATA[4].unlocked=true;renderAchievements();}
+  supabase.from('spin_results').insert({prize_type:seg.prize,prize_amount:seg.amount,won_at:new Date().toISOString()});
+}
+
+async function handleLogout(){await supabase.auth.signOut();window.location.href='/index.html';}
+init();
+</script>
+
+<!-- AdMaven Auto Tag -->
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'd4s64aqfhd',
+    });
+</script>
+<!-- BidVertiser Zone -->
+<!-- Bidvertiser2104798 -->
+</body>
+</html>
