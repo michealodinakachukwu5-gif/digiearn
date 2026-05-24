@@ -381,7 +381,7 @@ function completeTask(id){
   if(completedTasks.has(id)){alert('Already done today! Come back tomorrow.');return;}
   const task=TASKS.find(t=>t.id===id);
   const earn=task.earn[userPlan];
-  const limit=userPlan==='classic'?2000:500;
+  const limit=userPlan==='classic'?2000:1000;
   if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.\nYour limit: ₦'+limit.toLocaleString()+'/day');return;}
 
   completedTasks.add(id);
