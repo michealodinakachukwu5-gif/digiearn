@@ -255,7 +255,7 @@ async function init(){
   document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
   document.getElementById('plan-badge').textContent=userPlan==='classic'?'👑 Classic':'💼 Basic';
   document.getElementById('bonus-display').textContent='$'+bonus+'.00';
-  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'500');
+  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'1000');
 
   const h=new Date().getHours();
   document.getElementById('greeting-text').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', '+name.split(' ')[0]+'! 👋';
@@ -325,7 +325,7 @@ function completeTask(id){
   if(completedTasks.has(id)){alert('Already done! Come back tomorrow.');return;}
   const task=TASKS.find(t=>t.id===id);
   const earn=task.earn[userPlan];
-  const limit=userPlan==='classic'?2000:500;
+  const limit=userPlan==='classic'?2000:1000;
   if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.');return;}
   completedTasks.add(id);todayEarnings+=earn;totalNgn+=earn;
   updateMetrics();renderTasks();
