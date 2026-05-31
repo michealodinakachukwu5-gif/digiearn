@@ -105,6 +105,13 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 <!-- BidVertiser -->
 <script src="https://serve.bidvertiser.com/bdvr.ads.min.js" async></script>
 <!-- ════════════════ -->
+<!-- CPX Research Survey -->
+<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
+<script type="text/javascript">
+    aclib.runAutoTag({
+        zoneId: 'd4s64aqfhd',
+    });
+</script>
 </head>
 <body>
 <div class="sidebar">
@@ -148,6 +155,19 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
   </a>
 </div>
 
+<!-- CPX Research Survey Widget -->
+<div style="max-width:1000px;margin:1.5rem auto;padding:0 2rem">
+  <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,#0F0F1A,#1A0A2E);padding:12px 20px;display:flex;align-items:center;gap:10px">
+      <span style="font-size:18px">📋</span>
+      <div>
+        <div style="font-family:Syne,sans-serif;font-size:14px;font-weight:700;color:white">Complete Surveys & Earn Extra!</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.55)">Powered by CPX Research · Real paid surveys</div>
+      </div>
+    </div>
+    <iframe width="100%" frameBorder="0" height="400px" src="https://offers.cpx-research.com/index.php?app_id=33309&ext_user_id={unique_user_id}&secure_hash={secure_hash}&username={user_name}&email={user_email}&subid_1=digiearn&subid_2=earn" style="display:block"></iframe>
+  </div>
+</div>
 <div class="window-banner" id="window-banner"><span id="w-icon">⏳</span><span id="w-msg">Checking withdrawal window...</span></div>
 
     <div class="metrics">
@@ -255,7 +275,7 @@ async function init(){
   document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
   document.getElementById('plan-badge').textContent=userPlan==='classic'?'👑 Classic':'💼 Basic';
   document.getElementById('bonus-display').textContent='$'+bonus+'.00';
-  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'1000');
+  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'500');
 
   const h=new Date().getHours();
   document.getElementById('greeting-text').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', '+name.split(' ')[0]+'! 👋';
@@ -310,7 +330,12 @@ function updateWithdrawalBanner(){
 }
 
 function renderTasks(){
-  document.getElementById('task-list').innerHTML=TASKS.map(t=>`
+  var surveyCard = '<div class="task-item" onclick="openSurvey()" style="border:1.5px solid rgba(124,58,237,.3);background:linear-gradient(135deg,#F5F3FF,#fff)">' +
+    '<div class="t-icon ti-2" style="background:#F5F3FF">📋</div>' +
+    '<div style="flex:1"><div class="t-name">Fill Online Survey</div><div class="t-desc">Answer questions from real companies</div></div>' +
+    '<div style="text-align:right"><div class="t-earn">+₦' + (userPlan==='classic'?'400':'100') + '</div><div class="t-pill tp-open">Start</div></div>' +
+    '</div>';
+  document.getElementById('task-list').innerHTML = surveyCard + TASKS.map(t=>`
     <div class="task-item${completedTasks.has(t.id)?' done':''}" onclick="completeTask(${t.id})">
       <div class="t-icon ${t.bg}">${t.icon}</div>
       <div style="flex:1"><div class="t-name">${t.name}</div><div class="t-desc">${t.desc}</div></div>
@@ -325,7 +350,7 @@ function completeTask(id){
   if(completedTasks.has(id)){alert('Already done! Come back tomorrow.');return;}
   const task=TASKS.find(t=>t.id===id);
   const earn=task.earn[userPlan];
-  const limit=userPlan==='classic'?2000:1000;
+  const limit=userPlan==='classic'?2000:500;
   if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.');return;}
   completedTasks.add(id);todayEarnings+=earn;totalNgn+=earn;
   updateMetrics();renderTasks();
@@ -364,6 +389,40 @@ async function submitWithdrawal(){
   alert('✅ Withdrawal of ₦'+amount.toLocaleString()+' submitted! Payment within 24 hours.');
 }
 
+
+function openSurvey() {
+  var modal = document.getElementById('survey-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  supabase.auth.getUser().then(function(res) {
+    var user = res.data.user;
+    if (!user) return;
+    var uid = user.id || 'guest';
+    var email = encodeURIComponent(user.email || '');
+    var uname = encodeURIComponent((user.user_metadata && user.user_metadata.full_name) || 'user');
+    var hash = uid.replace(/-/g,'').slice(0,16);
+    var url = 'https://offers.cpx-research.com/index.php?app_id=33309&ext_user_id=' + uid + '&secure_hash=' + hash + '&username=' + uname + '&email=' + email + '&subid_1=digiearn&subid_2=survey';
+    document.getElementById('cpx-frame').src = url;
+  });
+}
+
+function closeSurvey() {
+  document.getElementById('survey-modal').style.display = 'none';
+  document.body.style.overflow = '';
+  var earn = userPlan === 'classic' ? 400 : 100;
+  todayEarnings += earn;
+  totalNgn += earn;
+  updateMetrics();
+  renderTasks();
+  var list = document.getElementById('tx-list');
+  if (list.innerHTML.includes('No activity')) list.innerHTML = '';
+  var row = document.createElement('div');
+  row.className = 'tx-row';
+  row.innerHTML = '<div class="tx-left"><div class="tx-dot dot-g"></div><div><div style="font-weight:500">Completed Survey</div><div style="font-size:11px;color:var(--muted)">Just now</div></div></div><div class="tx-in">+₦' + earn + '</div>';
+  list.prepend(row);
+  supabase.auth.updateUser({data:{earnings_ngn: totalNgn}});
+}
+
 async function handleLogout(){await supabase.auth.signOut();window.location.href='/index.html';}
 init();
 </script>
@@ -376,5 +435,25 @@ init();
 </script>
 <!-- BidVertiser Zone -->
 <!-- Bidvertiser2104798 -->
+
+<!-- CPX Survey Modal -->
+<div id="survey-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;padding:1rem">
+  <div style="background:white;border-radius:20px;width:100%;max-width:700px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column">
+    <div style="padding:1rem 1.5rem;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;background:#F9F8F6">
+      <div>
+        <div style="font-size:16px;font-weight:600;font-family:Space Grotesk,sans-serif">📋 Fill Survey and Earn</div>
+        <div style="font-size:12px;color:#6B7280">Complete surveys below to earn your reward</div>
+      </div>
+      <button onclick="closeSurvey()" style="background:none;border:1px solid #E5E7EB;border-radius:8px;padding:6px 14px;font-size:13px;cursor:pointer;font-family:Space Grotesk,sans-serif">Close</button>
+    </div>
+    <div style="flex:1;overflow-y:auto">
+      <iframe id="cpx-frame" width="100%" frameBorder="0" height="600px" src="about:blank"></iframe>
+    </div>
+    <div style="padding:1rem 1.5rem;border-top:1px solid #E5E7EB;background:#E6F9EE;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-size:13px;color:#00922B;font-weight:500">Your earnings will be credited after completing the survey!</div>
+      <button onclick="closeSurvey()" style="background:#00C853;color:white;border:none;padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:Space Grotesk,sans-serif">Done</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
