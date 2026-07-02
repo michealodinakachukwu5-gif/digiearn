@@ -191,6 +191,7 @@ tr:hover td{background:#FAFAFA}
       <div class="s-item active" onclick="go('dashboard',this)"><span class="s-icon">⊞</span> Dashboard</div>
       <div class="s-sec">Members</div>
       <div class="s-item" onclick="go('users',this)"><span class="s-icon">👥</span> All Members</div>
+      <div class="s-item" onclick="go('coupons',this)"><span class="s-icon">🎟</span> Coupons</div>
       <div class="s-item" onclick="go('withdrawals',this)"><span class="s-icon">💸</span> Withdrawals <span class="s-badge" id="sb-w">0</span></div>
       <div class="s-sec">Content</div>
       <div class="s-item" onclick="go('courses',this)"><span class="s-icon">📚</span> Courses</div>
@@ -246,6 +247,49 @@ tr:hover td{background:#FAFAFA}
               <button class="btn bv" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%;background:var(--pl);color:var(--pd)" onclick="go('courses',null)">📚 Add New Course</button>
               <button class="btn bed" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%" onclick="go('settings',null)">⚙️ Platform Settings</button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COUPONS -->
+      <div class="sec" id="sec-coupons">
+        <div class="info ip">🎟 Generate coupon codes for Basic ($5) and Classic ($10) registration. Admins can also generate FREE coupons that bypass payment entirely.</div>
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">All Coupons</div><span style="font-size:13px;color:var(--muted)" id="coupon-count">0 coupons</span></div>
+            <div class="tb">
+              <input class="si" placeholder="🔍 Search coupon code..." oninput="searchCoupons(this.value)"/>
+              <div class="ftabs">
+                <button class="ft on" onclick="filterCoupons('all',this)">All</button>
+                <button class="ft" onclick="filterCoupons('unused',this)">Unused</button>
+                <button class="ft" onclick="filterCoupons('used',this)">Used</button>
+                <button class="ft" onclick="filterCoupons('free',this)">Free/Admin</button>
+              </div>
+            </div>
+            <div class="tw"><table>
+              <thead><tr><th>#</th><th>Code</th><th>Plan</th><th>Type</th><th>Status</th><th>Used By</th><th>Created</th><th>Actions</th></tr></thead>
+              <tbody id="coupons-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">🎟 Generate Coupons</div></div>
+            <div class="fg"><label>Plan Type *</label>
+              <select id="cp-plan">
+                <option value="basic">💼 Basic — $5</option>
+                <option value="classic">👑 Classic — $10</option>
+              </select>
+            </div>
+            <div class="fg"><label>Coupon Type *</label>
+              <select id="cp-type" onchange="toggleFreeNote()">
+                <option value="paid">💳 Paid Coupon (user pays you directly)</option>
+                <option value="free">🎁 Free Coupon (admin gives away free)</option>
+              </select>
+            </div>
+            <div class="info ia" id="free-note" style="display:none">⚠️ Free coupons skip payment entirely. Use these for promotions, influencers or testing.</div>
+            <div class="fg"><label>How many coupons to generate? *</label><input type="number" id="cp-qty" value="1" min="1" max="100"/></div>
+            <div class="fg"><label>Notes <span style="font-weight:400;color:var(--muted)">(optional — e.g. "For John&apos;s WhatsApp group")</span></label><input type="text" id="cp-notes" placeholder="Internal note about this batch"/></div>
+            <button class="badd" onclick="generateCoupons()">🎟 Generate Coupons</button>
+            <div id="generated-codes" style="margin-top:1rem"></div>
           </div>
         </div>
       </div>
@@ -389,7 +433,7 @@ tr:hover td{background:#FAFAFA}
           <div class="sg">
             <div class="si2"><label>Basic Registration (₦)</label><input type="number" id="s-bp" value="7000"/></div>
             <div class="si2"><label>Classic Registration (₦)</label><input type="number" id="s-cp" value="12000"/></div>
-            <div class="si2"><label>Basic Daily Limit (₦)</label><input type="number" id="s-bl" value="1000"/></div>
+            <div class="si2"><label>Basic Daily Limit (₦)</label><input type="number" id="s-bl" value="500"/></div>
             <div class="si2"><label>Classic Daily Limit (₦)</label><input type="number" id="s-cl" value="2000"/></div>
             <div class="si2"><label>Basic Signup Bonus ($)</label><input type="number" id="s-bb" value="5"/></div>
             <div class="si2"><label>Classic Signup Bonus ($)</label><input type="number" id="s-cb" value="10"/></div>
@@ -451,6 +495,125 @@ try { ADMIN_EMAIL = localStorage.getItem('dge') || ADMIN_EMAIL; } catch(e){}
 try { ADMIN_PASS  = localStorage.getItem('dgp') || ADMIN_PASS;  } catch(e){}
 
 // ── LOGIN ─────────────────────────────────────────────────────────
+
+// ── COUPONS ───────────────────────────────────────────────────────
+var coupons = [];
+var couponFilter = 'all';
+
+function genCouponCode() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var seg = function() {
+    var s = '';
+    for (var i=0; i<4; i++) s += chars[Math.floor(Math.random()*chars.length)];
+    return s;
+  };
+  return 'DE-' + seg() + '-' + seg();
+}
+
+function toggleFreeNote() {
+  var type = document.getElementById('cp-type').value;
+  document.getElementById('free-note').style.display = type === 'free' ? 'block' : 'none';
+}
+
+function generateCoupons() {
+  var plan = document.getElementById('cp-plan').value;
+  var type = document.getElementById('cp-type').value;
+  var qty = parseInt(document.getElementById('cp-qty').value) || 1;
+  var notes = document.getElementById('cp-notes').value.trim();
+
+  if (qty > 100) { alert('Maximum 100 coupons at once.'); return; }
+
+  var newCodes = [];
+  for (var i = 0; i < qty; i++) {
+    var code = genCouponCode();
+    var coupon = {
+      id: Date.now() + i,
+      code: code,
+      plan: plan,
+      type: type,
+      used: false,
+      used_by: null,
+      notes: notes,
+      created: new Date().toLocaleDateString()
+    };
+    coupons.unshift(coupon);
+    newCodes.push(code);
+  }
+
+  try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
+
+  renderCoupons();
+  document.getElementById('generated-codes').innerHTML =
+    '<div class="info ig"><strong>✅ ' + qty + ' coupon(s) generated!</strong><br>' +
+    newCodes.map(function(c){return '<div style="font-family:monospace;font-size:14px;font-weight:700;margin-top:6px;padding:6px 10px;background:white;border-radius:6px;display:inline-block;margin-right:6px">'+c+'</div>'}).join('') +
+    '<br><button class="btn bv" style="margin-top:10px" onclick="copyAllCodes(\''+newCodes.join(',')+'\')">📋 Copy All Codes</button></div>';
+
+  document.getElementById('cp-notes').value = '';
+}
+
+function copyAllCodes(codesStr) {
+  var codes = codesStr.split(',').join('\n');
+  try {
+    navigator.clipboard.writeText(codes);
+    alert('✅ Codes copied to clipboard!');
+  } catch(e) {
+    alert('Codes:\n' + codes);
+  }
+}
+
+function getCouponsList() {
+  if (couponFilter === 'all') return coupons;
+  if (couponFilter === 'unused') return coupons.filter(function(c){return !c.used});
+  if (couponFilter === 'used') return coupons.filter(function(c){return c.used});
+  if (couponFilter === 'free') return coupons.filter(function(c){return c.type==='free'});
+  return coupons;
+}
+
+function renderCoupons(list) {
+  var data = list || getCouponsList();
+  document.getElementById('coupon-count').textContent = coupons.length + ' coupons';
+  document.getElementById('coupons-tbody').innerHTML = data.length ? data.map(function(c, i) {
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td>' +
+      '<td><strong style="font-family:monospace">'+c.code+'</strong></td>' +
+      '<td><span class="pill '+(c.plan==='classic'?'pc':'pb')+'">'+c.plan+'</span></td>' +
+      '<td><span class="pill '+(c.type==='free'?'pa':'pp')+'">'+(c.type==='free'?'🎁 Free':'💳 Paid')+'</span></td>' +
+      '<td><span class="pill '+(c.used?'prj':'pa')+'">'+(c.used?'Used':'Unused')+'</span></td>' +
+      '<td style="color:var(--muted);font-size:12px">'+(c.used_by||'—')+'</td>' +
+      '<td style="color:var(--muted);font-size:12px">'+c.created+'</td>' +
+      '<td><div class="brow"><button class="btn bv" onclick="copyCoupon(\''+c.code+'\')">Copy</button>'+(!c.used?'<button class="btn brj" onclick="deleteCoupon('+c.id+')">Delete</button>':'')+'</div></td></tr>';
+  }).join('') : '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">No coupons generated yet.</td></tr>';
+}
+
+function copyCoupon(code) {
+  try { navigator.clipboard.writeText(code); alert('Copied: ' + code); } catch(e) { alert('Code: ' + code); }
+}
+
+function deleteCoupon(id) {
+  if (confirm('Delete this coupon?')) {
+    coupons = coupons.filter(function(c){return c.id !== id});
+    try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
+    renderCoupons();
+  }
+}
+
+function filterCoupons(f, el) {
+  couponFilter = f;
+  document.querySelectorAll('#sec-coupons .ft').forEach(function(t){t.classList.remove('on')});
+  el.classList.add('on');
+  renderCoupons();
+}
+
+function searchCoupons(q) {
+  renderCoupons(coupons.filter(function(c){return c.code.toLowerCase().includes(q.toLowerCase())}));
+}
+
+function loadCoupons() {
+  try {
+    var saved = localStorage.getItem('dge_coupons');
+    if (saved) coupons = JSON.parse(saved);
+  } catch(e){}
+}
+
 function doLogin() {
   try {
     var email = (document.getElementById('lem').value || '').trim();
@@ -487,13 +650,14 @@ function doLogout() {
 }
 
 // ── NAV ───────────────────────────────────────────────────────────
-var TITLES = {dashboard:'Dashboard',users:'All Members',withdrawals:'Withdrawal Requests',courses:'Courses',tasks:'Daily Tasks',spin:'Spin Prizes',announce:'Announcements',settings:'Platform Settings'};
+var TITLES = {dashboard:'Dashboard',coupons:'Coupon Management',users:'All Members',withdrawals:'Withdrawal Requests',courses:'Courses',tasks:'Daily Tasks',spin:'Spin Prizes',announce:'Announcements',settings:'Platform Settings'};
 function go(id, el) {
   document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active')});
   document.getElementById('sec-'+id).classList.add('active');
   document.querySelectorAll('.s-item').forEach(function(i){i.classList.remove('active')});
   if (el) el.classList.add('active');
   document.getElementById('ttitle').textContent = TITLES[id] || id;
+  if (id==='coupons') renderCoupons();
   if (id==='users') renderUsers();
   if (id==='withdrawals') renderWithdrawals();
   if (id==='courses') renderCourses();
@@ -507,6 +671,7 @@ var users=[], withdrawals=[], courses=[], tasks=[], spins=[], anns=[];
 var uFilter='all', wFilter='pending';
 
 function init() {
+  loadCoupons();
   users = [
     {id:1,name:'Kofi Chambers',email:'kofi@example.com',phone:'08012345678',plan:'classic',bal:42.50,joined:'May 1, 2026',status:'active'},
     {id:2,name:'Amaka Obi',email:'amaka@example.com',phone:'08023456789',plan:'basic',bal:18.00,joined:'May 3, 2026',status:'active'},
