@@ -6,6 +6,11 @@
 <title>DigiEarn — Get Paid For Simple Tasks</title>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
+<script type="text/javascript">aclib.runAutoTag({zoneId:'d4s64aqfhd'});</script>
+<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
+<script type="text/javascript" src="https://cdn-cf.bvdisplay.com/header-bid.js"></script>
+<!-- Bidvertiser2104798 -->
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -48,6 +53,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2
 .plan-btn{width:100%;padding:12px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;border:none}
 .pb-b{background:var(--gl);color:var(--gd)}.pb-b:hover{background:var(--green);color:white}
 .pb-c{background:var(--p);color:white}.pb-c:hover{background:var(--pd)}
+.coupon-note{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:1rem 1.25rem;margin-top:1.5rem;text-align:center}
+.coupon-note strong{color:var(--pd)}
 .tasks-section{background:var(--white);padding:4rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .tasks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-width:1000px;margin:0 auto}
 .task-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center}
@@ -60,12 +67,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2
 .w-text p{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
 .w-rules{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 .w-rule{background:rgba(255,255,255,.15);border-radius:8px;padding:5px 12px;font-size:12px;color:white;font-weight:500}
-.pay-section{background:var(--bg);padding:4rem 2rem;border-top:1px solid var(--border)}
-.pay-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;max-width:700px;margin:0 auto}
-.pay-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1rem;text-align:center}
-.pay-card-logo{height:40px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
-.pay-card-name{font-size:12px;font-weight:600;margin-bottom:2px}
-.pay-card-sub{font-size:11px;color:var(--muted)}
+.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.step{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--pl);color:var(--pd);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
+.step-desc{font-size:12px;color:var(--muted);line-height:1.6}
 .ref-banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:20px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
 .ref-text h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white;margin-bottom:6px}
 .ref-text p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6}
@@ -73,11 +79,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2
 .ref-amt{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.9rem 1.25rem;text-align:center}
 .ref-amt strong{display:block;font-family:'Syne',sans-serif;font-size:22px;color:#A78BFA;font-weight:800}
 .ref-amt span{font-size:11px;color:rgba(255,255,255,.5)}
-.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-.step{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center}
-.step-num{width:40px;height:40px;border-radius:50%;background:var(--pl);color:var(--pd);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
-.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
-.step-desc{font-size:12px;color:var(--muted);line-height:1.6}
 footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
 .f-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px}.f-logo span{color:var(--p)}
 .f-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:1rem}
@@ -96,17 +97,15 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
 .plan-tab.on{border-color:var(--p);background:var(--pl)}
 .plan-tab-name{font-size:14px;font-weight:700}
 .plan-tab-price{font-size:12px;color:var(--muted)}
-.cur-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
-.cur-btn{padding:9px;border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;background:var(--white);font-family:'Space Grotesk',sans-serif;text-align:center}
-.cur-btn.on{border-color:var(--p);background:var(--pl);color:var(--pd)}
-.price-box{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:12px;text-align:center;margin-bottom:1.25rem}
-.price-box .amt{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--pd)}
-.price-box .desc{font-size:12px;color:var(--pd);margin-top:2px}
-.pay-label{font-size:13px;font-weight:600;margin-bottom:8px}
-.pay-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.25rem}
-.pay-opt{border:1.5px solid var(--border);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:60px}
-.pay-opt.on{border-color:var(--p);background:var(--pl)}
-.pay-opt-label{font-size:10px;font-weight:600;color:var(--muted)}
+.coupon-box{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;text-align:center}
+.coupon-box .label{font-size:12px;color:var(--pd);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
+.coupon-input{width:100%;padding:12px 14px;border:2px solid var(--p);border-radius:var(--r);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;text-align:center;letter-spacing:.1em;text-transform:uppercase;outline:none;background:white}
+.coupon-input:focus{border-color:var(--pd)}
+.coupon-status{font-size:13px;margin-top:8px;min-height:18px}
+.coupon-valid{color:var(--gd);font-weight:600}
+.coupon-invalid{color:var(--red);font-weight:600}
+.coupon-checking{color:var(--muted)}
+.buy-coupon-link{font-size:13px;color:var(--p);font-weight:600;cursor:pointer;text-align:center;display:block;margin-top:10px}
 .fg{margin-bottom:.9rem}
 .fg label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
 .fg input,.fg select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--white)}
@@ -120,16 +119,21 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
 .alert-box.show{display:block}
 .alert-err{background:var(--rl);color:var(--red);border:1px solid #fca5a5}
 .alert-ok{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
-@media(max-width:640px){.plans-grid,.two-fg{grid-template-columns:1fr}.nav-links{display:none}.ref-banner{flex-direction:column}.w-banner{flex-direction:column}.pay-opts{grid-template-columns:repeat(2,1fr)}}
+
+/* BUY COUPON MODAL */
+.coupon-shop{text-align:center}
+.coupon-shop-icon{font-size:48px;margin-bottom:1rem}
+.coupon-shop-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
+.coupon-shop-options{display:flex;flex-direction:column;gap:10px}
+.coupon-shop-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:var(--r);text-align:left}
+.cso-icon{font-size:24px;flex-shrink:0}
+.cso-text{flex:1}
+.cso-title{font-size:14px;font-weight:600}
+.coupon-shop-opt:hover{border-color:var(--p)!important}
+.cso-sub{font-size:12px;color:var(--muted)}
+
+@media(max-width:640px){.plans-grid,.two-fg{grid-template-columns:1fr}.nav-links{display:none}.ref-banner{flex-direction:column}.w-banner{flex-direction:column}}
 </style>
-<!-- ═══ AD NETWORKS ═══ -->
-<!-- Adsterra -->
-<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
-<!-- AdMaven -->
-<script type="text/javascript" src="https://aclibrary.com/ac.js"></script>
-<!-- BidVertiser -->
-<script src="https://serve.bidvertiser.com/bdvr.ads.min.js" async></script>
-<!-- ════════════════ -->
 </head>
 <body>
 
@@ -150,8 +154,8 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
   <h1>Complete Tasks.<br><span>Earn Real Money.</span></h1>
   <p>Watch ads, fill surveys and complete social media tasks from your phone. Get paid directly to your Nigerian bank account.</p>
   <div class="hero-btns">
-    <button class="btn-p" onclick="openModal('classic')">Join Classic — ₦12,000</button>
-    <button class="btn-o" onclick="openModal('basic')">Start Basic — ₦7,000</button>
+    <button class="btn-p" onclick="openModal('classic')">Join Classic — $10</button>
+    <button class="btn-o" onclick="openModal('basic')">Start Basic — $5</button>
     <a href="tutorial.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:white;padding:13px 24px;border-radius:12px;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.2)">🎓 How it works</a>
   </div>
   <div class="hero-stats">
@@ -161,33 +165,23 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
   </div>
 </div>
 
-<!-- Adsterra Ad Banner -->
-<div style="max-width:1000px;margin:1.5rem auto;padding:0 2rem;text-align:center">
-  <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Sponsored</div>
-  <a href="https://www.effectivecpmnetwork.com/gx1q7jgr?key=0889f96dbbcb9239cd3e3ecd4d3ff2aa" target="_blank" rel="noopener" style="display:block">
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1rem;display:flex;align-items:center;justify-content:center;min-height:90px">
-      <div id="adsterra-banner"></div>
-    </div>
-  </a>
-</div>
-
 <!-- PLANS -->
 <div class="section" id="plans">
   <div class="s-label">Choose your plan</div>
   <div class="s-title">Pick how much you want to earn</div>
-  <div class="s-sub">One-time registration fee. Start earning from day one.</div>
+  <div class="s-sub">Registration is by coupon code only. Get your coupon and join today!</div>
   <div class="plans-grid">
     <div class="plan-card">
       <div class="plan-icon pi-b">💼</div>
       <div class="plan-name">Basic</div>
-      <div class="plan-price">₦7,000 <span>one-time</span></div>
-      <div class="plan-earn">🎁 $5 signup bonus · Earn ₦1000/day</div>
+      <div class="plan-price">$5 <span>coupon</span></div>
+      <div class="plan-earn">🎁 $5 signup bonus · Earn ₦1,000/day</div>
       <ul class="plan-features">
         <li>$5 signup bonus credited instantly</li>
         <li>Watch ads &amp; videos</li>
         <li>Fill surveys &amp; forms</li>
         <li>Social media tasks</li>
-        <li>Withdraw from $45 (Mon–Fri, 10am–4pm)</li>
+        <li>Withdraw from $40 (Mon–Fri, 10am–4pm)</li>
         <li>All Nigerian banks supported</li>
         <li>Referral bonus — ₦500/referral</li>
       </ul>
@@ -197,7 +191,7 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
       <div class="pop-badge">⭐ Most Popular</div>
       <div class="plan-icon pi-c">👑</div>
       <div class="plan-name">Classic</div>
-      <div class="plan-price">₦12,000 <span>one-time</span></div>
+      <div class="plan-price">$10 <span>coupon</span></div>
       <div class="plan-earn">🎁 $10 signup bonus · Earn ₦2,000/day</div>
       <ul class="plan-features">
         <li>$10 signup bonus credited instantly</li>
@@ -205,12 +199,15 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
         <li>4× more tasks daily</li>
         <li>Priority task access</li>
         <li>Higher paying surveys</li>
-        <li>Withdraw from $40 (Mon–Fri, 10am–4pm)</li>
+        <li>Withdraw from $35 (Mon–Fri, 10am–4pm)</li>
         <li>Referral bonus — ₦1,000/referral</li>
         <li>Exclusive Classic tasks</li>
       </ul>
       <button class="plan-btn pb-c" onclick="openModal('classic')">Register Classic</button>
     </div>
+  </div>
+  <div class="coupon-note">
+    🎟 <strong>Registration requires a coupon code.</strong> Don't have one? <span style="color:var(--p);cursor:pointer;font-weight:700;text-decoration:underline" onclick="openModal('basic')">Get your coupon now →</span>
   </div>
 </div>
 
@@ -222,49 +219,11 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
       <h3>Withdrawal Rules</h3>
       <p>Earn up to your target and withdraw directly to your Nigerian bank account.</p>
       <div class="w-rules">
-        <div class="w-rule">💰 Basic: min $45</div>
-        <div class="w-rule">👑 Classic: min $40</div>
+        <div class="w-rule">💰 Basic: min $40</div>
+        <div class="w-rule">👑 Classic: min $35</div>
         <div class="w-rule">📅 Mon – Fri only</div>
         <div class="w-rule">🕙 10:00 AM – 4:00 PM</div>
         <div class="w-rule">⏱ Paid within 24hrs</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PAYMENT METHODS -->
-<div class="pay-section" id="payment">
-  <div style="max-width:700px;margin:0 auto;text-align:center">
-    <div class="s-label">Accepted payments</div>
-    <div class="s-title" style="margin-bottom:.5rem">Pay &amp; get paid your way</div>
-    <div class="s-sub">Register and withdraw using any Nigerian payment method.</div>
-    <div class="pay-grid">
-      <div class="pay-card">
-        <div class="pay-card-logo">
-          <svg width="60" height="30" viewBox="0 0 90 30"><circle cx="22" cy="15" r="13" fill="#EB001B"/><circle cx="38" cy="15" r="13" fill="#F79E1B"/><path d="M30 5.5a13 13 0 0 1 0 19A13 13 0 0 1 30 5.5z" fill="#FF5F00"/>
-          <text x="56" y="21" font-family="Arial" font-weight="bold" font-size="17" fill="#1A1F71">VISA</text></svg>
-        </div>
-        <div class="pay-card-name">Debit Card</div><div class="pay-card-sub">Visa / Mastercard</div>
-      </div>
-      <div class="pay-card">
-        <div class="pay-card-logo"><div style="font-size:30px">🏦</div></div>
-        <div class="pay-card-name">Bank Transfer</div><div class="pay-card-sub">All Nigerian banks</div>
-      </div>
-      <div class="pay-card">
-        <div class="pay-card-logo"><div style="font-size:30px">📱</div></div>
-        <div class="pay-card-name">USSD</div><div class="pay-card-sub">*737#, *919# etc</div>
-      </div>
-      <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#00B140;border-radius:8px;padding:5px 12px"><span style="color:white;font-size:14px;font-weight:900">OPay</span></div></div>
-        <div class="pay-card-name">OPay</div><div class="pay-card-sub">Mobile wallet</div>
-      </div>
-      <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#0066FF;border-radius:8px;padding:5px 10px"><span style="color:white;font-size:12px;font-weight:900">PalmPay</span></div></div>
-        <div class="pay-card-name">PalmPay</div><div class="pay-card-sub">Mobile wallet</div>
-      </div>
-      <div class="pay-card">
-        <div class="pay-card-logo"><div style="background:#40196B;border-radius:8px;padding:5px 14px"><span style="color:white;font-size:14px;font-weight:900">Kuda</span></div></div>
-        <div class="pay-card-name">Kuda Bank</div><div class="pay-card-sub">Online banking</div>
       </div>
     </div>
   </div>
@@ -292,9 +251,9 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
   <div class="s-label">Simple process</div>
   <div class="s-title">How it works</div>
   <div class="steps-grid">
-    <div class="step"><div class="step-num">1</div><div class="step-title">Register &amp; Pay</div><div class="step-desc">Choose Basic or Classic, pay once via card, bank transfer, USSD, OPay or PalmPay.</div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-title">Complete Tasks</div><div class="step-desc">Log in daily and complete available tasks — ads, surveys, social media tasks.</div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-title">Reach Your Target</div><div class="step-desc">Basic withdraws from $45. Classic withdraws from $40. Earn daily to reach it faster.</div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-title">Get a Coupon</div><div class="step-desc">Purchase a Basic ($5) or Classic ($10) coupon code to unlock registration.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-title">Register with Coupon</div><div class="step-desc">Enter your coupon code and fill in your details to create your account instantly.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-title">Complete Tasks</div><div class="step-desc">Log in daily and complete available tasks — ads, surveys, social media tasks.</div></div>
     <div class="step"><div class="step-num">4</div><div class="step-title">Withdraw Mon–Fri</div><div class="step-desc">Request between 10am–4pm on weekdays. Money hits your bank within 24 hours.</div></div>
   </div>
 </div>
@@ -311,16 +270,6 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
       <div class="ref-amt"><strong>₦1,000</strong><span>Per Classic referral</span></div>
     </div>
   </div>
-</div>
-
-<!-- Adsterra Ad Zone 2 -->
-<div style="max-width:1000px;margin:0 auto 2rem;padding:0 2rem;text-align:center">
-  <div style="font-size:11px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Advertisement</div>
-  <a href="https://www.effectivecpmnetwork.com/gx1q7jgr?key=0889f96dbbcb9239cd3e3ecd4d3ff2aa" target="_blank" rel="noopener" style="display:block">
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:1rem;min-height:90px;display:flex;align-items:center;justify-content:center">
-      <div id="adsterra-banner-2"></div>
-    </div>
-  </a>
 </div>
 
 <!-- BUSINESS BANNER -->
@@ -342,7 +291,7 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
   <div class="f-logo">Digi<span>Earn</span></div>
   <div class="f-sub">Nigeria's trusted digital earning platform.</div>
   <div class="f-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a><a href="#">FAQ</a></div>
-  <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:1rem">© 2026 DigiEarn. All rights reserved.</p>
+  <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:1rem">© 2026 DigiEarn — Powered by TechHub. All rights reserved.</p>
 </footer>
 
 <!-- REGISTRATION MODAL -->
@@ -357,50 +306,19 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
     <div class="plan-tabs">
       <div class="plan-tab on" id="tab-basic" onclick="setPlan('basic')">
         <div class="plan-tab-name">💼 Basic</div>
-        <div class="plan-tab-price">₦7,000</div>
+        <div class="plan-tab-price">$5 coupon</div>
       </div>
       <div class="plan-tab" id="tab-classic" onclick="setPlan('classic')">
         <div class="plan-tab-name">👑 Classic</div>
-        <div class="plan-tab-price">₦12,000</div>
+        <div class="plan-tab-price">$10 coupon</div>
       </div>
     </div>
 
-    <div class="cur-row">
-      <button class="cur-btn on" id="cur-ngn" onclick="setCur('NGN')">🇳🇬 Naira (₦)</button>
-      <button class="cur-btn" id="cur-usd" onclick="setCur('USD')">🇺🇸 Dollar ($)</button>
-    </div>
-
-    <div class="price-box">
-      <div class="amt" id="price-display">₦7,000</div>
-      <div class="desc">One-time registration · Lifetime access</div>
-    </div>
-
-    <div class="pay-label">How do you want to pay?</div>
-    <div class="pay-opts">
-      <div class="pay-opt on" id="po-card" onclick="setPay('card')">
-        <svg width="44" height="18" viewBox="0 0 90 30"><circle cx="22" cy="15" r="13" fill="#EB001B"/><circle cx="38" cy="15" r="13" fill="#F79E1B"/><path d="M30 5.5a13 13 0 0 1 0 19A13 13 0 0 1 30 5.5z" fill="#FF5F00"/><text x="56" y="21" font-family="Arial" font-weight="bold" font-size="17" fill="#1A1F71">VISA</text></svg>
-        <div class="pay-opt-label">Card</div>
-      </div>
-      <div class="pay-opt" id="po-bank" onclick="setPay('bank')">
-        <div style="font-size:22px">🏦</div>
-        <div class="pay-opt-label">Bank Transfer</div>
-      </div>
-      <div class="pay-opt" id="po-ussd" onclick="setPay('ussd')">
-        <div style="font-size:22px">📱</div>
-        <div class="pay-opt-label">USSD</div>
-      </div>
-      <div class="pay-opt" id="po-opay" onclick="setPay('opay')">
-        <div style="background:#00B140;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">OPay</span></div>
-        <div class="pay-opt-label">OPay</div>
-      </div>
-      <div class="pay-opt" id="po-palmpay" onclick="setPay('palmpay')">
-        <div style="background:#0066FF;border-radius:6px;padding:3px 6px"><span style="color:white;font-size:10px;font-weight:900">PalmPay</span></div>
-        <div class="pay-opt-label">PalmPay</div>
-      </div>
-      <div class="pay-opt" id="po-kuda" onclick="setPay('kuda')">
-        <div style="background:#40196B;border-radius:6px;padding:3px 8px"><span style="color:white;font-size:11px;font-weight:900">Kuda</span></div>
-        <div class="pay-opt-label">Kuda</div>
-      </div>
+    <div class="coupon-box">
+      <div class="label">🎟 Enter Your Coupon Code</div>
+      <input type="text" id="coupon-code" class="coupon-input" placeholder="XXXX-XXXX-XXXX" maxlength="20" oninput="checkCoupon()"/>
+      <div class="coupon-status" id="coupon-status"></div>
+      <span class="buy-coupon-link" onclick="openCouponShop()">Don't have a coupon? Get one now →</span>
     </div>
 
     <div class="two-fg">
@@ -426,25 +344,246 @@ footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
     <div class="fg"><label>Account Number * (10 digits)</label><input type="tel" id="r-acct" placeholder="0123456789" maxlength="10"/></div>
     <div class="fg"><label>Account Name *</label><input type="text" id="r-acctname" placeholder="Name on your bank account"/></div>
 
-    <button class="pay-btn" id="pay-btn" onclick="doRegister()">Pay &amp; Register Now →</button>
-    <div class="terms">By registering you agree to our Terms of Service. Payments secured by Paystack. Withdrawals: Mon–Fri 10am–4pm.</div>
+    <button class="pay-btn" id="reg-btn" onclick="doRegister()">Redeem Coupon &amp; Register →</button>
+    <div class="terms">By registering you agree to our Terms of Service. Withdrawals: Mon–Fri, 10am–4pm.</div>
+  </div>
+</div>
+
+<!-- BUY COUPON MODAL -->
+<div class="overlay" id="coupon-shop-overlay">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-head">
+      <div class="modal-title">🎟 Buy a Coupon</div>
+      <button class="modal-x" onclick="closeCouponShop()">×</button>
+    </div>
+    <div class="alert-box" id="shop-alert"></div>
+
+    <!-- STEP 1: Choose plan -->
+    <div id="shop-step1">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.6">
+        Choose your plan below. Pay securely with Paystack. Your coupon code will appear on screen immediately after payment!
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem">
+        <div class="coupon-shop-opt" id="shop-basic" onclick="selectShopPlan('basic')" style="cursor:pointer;border:2px solid var(--p);background:var(--pl)">
+          <div class="cso-icon">💼</div>
+          <div class="cso-text">
+            <div class="cso-title">Basic Plan — $5 <span style="font-size:11px;color:var(--muted);font-weight:400">(~₦7,500)</span></div>
+            <div class="cso-sub">Earn ₦1,000/day · $5 signup bonus · Withdraw from $40</div>
+          </div>
+          <div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:var(--p);flex-shrink:0">$5</div>
+        </div>
+        <div class="coupon-shop-opt" id="shop-classic" onclick="selectShopPlan('classic')" style="cursor:pointer">
+          <div class="cso-icon">👑</div>
+          <div class="cso-text">
+            <div class="cso-title">Classic Plan — $10 <span style="font-size:11px;color:var(--muted);font-weight:400">(~₦15,000)</span></div>
+            <div class="cso-sub">Earn ₦2,000/day · $10 signup bonus · Withdraw from $35</div>
+          </div>
+          <div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:var(--p);flex-shrink:0">$10</div>
+        </div>
+      </div>
+      <div class="fg"><label>Your Email Address *</label><input type="email" id="shop-email" placeholder="Enter your email to receive updates"/></div>
+      <button class="pay-btn" id="shop-pay-btn" onclick="doShopPayment()">Pay & Get My Coupon →</button>
+      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5">🔒 Payment secured by Paystack · All Nigerian banks, cards, OPay, PalmPay supported</div>
+    </div>
+
+    <!-- STEP 2: Coupon revealed -->
+    <div id="shop-step2" style="display:none;text-align:center">
+      <div style="font-size:48px;margin-bottom:1rem">🎉</div>
+      <div style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;margin-bottom:6px">Payment Successful!</div>
+      <div style="font-size:14px;color:var(--muted);margin-bottom:1.5rem;line-height:1.7">Your coupon code is ready. <strong>Screenshot or copy it now!</strong> This code gives you access to your DigiEarn account.</div>
+      <div style="background:#0F0B1E;border-radius:14px;padding:1.5rem;margin-bottom:1.25rem">
+        <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em">Your Coupon Code</div>
+        <div id="revealed-code" style="font-family:monospace;font-size:28px;font-weight:900;color:#A78BFA;letter-spacing:.15em;margin-bottom:12px">DE-XXXX-XXXX</div>
+        <button onclick="copyRevealedCode()" style="background:var(--p);color:white;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:Space Grotesk,sans-serif;width:100%">📋 Copy Code</button>
+      </div>
+      <div style="background:var(--gl);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--gd);margin-bottom:1.25rem;text-align:left;line-height:1.6">
+        ✅ Code saved to your account<br>
+        📅 Expires in 7 days — register before it expires!<br>
+        🔒 One-time use only
+      </div>
+      <button onclick="useCodeNow()" style="width:100%;padding:13px;background:var(--green);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;font-family:Space Grotesk,sans-serif">Register Now with This Code →</button>
+    </div>
   </div>
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────
 var SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 var SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
 var PAYSTACK_KEY = 'pk_live_831770e2c350d569d81a74835bee761772138ce8';
+var TG_TOKEN    = '8995399316:AAG8fHQabbiA8TvThGjoaHXn2VBAPN9eua8';
+var TG_CHAT     = '7130000367';
+var USD_RATE    = 1500;
 
 var db = null;
 window.addEventListener('load', function() {
   try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.log('Supabase:', e); }
 });
 
-var PRICES = { basic: { NGN: 7000, USD: 7 }, classic: { NGN: 12000, USD: 12 } };
-var CHANNELS = { card:['card'], bank:['bank'], ussd:['ussd'], opay:['bank'], palmpay:['bank'], kuda:['bank'] };
-var curPlan = 'basic', curCur = 'NGN', curPay = 'card';
+var curPlan = 'basic';
+var validCoupon = null;
+var couponCheckTimeout = null;
+var shopPlan = 'basic';
+var revealedCouponCode = '';
+
+// ── COUPON SHOP ───────────────────────────────────────────────────
+function selectShopPlan(plan) {
+  shopPlan = plan;
+  var basic   = document.getElementById('shop-basic');
+  var classic = document.getElementById('shop-classic');
+  if (plan === 'basic') {
+    basic.style.border   = '2px solid var(--p)';
+    basic.style.background = 'var(--pl)';
+    classic.style.border = '1.5px solid var(--border)';
+    classic.style.background = '';
+  } else {
+    classic.style.border   = '2px solid var(--p)';
+    classic.style.background = 'var(--pl)';
+    basic.style.border   = '1.5px solid var(--border)';
+    basic.style.background = '';
+  }
+}
+
+function genCode() {
+  var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  var seg = function() {
+    var s = '';
+    for (var i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    return s;
+  };
+  return 'DE-' + seg() + '-' + seg();
+}
+
+function sendTelegramNotif(msg) {
+  try {
+    fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
+    });
+  } catch(e) { console.log('TG error:', e); }
+}
+
+function saveCouponToSupabase(code, plan, email) {
+  if (!db) return;
+  var expiry = new Date();
+  expiry.setDate(expiry.getDate() + 7);
+  db.from('coupons').insert({
+    code: code,
+    plan: plan,
+    type: 'paid',
+    used: false,
+    used_by: null,
+    notes: 'Auto-generated after payment by ' + email,
+    expires_at: expiry.toISOString(),
+    created_at: new Date().toISOString()
+  }).then(function(){}).catch(function(){});
+}
+
+function doShopPayment() {
+  var email = (document.getElementById('shop-email').value || '').trim();
+  var alertEl = document.getElementById('shop-alert');
+  alertEl.className = 'alert-box';
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alertEl.textContent = 'Please enter a valid email address.';
+    alertEl.className = 'alert-box show alert-err';
+    return;
+  }
+
+  if (typeof PaystackPop === 'undefined') {
+    alertEl.textContent = 'Payment system not loaded. Please refresh and try again.';
+    alertEl.className = 'alert-box show alert-err';
+    return;
+  }
+
+  var btn = document.getElementById('shop-pay-btn');
+  btn.disabled = true;
+  btn.textContent = 'Loading payment...';
+
+  var prices = { basic: 7500, classic: 15000 };
+  var amount = prices[shopPlan];
+
+  try {
+    var handler = PaystackPop.setup({
+      key: PAYSTACK_KEY,
+      email: email,
+      amount: amount * 100,
+      currency: 'NGN',
+      ref: 'dge_coupon_' + Date.now(),
+      metadata: {
+        custom_fields: [
+          { display_name: 'Plan', variable_name: 'plan', value: shopPlan },
+          { display_name: 'Type', variable_name: 'type', value: 'coupon_purchase' }
+        ]
+      },
+      callback: function(response) {
+        // Generate coupon code
+        var code = genCode();
+        revealedCouponCode = code;
+
+        // Save to Supabase
+        saveCouponToSupabase(code, shopPlan, email);
+
+        // Notify you on Telegram
+        var msg = '🎟 <b>New Coupon Purchased!</b>
+
+' +
+          '📧 Email: ' + email + '
+' +
+          '💼 Plan: ' + shopPlan.toUpperCase() + '
+' +
+          '💰 Amount: ₦' + amount.toLocaleString() + '
+' +
+          '🎫 Code: <b>' + code + '</b>
+' +
+          '🔖 Ref: ' + response.reference + '
+' +
+          '📅 Time: ' + new Date().toLocaleString();
+        sendTelegramNotif(msg);
+
+        // Show coupon to user
+        document.getElementById('shop-step1').style.display = 'none';
+        document.getElementById('revealed-code').textContent = code;
+        document.getElementById('shop-step2').style.display = 'block';
+
+        btn.disabled = false;
+        btn.textContent = 'Pay & Get My Coupon →';
+      },
+      onClose: function() {
+        btn.disabled = false;
+        btn.textContent = 'Pay & Get My Coupon →';
+      }
+    });
+    handler.openIframe();
+  } catch(e) {
+    alertEl.textContent = 'Payment error: ' + e.message;
+    alertEl.className = 'alert-box show alert-err';
+    btn.disabled = false;
+    btn.textContent = 'Pay & Get My Coupon →';
+  }
+}
+
+function copyRevealedCode() {
+  try {
+    navigator.clipboard.writeText(revealedCouponCode);
+    alert('✅ Code copied: ' + revealedCouponCode);
+  } catch(e) {
+    alert('Your code: ' + revealedCouponCode);
+  }
+}
+
+function useCodeNow() {
+  // Close shop modal, open registration modal with code pre-filled
+  closeCouponShop();
+  openModal(shopPlan);
+  setTimeout(function() {
+    var input = document.getElementById('coupon-code');
+    if (input) {
+      input.value = revealedCouponCode;
+      checkCoupon();
+    }
+  }, 400);
+}
 
 // ── MODAL ─────────────────────────────────────────────────────────
 function openModal(plan) {
@@ -452,6 +591,9 @@ function openModal(plan) {
   document.getElementById('reg-overlay').classList.add('show');
   document.body.style.overflow = 'hidden';
   document.getElementById('reg-alert').className = 'alert-box';
+  document.getElementById('coupon-code').value = '';
+  document.getElementById('coupon-status').innerHTML = '';
+  validCoupon = null;
 }
 function closeModal() {
   document.getElementById('reg-overlay').classList.remove('show');
@@ -461,36 +603,67 @@ document.getElementById('reg-overlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
+function openCouponShop() {
+  document.getElementById('coupon-shop-overlay').classList.add('show');
+}
+function closeCouponShop() {
+  document.getElementById('coupon-shop-overlay').classList.remove('show');
+}
+document.getElementById('coupon-shop-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCouponShop();
+});
+
 function setPlan(p) {
   curPlan = p;
   document.getElementById('tab-basic').classList.toggle('on', p === 'basic');
   document.getElementById('tab-classic').classList.toggle('on', p === 'classic');
-  updatePrice();
-}
-function setCur(c) {
-  curCur = c;
-  document.getElementById('cur-ngn').classList.toggle('on', c === 'NGN');
-  document.getElementById('cur-usd').classList.toggle('on', c === 'USD');
-  updatePrice();
-}
-function setPay(p) {
-  curPay = p;
-  ['card','bank','ussd','opay','palmpay','kuda'].forEach(function(id) {
-    document.getElementById('po-'+id).classList.toggle('on', id === p);
-  });
-}
-function updatePrice() {
-  var amt = PRICES[curPlan][curCur];
-  var sym = curCur === 'NGN' ? '₦' : '$';
-  document.getElementById('price-display').textContent = sym + amt.toLocaleString();
 }
 
-// ── VALIDATION ────────────────────────────────────────────────────
-function showAlert(msg, type) {
-  var el = document.getElementById('reg-alert');
-  el.textContent = msg;
-  el.className = 'alert-box show ' + (type === 'err' ? 'alert-err' : 'alert-ok');
-  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+// ── COUPON VALIDATION ───────────────────────────────────────────────
+function checkCoupon() {
+  var code = document.getElementById('coupon-code').value.trim().toUpperCase();
+  var statusEl = document.getElementById('coupon-status');
+  validCoupon = null;
+
+  clearTimeout(couponCheckTimeout);
+
+  if (!code) {
+    statusEl.innerHTML = '';
+    return;
+  }
+
+  statusEl.innerHTML = '<span class="coupon-checking">Checking coupon...</span>';
+
+  couponCheckTimeout = setTimeout(function() {
+    if (!db) {
+      // Fallback: master admin code for testing without Supabase connection
+      if (code === 'ADMIN-FREE-2026' || code === 'TECHHUB-MASTER') {
+        validCoupon = { code: code, plan: curPlan, type: 'admin' };
+        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid admin coupon! Free registration.</span>';
+        return;
+      }
+      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Try again.</span>';
+      return;
+    }
+
+    db.from('coupons').select('*').eq('code', code).eq('used', false).single().then(function(result) {
+      if (result.error || !result.data) {
+        statusEl.innerHTML = '<span class="coupon-invalid">✗ Invalid or already used coupon code.</span>';
+        validCoupon = null;
+      } else {
+        var coupon = result.data;
+        if (coupon.plan !== curPlan) {
+          statusEl.innerHTML = '<span class="coupon-invalid">✗ This coupon is for the ' + coupon.plan + ' plan. Switch plans above.</span>';
+          validCoupon = null;
+        } else {
+          validCoupon = coupon;
+          statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + coupon.plan + ' coupon! Ready to register.</span>';
+        }
+      }
+    }).catch(function() {
+      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Try again.</span>';
+    });
+  }, 600);
 }
 
 // ── REGISTER ──────────────────────────────────────────────────────
@@ -504,7 +677,10 @@ function doRegister() {
   var bank     = (document.getElementById('r-bank').value || '');
   var acct     = (document.getElementById('r-acct').value || '').trim();
   var acctName = (document.getElementById('r-acctname').value || '').trim();
+  var couponCode = document.getElementById('coupon-code').value.trim().toUpperCase();
 
+  if (!couponCode) { showAlert('Please enter your coupon code.', 'err'); return; }
+  if (!validCoupon) { showAlert('Please enter a valid coupon code first.', 'err'); return; }
   if (!first)    { showAlert('Please enter your first name.', 'err'); return; }
   if (!last)     { showAlert('Please enter your last name.', 'err'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email address.', 'err'); return; }
@@ -514,100 +690,78 @@ function doRegister() {
   if (acct.replace(/\D/g,'').length !== 10) { showAlert('Please enter your 10-digit account number.', 'err'); return; }
   if (!acctName) { showAlert('Please enter your account name.', 'err'); return; }
 
-  var btn = document.getElementById('pay-btn');
+  var btn = document.getElementById('reg-btn');
   btn.disabled = true;
-  btn.textContent = 'Loading payment...';
+  btn.textContent = 'Creating account...';
 
-  if (typeof PaystackPop === 'undefined') {
-    showAlert('Payment system not loaded. Please refresh the page and try again.', 'err');
-    btn.disabled = false;
-    btn.textContent = 'Pay & Register Now →';
-    return;
-  }
-
-  var amount = PRICES[curPlan][curCur];
-  var paystackAmount = curCur === 'NGN' ? amount * 100 : amount * 150000;
   var bonus = curPlan === 'classic' ? 10 : 5;
 
-  try {
-    var handler = PaystackPop.setup({
-      key: PAYSTACK_KEY,
+  function finishRegistration() {
+    if (!db) {
+      closeModal();
+      showSuccessPage(first, email, curPlan, bonus);
+      btn.disabled = false;
+      btn.textContent = 'Redeem Coupon & Register →';
+      return;
+    }
+
+    db.auth.signUp({
       email: email,
-      amount: paystackAmount,
-      currency: 'NGN',
-      channels: CHANNELS[curPay] || ['card'],
-      metadata: {
-        custom_fields: [
-          { display_name: 'Plan', variable_name: 'plan', value: curPlan },
-          { display_name: 'Name', variable_name: 'name', value: first + ' ' + last },
-          { display_name: 'Phone', variable_name: 'phone', value: phone }
-        ]
-      },
-      callback: function(response) {
-        btn.textContent = 'Creating account...';
-        if (!db) {
-          try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) {}
-        }
-        if (!db) {
-          closeModal();
-          showSuccessPage(first, email, curPlan, bonus);
-          return;
-        }
-        db.auth.signUp({
-          email: email,
-          password: password,
-          options: {
-            data: {
-              full_name: first + ' ' + last,
-              phone: phone,
-              plan: curPlan,
-              bank_name: bank,
-              account_number: acct,
-              account_name: acctName,
-              referral_code: refCode,
-              paystack_ref: response.reference,
-              earnings_usd: bonus,
-              earnings_ngn: bonus * 1500,
-              signup_bonus_usd: bonus,
-              withdraw_count: 0,
-              joined: new Date().toISOString()
-            },
-            emailRedirectTo: window.location.origin + '/earn-dashboard.html'
-          }
-        }).then(function(result) {
-          btn.disabled = false;
-          btn.textContent = 'Pay & Register Now →';
-          if (result.error) {
-            if (result.error.message.indexOf('already registered') > -1) {
-              showAlert('This email is already registered. Please log in instead.', 'err');
-            } else {
-              showAlert('Payment successful! Account issue: ' + result.error.message + '. Please contact support.', 'err');
-            }
-          } else {
-            closeModal();
-            showSuccessPage(first, email, curPlan, bonus);
-          }
-        }).catch(function(err) {
-          btn.disabled = false;
-          btn.textContent = 'Pay & Register Now →';
-          showAlert('An error occurred: ' + err.message, 'err');
-        });
-      },
-      onClose: function() {
-        btn.disabled = false;
-        btn.textContent = 'Pay & Register Now →';
+      password: password,
+      options: {
+        data: {
+          full_name: first + ' ' + last,
+          phone: phone,
+          plan: curPlan,
+          bank_name: bank,
+          account_number: acct,
+          account_name: acctName,
+          referral_code: refCode,
+          coupon_used: couponCode,
+          earnings_usd: bonus,
+          earnings_ngn: bonus * 1500,
+          signup_bonus_usd: bonus,
+          withdraw_count: 0,
+          joined: new Date().toISOString()
+        },
+        emailRedirectTo: window.location.origin + '/earn-dashboard.html'
       }
+    }).then(function(result) {
+      btn.disabled = false;
+      btn.textContent = 'Redeem Coupon & Register →';
+      if (result.error) {
+        if (result.error.message.indexOf('already registered') > -1) {
+          showAlert('This email is already registered. Please log in instead.', 'err');
+        } else {
+          showAlert('Account error: ' + result.error.message, 'err');
+        }
+      } else {
+        // Mark coupon as used
+        if (validCoupon.id) {
+          db.from('coupons').update({used: true, used_by: email, used_at: new Date().toISOString()}).eq('id', validCoupon.id).then(function(){});
+        }
+        closeModal();
+        showSuccessPage(first, email, curPlan, bonus);
+      }
+    }).catch(function(err) {
+      btn.disabled = false;
+      btn.textContent = 'Redeem Coupon & Register →';
+      showAlert('An error occurred: ' + err.message, 'err');
     });
-    handler.openIframe();
-  } catch(e) {
-    btn.disabled = false;
-    btn.textContent = 'Pay & Register Now →';
-    showAlert('Payment error: ' + e.message + '. Please refresh and try again.', 'err');
   }
+
+  finishRegistration();
 }
 
 function showSuccessPage(name, email, plan, bonus) {
-  document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:sans-serif;padding:2rem"><div style="background:white;border-radius:24px;padding:2.5rem;max-width:460px;width:100%;text-align:center;box-shadow:0 4px 40px rgba(0,0,0,.08)"><div style="font-size:52px;margin-bottom:1rem">🎉</div><h1 style="font-size:26px;font-weight:800;margin-bottom:.5rem">Welcome, ' + name.split(' ')[0] + '!</h1><p style="color:#6B7280;margin-bottom:1.25rem;line-height:1.7;font-size:14px">Your <strong>' + (plan === 'classic' ? 'Classic' : 'Basic') + '</strong> account has been created. Check your email at <strong>' + email + '</strong> and click the confirmation link to activate.</p><div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $' + bonus + ' signup bonus has been credited to your account!</div><div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">🏦 Withdrawals: Mon–Fri · 10am–4pm · ' + (plan === 'classic' ? 'Min $40' : 'Min $45') + '</div><a href="/earn-dashboard.html" style="display:block;background:#7C3AED;color:white;padding:13px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none">Go to Dashboard →</a></div></div>';
+  document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:sans-serif;padding:2rem"><div style="background:white;border-radius:24px;padding:2.5rem;max-width:460px;width:100%;text-align:center;box-shadow:0 4px 40px rgba(0,0,0,.08)"><div style="font-size:52px;margin-bottom:1rem">🎉</div><h1 style="font-size:26px;font-weight:800;margin-bottom:.5rem">Welcome, ' + name.split(' ')[0] + '!</h1><p style="color:#6B7280;margin-bottom:1.25rem;line-height:1.7;font-size:14px">Your <strong>' + (plan === 'classic' ? 'Classic' : 'Basic') + '</strong> account has been created using your coupon. Check your email at <strong>' + email + '</strong> and click the confirmation link to activate.</p><div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $' + bonus + ' signup bonus has been credited to your account!</div><div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">🏦 Withdrawals: Mon–Fri · 10am–4pm · ' + (plan === 'classic' ? 'Min $35' : 'Min $40') + '</div><a href="/earn-dashboard.html" style="display:block;background:#7C3AED;color:white;padding:13px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none">Go to Dashboard →</a></div></div>';
+}
+
+function showAlert(msg, type) {
+  var el = document.getElementById('reg-alert');
+  el.textContent = msg;
+  el.className = 'alert-box show ' + (type === 'err' ? 'alert-err' : 'alert-ok');
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 // Pre-fill referral code from URL
@@ -619,15 +773,5 @@ function showSuccessPage(name, email, plan, bonus) {
   }
 })();
 </script>
-
-<!-- AdMaven Auto Tag -->
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'd4s64aqfhd',
-    });
-</script>
-<!-- BidVertiser Zone -->
-<!-- Bidvertiser2104798 -->
-  <a href='https://www.sideprojectors.com/project/81786/digiearn' alt='DigiEarn is for sale at @SideProjectors'><img style='position:fixed;z-index:1000;top:-5px; right: 20px; border: 0;' src='https://www.sideprojectors.com/img/badges/badge_2_red.png' alt='DigiEarn is sale at @SideProjectors'></a>
 </body>
 </html>
