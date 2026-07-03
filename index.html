@@ -6,11 +6,7 @@
 <title>DigiEarn — Get Paid For Simple Tasks</title>
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
-<script type="text/javascript">aclib.runAutoTag({zoneId:'d4s64aqfhd'});</script>
-<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
-<script type="text/javascript" src="https://cdn-cf.bvdisplay.com/header-bid.js"></script>
-<!-- Bidvertiser2104798 -->
+
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -635,34 +631,52 @@ function checkCoupon() {
   statusEl.innerHTML = '<span class="coupon-checking">Checking coupon...</span>';
 
   couponCheckTimeout = setTimeout(function() {
-    if (!db) {
-      // Fallback: master admin code for testing without Supabase connection
-      if (code === 'ADMIN-FREE-2026' || code === 'TECHHUB-MASTER') {
-        validCoupon = { code: code, plan: curPlan, type: 'admin' };
-        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid admin coupon! Free registration.</span>';
-        return;
-      }
-      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Try again.</span>';
+
+    // ── MASTER ADMIN CODES — always work regardless of Supabase ──
+    var ADMIN_CODES = ['ADMIN-FREE-2026', 'TECHHUB-MASTER', 'DIGIEARN-ADMIN', 'TECHHUB-2026'];
+    if (ADMIN_CODES.indexOf(code) > -1) {
+      validCoupon = { code: code, plan: curPlan, type: 'admin' };
+      statusEl.innerHTML = '<span class="coupon-valid">✓ Valid admin coupon! Free registration.</span>';
       return;
     }
 
-    db.from('coupons').select('*').eq('code', code).eq('used', false).single().then(function(result) {
-      if (result.error || !result.data) {
+    // ── CHECK SUPABASE ──
+    if (!db) {
+      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not connect to server. Try again or use an admin code.</span>';
+      return;
+    }
+
+    db.from('coupons').select('*').eq('code', code).eq('used', false).then(function(result) {
+      if (result.error || !result.data || result.data.length === 0) {
         statusEl.innerHTML = '<span class="coupon-invalid">✗ Invalid or already used coupon code.</span>';
         validCoupon = null;
-      } else {
-        var coupon = result.data;
-        if (coupon.plan !== curPlan) {
-          statusEl.innerHTML = '<span class="coupon-invalid">✗ This coupon is for the ' + coupon.plan + ' plan. Switch plans above.</span>';
-          validCoupon = null;
-        } else {
-          validCoupon = coupon;
-          statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + coupon.plan + ' coupon! Ready to register.</span>';
-        }
+        return;
       }
-    }).catch(function() {
-      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Try again.</span>';
+
+      var coupon = result.data[0];
+
+      // Check expiry
+      if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
+        statusEl.innerHTML = '<span class="coupon-invalid">✗ This coupon has expired.</span>';
+        validCoupon = null;
+        return;
+      }
+
+      // If coupon has a plan set, auto-switch to that plan
+      if (coupon.plan && coupon.plan !== curPlan) {
+        setPlan(coupon.plan);
+        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + coupon.plan + ' coupon! Switched to ' + coupon.plan + ' plan for you.</span>';
+      } else {
+        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + (coupon.plan || curPlan) + ' coupon! Ready to register.</span>';
+      }
+
+      validCoupon = coupon;
+
+    }).catch(function(err) {
+      console.log('Coupon check error:', err);
+      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Please try again.</span>';
     });
+
   }, 600);
 }
 
@@ -680,7 +694,16 @@ function doRegister() {
   var couponCode = document.getElementById('coupon-code').value.trim().toUpperCase();
 
   if (!couponCode) { showAlert('Please enter your coupon code.', 'err'); return; }
-  if (!validCoupon) { showAlert('Please enter a valid coupon code first.', 'err'); return; }
+  if (!validCoupon) {
+    // Try one more time with admin codes before blocking
+    var ADMIN_CODES = ['ADMIN-FREE-2026', 'TECHHUB-MASTER', 'DIGIEARN-ADMIN', 'TECHHUB-2026'];
+    if (ADMIN_CODES.indexOf(couponCode.toUpperCase()) > -1) {
+      validCoupon = { code: couponCode.toUpperCase(), plan: curPlan, type: 'admin' };
+    } else {
+      showAlert('Please enter a valid coupon code and wait for it to be verified (green tick ✓).', 'err');
+      return;
+    }
+  }
   if (!first)    { showAlert('Please enter your first name.', 'err'); return; }
   if (!last)     { showAlert('Please enter your last name.', 'err'); return; }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email address.', 'err'); return; }
@@ -772,6 +795,33 @@ function showAlert(msg, type) {
     if (el) el.value = ref;
   }
 })();
+</script>
+<!-- Ad Networks - loaded last so they don't block registration -->
+<script>
+// Load ad networks safely after page is ready
+window.addEventListener('load', function() {
+  try {
+    // Adsterra
+    var s1 = document.createElement('script');
+    s1.src = 'https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js';
+    document.body.appendChild(s1);
+  } catch(e){}
+  try {
+    // AdMaven
+    var s2 = document.createElement('script');
+    s2.src = 'https://cdn.ad-maven.com/aclib.min.js';
+    s2.onload = function() {
+      try { aclib.runAutoTag({zoneId:'d4s64aqfhd'}); } catch(e){}
+    };
+    document.body.appendChild(s2);
+  } catch(e){}
+  try {
+    // BidVertiser
+    var s3 = document.createElement('script');
+    s3.src = 'https://cdn-cf.bvdisplay.com/header-bid.js';
+    document.body.appendChild(s3);
+  } catch(e){}
+});
 </script>
 </body>
 </html>
