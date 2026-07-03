@@ -3,802 +3,873 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>DigiEarn — Get Paid For Simple Tasks</title>
-<script src="https://js.paystack.co/v1/inline.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
-<script type="text/javascript">aclib.runAutoTag({zoneId:'d4s64aqfhd'});</script>
-<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
-<script type="text/javascript" src="https://cdn-cf.bvdisplay.com/header-bid.js"></script>
-<!-- Bidvertiser2104798 -->
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<title>Admin — DigiEarn</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;--green:#00C853;--gd:#00922B;--gl:#E6F9EE;--text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;--bg:#F9F8F6;--white:#fff;--r:12px;--red:#DC2626;--rl:#FEF2F2}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-a{text-decoration:none;color:inherit}
-nav{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.nav-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}.nav-logo span{color:var(--p)}
-.nav-links{display:flex;gap:1.5rem;align-items:center}
-.nav-links a{font-size:14px;color:var(--muted);font-weight:500}
-.nav-cta{background:var(--p);color:white;padding:9px 22px;border-radius:var(--r);font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.hero{background:linear-gradient(135deg,#0F0F1A,#1a1040);padding:5rem 2rem;text-align:center;color:white}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(124,58,237,.2);color:#C4B5FD;font-size:13px;font-weight:600;padding:6px 16px;border-radius:999px;margin-bottom:1.5rem;border:1px solid rgba(124,58,237,.3)}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(32px,6vw,60px);font-weight:800;line-height:1.1;margin-bottom:1.25rem;letter-spacing:-1px}
-.hero h1 span{color:#A78BFA}
-.hero p{font-size:17px;color:rgba(255,255,255,.7);line-height:1.7;max-width:540px;margin:0 auto 2.5rem}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--p);color:white;padding:13px 30px;border-radius:var(--r);font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.btn-o{background:rgba(255,255,255,.1);color:white;padding:13px 30px;border-radius:var(--r);font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.hero-stats{display:flex;gap:2.5rem;justify-content:center;margin-top:3rem;flex-wrap:wrap}
-.hs strong{display:block;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white}
-.hs span{font-size:13px;color:rgba(255,255,255,.5)}
-.section{padding:4rem 2rem;max-width:1000px;margin:0 auto}
-.s-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--p);margin-bottom:8px}
-.s-title{font-family:'Syne',sans-serif;font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:.75rem;letter-spacing:-.5px}
-.s-sub{font-size:15px;color:var(--muted);margin-bottom:2.5rem;line-height:1.7}
-.plans-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.plan-card{background:var(--white);border:2px solid var(--border);border-radius:20px;padding:2rem;position:relative;transition:border-color .2s}
-.plan-card.popular{border-color:var(--p)}
-.pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--p);color:white;font-size:12px;font-weight:700;padding:4px 18px;border-radius:999px;white-space:nowrap}
-.plan-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:1.25rem}
-.pi-b{background:var(--gl)}.pi-c{background:var(--pl)}
-.plan-name{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px}
-.plan-price{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--p);line-height:1;margin-bottom:4px}
-.plan-price span{font-size:15px;font-weight:400;color:var(--muted)}
-.plan-earn{font-size:13px;color:var(--gd);font-weight:600;background:var(--gl);padding:5px 12px;border-radius:8px;display:inline-block;margin-bottom:1.25rem}
-.plan-features{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:1.75rem}
-.plan-features li{display:flex;align-items:flex-start;gap:8px;font-size:13px;line-height:1.5}
-.plan-features li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
-.plan-btn{width:100%;padding:12px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;border:none}
-.pb-b{background:var(--gl);color:var(--gd)}.pb-b:hover{background:var(--green);color:white}
-.pb-c{background:var(--p);color:white}.pb-c:hover{background:var(--pd)}
-.coupon-note{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:1rem 1.25rem;margin-top:1.5rem;text-align:center}
-.coupon-note strong{color:var(--pd)}
-.tasks-section{background:var(--white);padding:4rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.tasks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;max-width:1000px;margin:0 auto}
-.task-card{background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:1.25rem;text-align:center}
-.task-icon{font-size:30px;margin-bottom:8px}
-.task-name{font-size:14px;font-weight:600;margin-bottom:3px}
-.task-earn{font-size:12px;color:var(--gd);font-weight:600}
-.w-banner{background:linear-gradient(135deg,#00922B,#00C853);border-radius:18px;padding:1.5rem 2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem}
-.w-icon{font-size:36px;flex-shrink:0}
-.w-text h3{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:white;margin-bottom:5px}
-.w-text p{font-size:13px;color:rgba(255,255,255,.8);line-height:1.6}
-.w-rules{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.w-rule{background:rgba(255,255,255,.15);border-radius:8px;padding:5px 12px;font-size:12px;color:white;font-weight:500}
-.steps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-.step{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.5rem;text-align:center}
-.step-num{width:40px;height:40px;border-radius:50%;background:var(--pl);color:var(--pd);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
-.step-title{font-size:14px;font-weight:600;margin-bottom:5px}
-.step-desc{font-size:12px;color:var(--muted);line-height:1.6}
-.ref-banner{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:20px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
-.ref-text h2{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:white;margin-bottom:6px}
-.ref-text p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6}
-.ref-amounts{display:flex;gap:14px}
-.ref-amt{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:.9rem 1.25rem;text-align:center}
-.ref-amt strong{display:block;font-family:'Syne',sans-serif;font-size:22px;color:#A78BFA;font-weight:800}
-.ref-amt span{font-size:11px;color:rgba(255,255,255,.5)}
-footer{background:var(--text);color:white;padding:2.5rem 2rem;text-align:center}
-.f-logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:6px}.f-logo span{color:var(--p)}
-.f-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:1rem}
-.f-links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap}
-.f-links a{font-size:12px;color:rgba(255,255,255,.4)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Space Grotesk',sans-serif}
+:root{--p:#7C3AED;--pd:#5B21B6;--pl:#F5F3FF;--g:#00C853;--gd:#00922B;--gl:#E6F9EE;--r:#DC2626;--rl:#FEF2F2;--a:#F59E0B;--al:#FFFBEB;--ak:#92400E;--text:#0F0F0F;--muted:#6B7280;--bd:#E5E7EB;--bg:#F9F8F6;--w:#fff;--dk:#0F0B1E;--rad:12px}
+body{background:var(--bg);color:var(--text);min-height:100vh}
 
-/* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:1000;overflow-y:auto;padding:1rem}
-.overlay.show{display:flex;align-items:flex-start;justify-content:center}
-.modal{background:var(--white);border-radius:20px;padding:2rem;width:100%;max-width:480px;margin:auto;position:relative}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem}
-.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
-.modal-x{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted);line-height:1;padding:0}
-.plan-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.25rem}
-.plan-tab{border:2px solid var(--border);border-radius:var(--r);padding:.75rem;text-align:center;cursor:pointer;transition:all .15s}
-.plan-tab.on{border-color:var(--p);background:var(--pl)}
-.plan-tab-name{font-size:14px;font-weight:700}
-.plan-tab-price{font-size:12px;color:var(--muted)}
-.coupon-box{background:var(--pl);border:1.5px solid var(--p);border-radius:var(--r);padding:1.25rem;margin-bottom:1.25rem;text-align:center}
-.coupon-box .label{font-size:12px;color:var(--pd);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em}
-.coupon-input{width:100%;padding:12px 14px;border:2px solid var(--p);border-radius:var(--r);font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;text-align:center;letter-spacing:.1em;text-transform:uppercase;outline:none;background:white}
-.coupon-input:focus{border-color:var(--pd)}
-.coupon-status{font-size:13px;margin-top:8px;min-height:18px}
-.coupon-valid{color:var(--gd);font-weight:600}
-.coupon-invalid{color:var(--red);font-weight:600}
-.coupon-checking{color:var(--muted)}
-.buy-coupon-link{font-size:13px;color:var(--p);font-weight:600;cursor:pointer;text-align:center;display:block;margin-top:10px}
-.fg{margin-bottom:.9rem}
-.fg label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
-.fg input,.fg select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--white)}
-.fg input:focus,.fg select:focus{border-color:var(--p)}
-.two-fg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.pay-btn{width:100%;padding:13px;background:var(--p);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif;margin-top:.5rem;transition:background .2s}
-.pay-btn:hover{background:var(--pd)}
-.pay-btn:disabled{opacity:.6;cursor:not-allowed}
-.terms{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5}
-.alert-box{padding:10px 14px;border-radius:var(--r);font-size:13px;margin-bottom:1rem;display:none;line-height:1.5}
-.alert-box.show{display:block}
-.alert-err{background:var(--rl);color:var(--red);border:1px solid #fca5a5}
-.alert-ok{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
+/* LOGIN */
+#login-page{display:flex!important;min-height:100vh;align-items:center;justify-content:center;background:linear-gradient(135deg,#0F0B1E,#1a1040)}
+.login-card{background:var(--w);border-radius:20px;padding:2.5rem;width:90%;max-width:380px;text-align:center}
+.login-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;margin-bottom:6px}
+.login-logo span{color:var(--p)}
+.login-tag{display:inline-block;font-size:11px;background:var(--rl);color:var(--r);padding:4px 14px;border-radius:999px;font-weight:700;margin-bottom:1.5rem}
+.lf{text-align:left;margin-bottom:1rem}
+.lf label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}
+.lf input{width:100%;padding:11px 14px;border:1.5px solid var(--bd);border-radius:var(--rad);font-size:14px;outline:none}
+.lf input:focus{border-color:var(--p)}
+.login-btn{width:100%;padding:13px;background:var(--p);color:white;border:none;border-radius:var(--rad);font-size:15px;font-weight:700;cursor:pointer}
+.login-btn:hover{background:var(--pd)}
+.login-err{color:var(--r);font-size:13px;margin-bottom:.75rem;display:none;text-align:center}
 
-/* BUY COUPON MODAL */
-.coupon-shop{text-align:center}
-.coupon-shop-icon{font-size:48px;margin-bottom:1rem}
-.coupon-shop-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.5rem}
-.coupon-shop-options{display:flex;flex-direction:column;gap:10px}
-.coupon-shop-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:var(--r);text-align:left}
-.cso-icon{font-size:24px;flex-shrink:0}
-.cso-text{flex:1}
-.cso-title{font-size:14px;font-weight:600}
-.coupon-shop-opt:hover{border-color:var(--p)!important}
-.cso-sub{font-size:12px;color:var(--muted)}
+/* APP */
+#app-page{display:none!important;min-height:100vh;flex-direction:row}
+#app-page.show{display:flex!important}
+.sidebar{width:230px;background:var(--dk);display:flex;flex-direction:column;min-height:100vh;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto}
+.s-logo{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:white;padding:1.25rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.s-logo span{color:var(--p)}
+.atag{font-size:9px;background:var(--r);color:white;padding:2px 7px;border-radius:3px;margin-left:5px;font-weight:700;vertical-align:middle}
+.s-sec{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.75rem 1.25rem .25rem}
+.s-item{display:flex;align-items:center;gap:9px;padding:9px 1.25rem;font-size:13px;color:rgba(255,255,255,.5);cursor:pointer;border-left:3px solid transparent;transition:all .15s;user-select:none}
+.s-item:hover{color:white;background:rgba(255,255,255,.05)}
+.s-item.active{color:white;background:rgba(124,58,237,.2);border-left-color:var(--p)}
+.s-icon{width:20px;text-align:center;font-size:15px}
+.s-badge{margin-left:auto;background:var(--r);color:white;font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px}
+.s-footer{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.07);margin-top:auto}
+.logout-btn{width:100%;background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(220,38,38,.2);border-radius:var(--rad);padding:8px;font-size:13px;cursor:pointer}
+.main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.topbar{background:var(--w);border-bottom:1px solid var(--bd);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:17px;font-weight:600}
+.admin-pill{background:var(--rl);color:var(--r);font-size:11px;font-weight:700;padding:3px 12px;border-radius:999px}
+.content{padding:1.5rem;overflow-y:auto;flex:1}
 
-@media(max-width:640px){.plans-grid,.two-fg{grid-template-columns:1fr}.nav-links{display:none}.ref-banner{flex-direction:column}.w-banner{flex-direction:column}}
+/* SECTIONS */
+.sec{display:none}.sec.active{display:block}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.metric{background:var(--w);border:1px solid var(--bd);border-radius:var(--rad);padding:1rem}
+.metric.cp{background:var(--p);border-color:var(--p)}
+.metric.cg{background:var(--g);border-color:var(--g)}
+.metric.cr{background:var(--r);border-color:var(--r)}
+.metric.ca{background:var(--a);border-color:var(--a)}
+.metric[class*=c] .ml,.metric[class*=c] .ms{color:rgba(255,255,255,.75)}
+.metric[class*=c] .mv{color:white}
+.ml{font-size:11px;color:var(--muted);margin-bottom:4px}
+.mv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1}
+.ms{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* CARDS */
+.card{background:var(--w);border:1px solid var(--bd);border-radius:14px;padding:1.25rem;margin-bottom:1.25rem}
+.ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px}
+.ct{font-size:15px;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem}
+
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:8px 12px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:2px solid var(--bd);white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--bd);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#FAFAFA}
+
+/* PILLS */
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px}
+.pb{background:var(--gl);color:var(--gd)}
+.pc{background:var(--pl);color:var(--pd)}
+.pp{background:var(--al);color:var(--ak)}
+.ppd{background:var(--gl);color:var(--gd)}
+.prj{background:var(--rl);color:var(--r)}
+.pa{background:var(--gl);color:var(--gd)}
+.ps{background:var(--rl);color:var(--r)}
+
+/* BUTTONS */
+.btn{border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.ba{background:var(--g);color:white}
+.brj{background:var(--rl);color:var(--r)}
+.bv{background:var(--pl);color:var(--pd)}
+.bsu{background:var(--al);color:var(--ak)}
+.bac{background:var(--gl);color:var(--gd)}
+.bed{background:#f3f4f6;color:var(--text)}
+.bpr{background:var(--p);color:white;padding:9px 18px;border-radius:var(--rad);font-size:13px}
+.bgr{background:var(--g);color:white;padding:9px 18px;border-radius:var(--rad);font-size:13px}
+.brow{display:flex;gap:6px;flex-wrap:wrap}
+
+/* TOOLBAR */
+.tb{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+.si{padding:8px 14px;border:1px solid var(--bd);border-radius:var(--rad);font-size:13px;outline:none;flex:1;min-width:180px}
+.si:focus{border-color:var(--p)}
+.ftabs{display:flex;gap:6px;flex-wrap:wrap}
+.ft{padding:5px 14px;border-radius:999px;border:1px solid var(--bd);font-size:12px;font-weight:500;cursor:pointer;background:var(--w);color:var(--muted)}
+.ft.on{background:var(--p);color:white;border-color:var(--p)}
+
+/* FORM */
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:.9rem}
+.fg label{font-size:13px;font-weight:600}
+.fg input,.fg select,.fg textarea{padding:9px 13px;border:1.5px solid var(--bd);border-radius:var(--rad);font-size:13px;outline:none;width:100%;background:var(--w);color:var(--text)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--p)}
+.fg textarea{resize:vertical;min-height:80px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ffull{grid-column:1/-1}
+.badd{width:100%;padding:11px;background:var(--p);color:white;border:none;border-radius:var(--rad);font-size:13px;font-weight:700;cursor:pointer;margin-top:.5rem}
+
+/* CHART */
+.chart{display:flex;align-items:flex-end;gap:8px;height:120px;padding:4px}
+.cb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.cbar{width:100%;border-radius:5px 5px 0 0;min-height:4px}
+.clb{font-size:10px;color:var(--muted)}
+.cvl{font-size:10px;font-weight:600;color:var(--pd)}
+
+/* STAT ROW */
+.sr{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px}
+.sr:last-child{border-bottom:none}
+
+/* INFO */
+.info{border-radius:var(--rad);padding:10px 14px;font-size:13px;line-height:1.6;margin-bottom:1rem}
+.ig{background:var(--gl);color:var(--gd);border:1px solid #6ee7a7}
+.ir{background:var(--rl);color:var(--r);border:1px solid #fca5a5}
+.ip{background:var(--pl);color:var(--pd);border:1px solid #C4B5FD}
+.ia{background:var(--al);color:var(--ak);border:1px solid #FCD34D}
+
+/* TOGGLE */
+.tgw{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;margin-bottom:10px}
+.tg{position:relative;width:42px;height:22px;cursor:pointer;flex-shrink:0}
+.tg input{opacity:0;width:0;height:0}
+.tgs{position:absolute;inset:0;background:var(--bd);border-radius:999px;transition:.3s}
+.tgs:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.3s}
+.tg input:checked+.tgs{background:var(--p)}
+.tg input:checked+.tgs:before{transform:translateX(20px)}
+
+/* SETTINGS */
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.25rem}
+.si2{display:flex;flex-direction:column;gap:5px}
+.si2 label{font-size:13px;font-weight:600;color:var(--muted)}
+.si2 input{padding:10px 14px;border:1.5px solid var(--bd);border-radius:var(--rad);font-size:14px;font-weight:600;outline:none}
+.si2 input:focus{border-color:var(--p)}
+.daypills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.dp{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--w);color:var(--muted)}
+.dp.on{background:var(--p);color:white;border-color:var(--p)}
+.dp.off{background:var(--rl);color:var(--r);border-color:#fca5a5}
+
+/* PRIZE LIST */
+.prize-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--bd);border-radius:var(--rad);margin-bottom:8px}
+.pc2{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.pl2{flex:1;font-size:13px;font-weight:500}
+.pi2{width:90px;padding:5px 9px;border:1px solid var(--bd);border-radius:8px;font-size:13px;outline:none}
+
+/* ANN */
+.ann-item{border:1px solid var(--bd);border-radius:var(--rad);padding:1rem;margin-bottom:10px}
+.an-title{font-size:14px;font-weight:600;margin-bottom:3px}
+.an-meta{font-size:12px;color:var(--muted);margin-bottom:5px}
+.an-body{font-size:13px;line-height:1.6}
+
+@media(max-width:900px){.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.two,.sg,.fgrid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-logo">Digi<span>Earn</span></div>
-  <div class="nav-links">
-    <a href="#tasks">Tasks</a>
-    <a href="#plans">Plans</a>
-    <a href="#how">How it works</a>
-    <a href="tutorial.html" style="color:#7C3AED;font-weight:600">🎓 Tutorial</a>
-    <a href="business.html" style="background:#E6F9EE;color:#00922B;padding:6px 14px;border-radius:999px;font-weight:600;font-size:13px">🏢 For Businesses</a>
-  </div>
-  <button class="nav-cta" onclick="openModal('basic')">Start Earning →</button>
-</nav>
-
-<div class="hero">
-  <div class="hero-badge">🇳🇬 Nigeria's #1 Digital Earning Platform</div>
-  <h1>Complete Tasks.<br><span>Earn Real Money.</span></h1>
-  <p>Watch ads, fill surveys and complete social media tasks from your phone. Get paid directly to your Nigerian bank account.</p>
-  <div class="hero-btns">
-    <button class="btn-p" onclick="openModal('classic')">Join Classic — $10</button>
-    <button class="btn-o" onclick="openModal('basic')">Start Basic — $5</button>
-    <a href="tutorial.html" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);color:white;padding:13px 24px;border-radius:12px;font-size:15px;font-weight:600;border:1px solid rgba(255,255,255,.2)">🎓 How it works</a>
-  </div>
-  <div class="hero-stats">
-    <div class="hs"><strong>8,400+</strong><span>Active earners</span></div>
-    <div class="hs"><strong>₦42M+</strong><span>Paid out</span></div>
-    <div class="hs"><strong>Daily</strong><span>Mon–Fri payouts</span></div>
+<!-- LOGIN -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-logo">Digi<span>Earn</span></div>
+    <span class="login-tag">🔐 Admin Panel</span>
+    <div class="login-err" id="lerr">❌ Wrong email or password. Try again.</div>
+    <div class="lf"><label>Admin Email</label><input type="email" id="lem" placeholder="admin@digiearn.com" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <div class="lf"><label>Password</label><input type="password" id="lpw" placeholder="Your admin password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+    <button class="login-btn" onclick="doLogin()">Login to Admin Panel</button>
   </div>
 </div>
 
-<!-- PLANS -->
-<div class="section" id="plans">
-  <div class="s-label">Choose your plan</div>
-  <div class="s-title">Pick how much you want to earn</div>
-  <div class="s-sub">Registration is by coupon code only. Get your coupon and join today!</div>
-  <div class="plans-grid">
-    <div class="plan-card">
-      <div class="plan-icon pi-b">💼</div>
-      <div class="plan-name">Basic</div>
-      <div class="plan-price">$5 <span>coupon</span></div>
-      <div class="plan-earn">🎁 $5 signup bonus · Earn ₦1,000/day</div>
-      <ul class="plan-features">
-        <li>$5 signup bonus credited instantly</li>
-        <li>Watch ads &amp; videos</li>
-        <li>Fill surveys &amp; forms</li>
-        <li>Social media tasks</li>
-        <li>Withdraw from $40 (Mon–Fri, 10am–4pm)</li>
-        <li>All Nigerian banks supported</li>
-        <li>Referral bonus — ₦500/referral</li>
-      </ul>
-      <button class="plan-btn pb-b" onclick="openModal('basic')">Register Basic</button>
+<!-- APP -->
+<div id="app-page">
+  <div class="sidebar">
+    <div class="s-logo">Digi<span>Earn</span><span class="atag">ADMIN</span></div>
+    <div style="flex:1">
+      <div class="s-sec">Overview</div>
+      <div class="s-item active" onclick="go('dashboard',this)"><span class="s-icon">⊞</span> Dashboard</div>
+      <div class="s-sec">Members</div>
+      <div class="s-item" onclick="go('users',this)"><span class="s-icon">👥</span> All Members</div>
+      <div class="s-item" onclick="go('coupons',this)"><span class="s-icon">🎟</span> Coupons</div>
+      <div class="s-item" onclick="go('withdrawals',this)"><span class="s-icon">💸</span> Withdrawals <span class="s-badge" id="sb-w">0</span></div>
+      <div class="s-sec">Content</div>
+      <div class="s-item" onclick="go('courses',this)"><span class="s-icon">📚</span> Courses</div>
+      <div class="s-item" onclick="go('tasks',this)"><span class="s-icon">✅</span> Daily Tasks</div>
+      <div class="s-item" onclick="go('spin',this)"><span class="s-icon">🎰</span> Spin Prizes</div>
+      <div class="s-sec">Tools</div>
+      <div class="s-item" onclick="go('announce',this)"><span class="s-icon">📣</span> Announcements</div>
+      <div class="s-item" onclick="go('settings',this)"><span class="s-icon">⚙️</span> Settings</div>
     </div>
-    <div class="plan-card popular">
-      <div class="pop-badge">⭐ Most Popular</div>
-      <div class="plan-icon pi-c">👑</div>
-      <div class="plan-name">Classic</div>
-      <div class="plan-price">$10 <span>coupon</span></div>
-      <div class="plan-earn">🎁 $10 signup bonus · Earn ₦2,000/day</div>
-      <ul class="plan-features">
-        <li>$10 signup bonus credited instantly</li>
-        <li>Everything in Basic</li>
-        <li>4× more tasks daily</li>
-        <li>Priority task access</li>
-        <li>Higher paying surveys</li>
-        <li>Withdraw from $35 (Mon–Fri, 10am–4pm)</li>
-        <li>Referral bonus — ₦1,000/referral</li>
-        <li>Exclusive Classic tasks</li>
-      </ul>
-      <button class="plan-btn pb-c" onclick="openModal('classic')">Register Classic</button>
-    </div>
+    <div class="s-footer"><button class="logout-btn" onclick="doLogout()">🚪 Logout</button></div>
   </div>
-  <div class="coupon-note">
-    🎟 <strong>Registration requires a coupon code.</strong> Don't have one? <span style="color:var(--p);cursor:pointer;font-weight:700;text-decoration:underline" onclick="openModal('basic')">Get your coupon now →</span>
-  </div>
-</div>
 
-<!-- WITHDRAWAL INFO -->
-<div style="padding:0 2rem 2rem;max-width:1000px;margin:0 auto" id="withdraw">
-  <div class="w-banner">
-    <div class="w-icon">🏦</div>
-    <div class="w-text">
-      <h3>Withdrawal Rules</h3>
-      <p>Earn up to your target and withdraw directly to your Nigerian bank account.</p>
-      <div class="w-rules">
-        <div class="w-rule">💰 Basic: min $40</div>
-        <div class="w-rule">👑 Classic: min $35</div>
-        <div class="w-rule">📅 Mon – Fri only</div>
-        <div class="w-rule">🕙 10:00 AM – 4:00 PM</div>
-        <div class="w-rule">⏱ Paid within 24hrs</div>
-      </div>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="ttitle">Dashboard</div>
+      <span class="admin-pill">🔐 Admin Mode</span>
     </div>
-  </div>
-</div>
+    <div class="content">
 
-<!-- TASKS -->
-<div class="tasks-section" id="tasks">
-  <div style="max-width:1000px;margin:0 auto">
-    <div class="s-label" style="text-align:center">What you will do</div>
-    <div class="s-title" style="text-align:center;margin-bottom:.5rem">Simple tasks, real money</div>
-    <div class="s-sub" style="text-align:center">Complete from your phone anytime.</div>
-    <div class="tasks-grid">
-      <div class="task-card"><div class="task-icon">📺</div><div class="task-name">Watch Ads</div><div class="task-earn">₦50–₦200 per ad</div></div>
-      <div class="task-card"><div class="task-icon">📋</div><div class="task-name">Fill Surveys</div><div class="task-earn">₦100–₦500 each</div></div>
-      <div class="task-card"><div class="task-icon">❤️</div><div class="task-name">Like &amp; Follow</div><div class="task-earn">₦30–₦100 each</div></div>
-      <div class="task-card"><div class="task-icon">🔁</div><div class="task-name">Share Posts</div><div class="task-earn">₦50–₦150 each</div></div>
-      <div class="task-card"><div class="task-icon">📝</div><div class="task-name">Write Reviews</div><div class="task-earn">₦200–₦500 each</div></div>
-      <div class="task-card"><div class="task-icon">🎬</div><div class="task-name">Watch Videos</div><div class="task-earn">₦50–₦300 each</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<div class="section" id="how">
-  <div class="s-label">Simple process</div>
-  <div class="s-title">How it works</div>
-  <div class="steps-grid">
-    <div class="step"><div class="step-num">1</div><div class="step-title">Get a Coupon</div><div class="step-desc">Purchase a Basic ($5) or Classic ($10) coupon code to unlock registration.</div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-title">Register with Coupon</div><div class="step-desc">Enter your coupon code and fill in your details to create your account instantly.</div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-title">Complete Tasks</div><div class="step-desc">Log in daily and complete available tasks — ads, surveys, social media tasks.</div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-title">Withdraw Mon–Fri</div><div class="step-desc">Request between 10am–4pm on weekdays. Money hits your bank within 24 hours.</div></div>
-  </div>
-</div>
-
-<!-- REFERRAL -->
-<div style="padding:0 2rem 4rem;max-width:1000px;margin:0 auto">
-  <div class="ref-banner">
-    <div class="ref-text">
-      <h2>Invite friends. Earn more. 🔥</h2>
-      <p>Share your referral link and earn a bonus every time someone registers.</p>
-    </div>
-    <div class="ref-amounts">
-      <div class="ref-amt"><strong>₦500</strong><span>Per Basic referral</span></div>
-      <div class="ref-amt"><strong>₦1,000</strong><span>Per Classic referral</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- BUSINESS BANNER -->
-<div style="padding:0 2rem 4rem;max-width:1000px;margin:0 auto">
-  <div style="background:linear-gradient(135deg,#0F0F1A,#1A0A2E);border-radius:24px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap">
-    <div>
-      <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#A78BFA;margin-bottom:8px">For Businesses</div>
-      <div style="font-family:Syne,sans-serif;font-size:24px;font-weight:800;color:white;margin-bottom:6px;line-height:1.2">Want to grow your brand?</div>
-      <div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.6;max-width:420px">Pay our 8,400+ members to like your pages, follow your accounts, watch your videos and promote your business across Nigeria.</div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px;align-items:center;flex-shrink:0">
-      <a href="business.html" style="display:block;background:#7C3AED;color:white;padding:13px 28px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;text-align:center;white-space:nowrap">🏢 Post a Business Task →</a>
-      <div style="font-size:12px;color:rgba(255,255,255,.4);text-align:center">Starting from ₦5,000 · 8,400+ real Nigerians</div>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <div class="f-logo">Digi<span>Earn</span></div>
-  <div class="f-sub">Nigeria's trusted digital earning platform.</div>
-  <div class="f-links"><a href="#">Terms</a><a href="#">Privacy</a><a href="#">Contact</a><a href="#">FAQ</a></div>
-  <p style="font-size:11px;color:rgba(255,255,255,.2);margin-top:1rem">© 2026 DigiEarn — Powered by TechHub. All rights reserved.</p>
-</footer>
-
-<!-- REGISTRATION MODAL -->
-<div class="overlay" id="reg-overlay">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">Create Account</div>
-      <button class="modal-x" onclick="closeModal()">×</button>
-    </div>
-    <div class="alert-box" id="reg-alert"></div>
-
-    <div class="plan-tabs">
-      <div class="plan-tab on" id="tab-basic" onclick="setPlan('basic')">
-        <div class="plan-tab-name">💼 Basic</div>
-        <div class="plan-tab-price">$5 coupon</div>
-      </div>
-      <div class="plan-tab" id="tab-classic" onclick="setPlan('classic')">
-        <div class="plan-tab-name">👑 Classic</div>
-        <div class="plan-tab-price">$10 coupon</div>
-      </div>
-    </div>
-
-    <div class="coupon-box">
-      <div class="label">🎟 Enter Your Coupon Code</div>
-      <input type="text" id="coupon-code" class="coupon-input" placeholder="XXXX-XXXX-XXXX" maxlength="20" oninput="checkCoupon()"/>
-      <div class="coupon-status" id="coupon-status"></div>
-      <span class="buy-coupon-link" onclick="openCouponShop()">Don't have a coupon? Get one now →</span>
-    </div>
-
-    <div class="two-fg">
-      <div class="fg"><label>First Name *</label><input type="text" id="r-first" placeholder="John"/></div>
-      <div class="fg"><label>Last Name *</label><input type="text" id="r-last" placeholder="Doe"/></div>
-    </div>
-    <div class="fg"><label>Email Address *</label><input type="email" id="r-email" placeholder="you@example.com"/></div>
-    <div class="fg"><label>Phone Number *</label><input type="tel" id="r-phone" placeholder="08012345678"/></div>
-    <div class="fg"><label>Password * (min 8 characters)</label><input type="password" id="r-pass" placeholder="Create a strong password"/></div>
-    <div class="fg"><label>Referral Code <span style="font-weight:400;color:var(--muted)">(optional)</span></label><input type="text" id="r-ref" placeholder="Enter referral code if you have one"/></div>
-    <div class="fg">
-      <label>Bank Name *</label>
-      <select id="r-bank">
-        <option value="">Select your bank</option>
-        <option>Access Bank</option><option>GTBank</option><option>First Bank</option>
-        <option>UBA</option><option>Zenith Bank</option><option>Kuda Bank</option>
-        <option>Opay</option><option>Palmpay</option><option>Moniepoint</option>
-        <option>Sterling Bank</option><option>Wema Bank</option><option>Union Bank</option>
-        <option>Fidelity Bank</option><option>Stanbic IBTC</option><option>Polaris Bank</option>
-        <option>Keystone Bank</option><option>Heritage Bank</option><option>Other</option>
-      </select>
-    </div>
-    <div class="fg"><label>Account Number * (10 digits)</label><input type="tel" id="r-acct" placeholder="0123456789" maxlength="10"/></div>
-    <div class="fg"><label>Account Name *</label><input type="text" id="r-acctname" placeholder="Name on your bank account"/></div>
-
-    <button class="pay-btn" id="reg-btn" onclick="doRegister()">Redeem Coupon &amp; Register →</button>
-    <div class="terms">By registering you agree to our Terms of Service. Withdrawals: Mon–Fri, 10am–4pm.</div>
-  </div>
-</div>
-
-<!-- BUY COUPON MODAL -->
-<div class="overlay" id="coupon-shop-overlay">
-  <div class="modal" style="max-width:440px">
-    <div class="modal-head">
-      <div class="modal-title">🎟 Buy a Coupon</div>
-      <button class="modal-x" onclick="closeCouponShop()">×</button>
-    </div>
-    <div class="alert-box" id="shop-alert"></div>
-
-    <!-- STEP 1: Choose plan -->
-    <div id="shop-step1">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:1rem;line-height:1.6">
-        Choose your plan below. Pay securely with Paystack. Your coupon code will appear on screen immediately after payment!
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.25rem">
-        <div class="coupon-shop-opt" id="shop-basic" onclick="selectShopPlan('basic')" style="cursor:pointer;border:2px solid var(--p);background:var(--pl)">
-          <div class="cso-icon">💼</div>
-          <div class="cso-text">
-            <div class="cso-title">Basic Plan — $5 <span style="font-size:11px;color:var(--muted);font-weight:400">(~₦7,500)</span></div>
-            <div class="cso-sub">Earn ₦1,000/day · $5 signup bonus · Withdraw from $40</div>
-          </div>
-          <div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:var(--p);flex-shrink:0">$5</div>
+      <!-- DASHBOARD -->
+      <div class="sec active" id="sec-dashboard">
+        <div class="metrics">
+          <div class="metric cp"><div class="ml">Total Revenue</div><div class="mv" id="d-rev">₦0</div><div class="ms">All registrations</div></div>
+          <div class="metric cg"><div class="ml">Total Members</div><div class="mv" id="d-mem">0</div><div class="ms" id="d-split">0 Basic · 0 Classic</div></div>
+          <div class="metric cr"><div class="ml">Pending Withdrawals</div><div class="mv" id="d-pend">0</div><div class="ms">Awaiting approval</div></div>
+          <div class="metric ca"><div class="ml">Total Paid Out</div><div class="mv" id="d-paid">₦0</div><div class="ms">To members</div></div>
         </div>
-        <div class="coupon-shop-opt" id="shop-classic" onclick="selectShopPlan('classic')" style="cursor:pointer">
-          <div class="cso-icon">👑</div>
-          <div class="cso-text">
-            <div class="cso-title">Classic Plan — $10 <span style="font-size:11px;color:var(--muted);font-weight:400">(~₦15,000)</span></div>
-            <div class="cso-sub">Earn ₦2,000/day · $10 signup bonus · Withdraw from $35</div>
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">Revenue This Week</div></div>
+            <div class="chart" id="rev-chart"></div>
+            <br>
+            <div class="sr"><span style="color:var(--muted)">Basic members (₦7,000 each)</span><span id="ds-b" style="font-weight:600">0</span></div>
+            <div class="sr"><span style="color:var(--muted)">Classic members (₦12,000 each)</span><span id="ds-c" style="font-weight:600">0</span></div>
+            <div class="sr"><span style="color:var(--muted)">Course enrollments</span><span id="ds-e" style="font-weight:600">0</span></div>
+            <div class="sr"><span style="color:var(--muted)">Spin prizes given</span><span id="ds-s" style="font-weight:600">0</span></div>
           </div>
-          <div style="font-family:Syne,sans-serif;font-size:18px;font-weight:800;color:var(--p);flex-shrink:0">$10</div>
+          <div class="card">
+            <div class="ch"><div class="ct">Pending Withdrawals</div><button class="btn bpr" onclick="go('withdrawals',null)">View All</button></div>
+            <div id="d-rw"><div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">✅ No pending withdrawals</div></div>
+          </div>
+        </div>
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">Recent Members</div></div>
+            <div id="d-ru"></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">Quick Actions</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <button class="btn bpr" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%" onclick="go('withdrawals',null)">💸 Review Withdrawal Requests</button>
+              <button class="btn bgr" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%" onclick="go('announce',null)">📣 Send Announcement</button>
+              <button class="btn bv" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%;background:var(--pl);color:var(--pd)" onclick="go('courses',null)">📚 Add New Course</button>
+              <button class="btn bed" style="text-align:left;padding:12px 16px;border-radius:var(--rad);font-size:13px;width:100%" onclick="go('settings',null)">⚙️ Platform Settings</button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="fg"><label>Your Email Address *</label><input type="email" id="shop-email" placeholder="Enter your email to receive updates"/></div>
-      <button class="pay-btn" id="shop-pay-btn" onclick="doShopPayment()">Pay & Get My Coupon →</button>
-      <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.5">🔒 Payment secured by Paystack · All Nigerian banks, cards, OPay, PalmPay supported</div>
-    </div>
 
-    <!-- STEP 2: Coupon revealed -->
-    <div id="shop-step2" style="display:none;text-align:center">
-      <div style="font-size:48px;margin-bottom:1rem">🎉</div>
-      <div style="font-family:Syne,sans-serif;font-size:22px;font-weight:800;margin-bottom:6px">Payment Successful!</div>
-      <div style="font-size:14px;color:var(--muted);margin-bottom:1.5rem;line-height:1.7">Your coupon code is ready. <strong>Screenshot or copy it now!</strong> This code gives you access to your DigiEarn account.</div>
-      <div style="background:#0F0B1E;border-radius:14px;padding:1.5rem;margin-bottom:1.25rem">
-        <div style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em">Your Coupon Code</div>
-        <div id="revealed-code" style="font-family:monospace;font-size:28px;font-weight:900;color:#A78BFA;letter-spacing:.15em;margin-bottom:12px">DE-XXXX-XXXX</div>
-        <button onclick="copyRevealedCode()" style="background:var(--p);color:white;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:Space Grotesk,sans-serif;width:100%">📋 Copy Code</button>
+      <!-- COUPONS -->
+      <div class="sec" id="sec-coupons">
+        <div class="info ip">🎟 Generate coupon codes for Basic ($5) and Classic ($10) registration. Admins can also generate FREE coupons that bypass payment entirely.</div>
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">All Coupons</div><span style="font-size:13px;color:var(--muted)" id="coupon-count">0 coupons</span></div>
+            <div class="tb">
+              <input class="si" placeholder="🔍 Search coupon code..." oninput="searchCoupons(this.value)"/>
+              <div class="ftabs">
+                <button class="ft on" onclick="filterCoupons('all',this)">All</button>
+                <button class="ft" onclick="filterCoupons('unused',this)">Unused</button>
+                <button class="ft" onclick="filterCoupons('used',this)">Used</button>
+                <button class="ft" onclick="filterCoupons('free',this)">Free/Admin</button>
+              </div>
+            </div>
+            <div class="tw"><table>
+              <thead><tr><th>#</th><th>Code</th><th>Plan</th><th>Type</th><th>Status</th><th>Used By</th><th>Created</th><th>Actions</th></tr></thead>
+              <tbody id="coupons-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">🎟 Generate Coupons</div></div>
+            <div class="fg"><label>Plan Type *</label>
+              <select id="cp-plan">
+                <option value="basic">💼 Basic — $5</option>
+                <option value="classic">👑 Classic — $10</option>
+              </select>
+            </div>
+            <div class="fg"><label>Coupon Type *</label>
+              <select id="cp-type" onchange="toggleFreeNote()">
+                <option value="paid">💳 Paid Coupon (user pays you directly)</option>
+                <option value="free">🎁 Free Coupon (admin gives away free)</option>
+              </select>
+            </div>
+            <div class="info ia" id="free-note" style="display:none">⚠️ Free coupons skip payment entirely. Use these for promotions, influencers or testing.</div>
+            <div class="fg"><label>How many coupons to generate? *</label><input type="number" id="cp-qty" value="1" min="1" max="100"/></div>
+            <div class="fg"><label>Notes <span style="font-weight:400;color:var(--muted)">(optional — e.g. "For John&apos;s WhatsApp group")</span></label><input type="text" id="cp-notes" placeholder="Internal note about this batch"/></div>
+            <button class="badd" onclick="generateCoupons()">🎟 Generate Coupons</button>
+            <div id="generated-codes" style="margin-top:1rem"></div>
+          </div>
+        </div>
       </div>
-      <div style="background:var(--gl);border-radius:var(--r);padding:12px 16px;font-size:13px;color:var(--gd);margin-bottom:1.25rem;text-align:left;line-height:1.6">
-        ✅ Code saved to your account<br>
-        📅 Expires in 7 days — register before it expires!<br>
-        🔒 One-time use only
+
+      <!-- USERS -->
+      <div class="sec" id="sec-users">
+        <div class="card">
+          <div class="ch"><div class="ct">All Members</div><span style="font-size:13px;color:var(--muted)" id="uc-label">0 members</span></div>
+          <div class="tb">
+            <input class="si" placeholder="🔍 Search name or email..." oninput="searchU(this.value)"/>
+            <div class="ftabs">
+              <button class="ft on" onclick="fuFilter('all',this)">All</button>
+              <button class="ft" onclick="fuFilter('basic',this)">Basic</button>
+              <button class="ft" onclick="fuFilter('classic',this)">Classic</button>
+              <button class="ft" onclick="fuFilter('active',this)">Active</button>
+              <button class="ft" onclick="fuFilter('suspended',this)">Suspended</button>
+            </div>
+          </div>
+          <div class="tw"><table>
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Phone</th><th>Plan</th><th>Balance</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="u-tbody"></tbody>
+          </table></div>
+        </div>
       </div>
-      <button onclick="useCodeNow()" style="width:100%;padding:13px;background:var(--green);color:white;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;font-family:Space Grotesk,sans-serif">Register Now with This Code →</button>
+
+      <!-- WITHDRAWALS -->
+      <div class="sec" id="sec-withdrawals">
+        <div class="info ia">⚠️ Always send payment to the member's bank account BEFORE clicking Approve. Once approved it cannot be undone.</div>
+        <div class="card">
+          <div class="ch">
+            <div class="ct">Withdrawal Requests</div>
+            <div style="display:flex;gap:12px;align-items:center">
+              <span style="font-size:13px;font-weight:600;color:var(--r)" id="w-pcount">0 pending</span>
+              <span style="font-size:13px;color:var(--muted)" id="w-total">Total: ₦0</span>
+            </div>
+          </div>
+          <div class="tb">
+            <input class="si" placeholder="🔍 Search member..." oninput="searchW(this.value)"/>
+            <div class="ftabs">
+              <button class="ft on" onclick="fwFilter('pending',this)">Pending</button>
+              <button class="ft" onclick="fwFilter('paid',this)">Paid</button>
+              <button class="ft" onclick="fwFilter('rejected',this)">Rejected</button>
+              <button class="ft" onclick="fwFilter('all',this)">All</button>
+            </div>
+          </div>
+          <div class="tw"><table>
+            <thead><tr><th>#</th><th>Member</th><th>Amount</th><th>Bank</th><th>Account No.</th><th>Account Name</th><th>Plan</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="w-tbody"></tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- COURSES -->
+      <div class="sec" id="sec-courses">
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">All Courses</div><span style="font-size:13px;color:var(--muted)" id="cc-label">0 courses</span></div>
+            <div class="tw"><table>
+              <thead><tr><th>#</th><th>Title</th><th>Category</th><th>Price</th><th>Students</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="c-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">➕ Add New Course</div></div>
+            <div class="fgrid">
+              <div class="fg ffull"><label>Course Title *</label><input id="cf-title" placeholder="e.g. Digital Marketing Masterclass"/></div>
+              <div class="fg"><label>Category *</label><select id="cf-cat"><option value="">Select...</option><option>Digital Marketing</option><option>Graphic Design</option><option>Video Editing</option><option>Coding & Web Dev</option></select></div>
+              <div class="fg"><label>Price (₦) *</label><input type="number" id="cf-price" placeholder="e.g. 15000"/></div>
+              <div class="fg"><label>Duration</label><input id="cf-dur" placeholder="e.g. 6 weeks"/></div>
+              <div class="fg"><label>Instructor</label><input id="cf-instr" placeholder="Instructor name"/></div>
+              <div class="fg"><label>Level</label><select id="cf-lvl"><option>Beginner</option><option>Intermediate</option><option>Advanced</option><option>All levels</option></select></div>
+              <div class="fg ffull"><label>Description</label><textarea id="cf-desc" placeholder="Brief description..."></textarea></div>
+              <button class="badd ffull" onclick="addCourse()">➕ Add Course</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASKS -->
+      <div class="sec" id="sec-tasks">
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">Daily Tasks</div><button class="btn bpr" onclick="alert('✅ Task changes saved!')">Save Changes</button></div>
+            <div class="tw"><table>
+              <thead><tr><th>#</th><th>Task</th><th>Basic Pay (₦)</th><th>Classic Pay (₦)</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="t-tbody"></tbody>
+            </table></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">➕ Add Task</div></div>
+            <div class="fg"><label>Task Name *</label><input id="tf-name" placeholder="e.g. Watch YouTube Short"/></div>
+            <div class="fg"><label>Description</label><input id="tf-desc" placeholder="Brief description"/></div>
+            <div class="fg"><label>Icon (emoji)</label><input id="tf-icon" placeholder="e.g. 🎬" style="width:70px"/></div>
+            <div class="fg"><label>Basic Pay (₦) *</label><input type="number" id="tf-basic" placeholder="e.g. 50"/></div>
+            <div class="fg"><label>Classic Pay (₦) *</label><input type="number" id="tf-classic" placeholder="e.g. 200"/></div>
+            <button class="badd" onclick="addTask()">➕ Add Task</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SPIN -->
+      <div class="sec" id="sec-spin">
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">Spin Prize Config</div><button class="btn bpr" onclick="alert('✅ Spin prizes saved!')">Save Prizes</button></div>
+            <div class="info ip">Configure what members can win. Toggle each prize on/off and set cash amounts.</div>
+            <div id="prize-list"></div>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">Spin Results Log</div><span style="font-size:13px;color:var(--muted)" id="spin-tot">Total cash: ₦0</span></div>
+            <div class="tw"><table>
+              <thead><tr><th>Member</th><th>Prize</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+              <tbody id="spin-tbody"></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANNOUNCE -->
+      <div class="sec" id="sec-announce">
+        <div class="two">
+          <div class="card">
+            <div class="ch"><div class="ct">📣 Send Announcement</div></div>
+            <div class="fg"><label>Title *</label><input id="an-title" placeholder="e.g. Great news for all members!"/></div>
+            <div class="fg"><label>Send To</label><select id="an-target"><option value="all">All Members</option><option value="basic">Basic Members Only</option><option value="classic">Classic Members Only</option></select></div>
+            <div class="fg"><label>Type</label><select id="an-type"><option value="info">ℹ️ Information</option><option value="promo">🎉 Promotion</option><option value="warn">⚠️ Warning</option></select></div>
+            <div class="fg"><label>Message *</label><textarea id="an-msg" placeholder="Write your message here..."></textarea></div>
+            <button class="badd" onclick="sendAnn()">📣 Send Announcement</button>
+          </div>
+          <div class="card">
+            <div class="ch"><div class="ct">Sent Announcements</div><span style="font-size:13px;color:var(--muted)" id="ann-cnt">0 sent</span></div>
+            <div id="ann-hist"><div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">No announcements yet.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="sec" id="sec-settings">
+        <div class="card">
+          <div class="ch"><div class="ct">💰 Pricing & Earnings</div><button class="btn bpr" onclick="saveSettings()">Save All Settings</button></div>
+          <div class="sg">
+            <div class="si2"><label>Basic Registration (₦)</label><input type="number" id="s-bp" value="7000"/></div>
+            <div class="si2"><label>Classic Registration (₦)</label><input type="number" id="s-cp" value="12000"/></div>
+            <div class="si2"><label>Basic Daily Limit (₦)</label><input type="number" id="s-bl" value="500"/></div>
+            <div class="si2"><label>Classic Daily Limit (₦)</label><input type="number" id="s-cl" value="2000"/></div>
+            <div class="si2"><label>Basic Signup Bonus ($)</label><input type="number" id="s-bb" value="5"/></div>
+            <div class="si2"><label>Classic Signup Bonus ($)</label><input type="number" id="s-cb" value="10"/></div>
+            <div class="si2"><label>Basic Min. Withdrawal ($)</label><input type="number" id="s-bm" value="45"/></div>
+            <div class="si2"><label>Classic Min. Withdrawal ($)</label><input type="number" id="s-cm" value="40"/></div>
+            <div class="si2"><label>Basic Referral Bonus (₦)</label><input type="number" id="s-br" value="500"/></div>
+            <div class="si2"><label>Classic Referral Bonus (₦)</label><input type="number" id="s-cr" value="1000"/></div>
+            <div class="si2"><label>USD → NGN Rate</label><input type="number" id="s-rt" value="1500"/></div>
+            <div class="si2"><label>Platform Fee on Courses (%)</label><input type="number" id="s-pf" value="10"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">🏦 Withdrawal Window</div></div>
+          <div style="margin-bottom:1rem"><div style="font-size:13px;font-weight:600;margin-bottom:8px">Open Days</div>
+            <div class="daypills">
+              <div class="dp on" onclick="this.classList.toggle('on');this.classList.toggle('off')">Mon</div>
+              <div class="dp on" onclick="this.classList.toggle('on');this.classList.toggle('off')">Tue</div>
+              <div class="dp on" onclick="this.classList.toggle('on');this.classList.toggle('off')">Wed</div>
+              <div class="dp on" onclick="this.classList.toggle('on');this.classList.toggle('off')">Thu</div>
+              <div class="dp on" onclick="this.classList.toggle('on');this.classList.toggle('off')">Fri</div>
+              <div class="dp off" onclick="this.classList.toggle('on');this.classList.toggle('off')">Sat</div>
+              <div class="dp off" onclick="this.classList.toggle('on');this.classList.toggle('off')">Sun</div>
+            </div>
+          </div>
+          <div class="sg">
+            <div class="si2"><label>Open Time</label><input type="time" value="10:00"/></div>
+            <div class="si2"><label>Close Time</label><input type="time" value="16:00"/></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">🔧 Feature Toggles</div></div>
+          <div class="tgw"><label class="tg"><input type="checkbox" checked/><span class="tgs"></span></label> Daily Tasks Enabled</div>
+          <div class="tgw"><label class="tg"><input type="checkbox" checked/><span class="tgs"></span></label> Weekly Spin Enabled</div>
+          <div class="tgw"><label class="tg"><input type="checkbox" checked/><span class="tgs"></span></label> Course Enrollments Open</div>
+          <div class="tgw"><label class="tg"><input type="checkbox" checked/><span class="tgs"></span></label> Referral System Active</div>
+          <div class="tgw"><label class="tg"><input type="checkbox" checked/><span class="tgs"></span></label> New Registrations Open</div>
+          <div class="tgw"><label class="tg"><input type="checkbox"/><span class="tgs"></span></label> Maintenance Mode</div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">🔐 Change Admin Credentials</div></div>
+          <div class="info ia">⚠️ Change these from the defaults before sharing the site!</div>
+          <div class="sg">
+            <div class="si2"><label>Admin Email</label><input type="email" id="s-ae" value="admin@digiearn.com"/></div>
+            <div class="si2"><label>Admin Password</label><input type="password" id="s-ap" value="DigiAdmin2026!"/></div>
+          </div>
+          <button class="btn bpr" style="margin-top:.5rem" onclick="saveCreds()">Update Credentials</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
 <script>
-var SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
-var SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
-var PAYSTACK_KEY = 'pk_live_831770e2c350d569d81a74835bee761772138ce8';
-var TG_TOKEN    = '8995399316:AAG8fHQabbiA8TvThGjoaHXn2VBAPN9eua8';
-var TG_CHAT     = '7130000367';
-var USD_RATE    = 1500;
+// ── CREDENTIALS ───────────────────────────────────────────────────
+var ADMIN_EMAIL = 'admin@digiearn.com';
+var ADMIN_PASS  = 'DigiAdmin2026!';
+try { ADMIN_EMAIL = localStorage.getItem('dge') || ADMIN_EMAIL; } catch(e){}
+try { ADMIN_PASS  = localStorage.getItem('dgp') || ADMIN_PASS;  } catch(e){}
 
-var db = null;
-window.addEventListener('load', function() {
-  try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e) { console.log('Supabase:', e); }
-});
+// ── LOGIN ─────────────────────────────────────────────────────────
 
-var curPlan = 'basic';
-var validCoupon = null;
-var couponCheckTimeout = null;
-var shopPlan = 'basic';
-var revealedCouponCode = '';
+// ── COUPONS ───────────────────────────────────────────────────────
+var coupons = [];
+var couponFilter = 'all';
 
-// ── COUPON SHOP ───────────────────────────────────────────────────
-function selectShopPlan(plan) {
-  shopPlan = plan;
-  var basic   = document.getElementById('shop-basic');
-  var classic = document.getElementById('shop-classic');
-  if (plan === 'basic') {
-    basic.style.border   = '2px solid var(--p)';
-    basic.style.background = 'var(--pl)';
-    classic.style.border = '1.5px solid var(--border)';
-    classic.style.background = '';
-  } else {
-    classic.style.border   = '2px solid var(--p)';
-    classic.style.background = 'var(--pl)';
-    basic.style.border   = '1.5px solid var(--border)';
-    basic.style.background = '';
-  }
-}
-
-function genCode() {
+function genCouponCode() {
   var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var seg = function() {
     var s = '';
-    for (var i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)];
+    for (var i=0; i<4; i++) s += chars[Math.floor(Math.random()*chars.length)];
+    return s;
     return s;
   };
   return 'DE-' + seg() + '-' + seg();
 }
 
-function sendTelegramNotif(msg) {
-  try {
-    fetch('https://api.telegram.org/bot' + TG_TOKEN + '/sendMessage', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TG_CHAT, text: msg, parse_mode: 'HTML' })
-    });
-  } catch(e) { console.log('TG error:', e); }
+function toggleFreeNote() {
+  var type = document.getElementById('cp-type').value;
+  document.getElementById('free-note').style.display = type === 'free' ? 'block' : 'none';
 }
 
-function saveCouponToSupabase(code, plan, email) {
-  if (!db) return;
-  var expiry = new Date();
-  expiry.setDate(expiry.getDate() + 7);
-  db.from('coupons').insert({
-    code: code,
-    plan: plan,
-    type: 'paid',
-    used: false,
-    used_by: null,
-    notes: 'Auto-generated after payment by ' + email,
-    expires_at: expiry.toISOString(),
-    created_at: new Date().toISOString()
-  }).then(function(){}).catch(function(){});
+function generateCoupons() {
+  var plan = document.getElementById('cp-plan').value;
+  var type = document.getElementById('cp-type').value;
+  var qty = parseInt(document.getElementById('cp-qty').value) || 1;
+  var notes = document.getElementById('cp-notes').value.trim();
+
+  if (qty > 100) { alert('Maximum 100 coupons at once.'); return; }
+
+  var newCodes = [];
+  for (var i = 0; i < qty; i++) {
+    var code = genCouponCode();
+    var coupon = {
+      id: Date.now() + i,
+      code: code,
+      plan: plan,
+      type: type,
+      used: false,
+      used_by: null,
+      notes: notes,
+      created: new Date().toLocaleDateString()
+    };
+    coupons.unshift(coupon);
+    newCodes.push(code);
+  }
+
+  try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
+
+  renderCoupons();
+  document.getElementById('generated-codes').innerHTML =
+    '<div class="info ig"><strong>✅ ' + qty + ' coupon(s) generated!</strong><br>' +
+    newCodes.map(function(c){return '<div style="font-family:monospace;font-size:14px;font-weight:700;margin-top:6px;padding:6px 10px;background:white;border-radius:6px;display:inline-block;margin-right:6px">'+c+'</div>'}).join('') +
+    '<br><button class="btn bv" style="margin-top:10px" onclick="copyAllCodes(\''+newCodes.join(',')+'\')">📋 Copy All Codes</button></div>';
+
+  document.getElementById('cp-notes').value = '';
 }
 
-function doShopPayment() {
-  var email = (document.getElementById('shop-email').value || '').trim();
-  var alertEl = document.getElementById('shop-alert');
-  alertEl.className = 'alert-box';
-
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alertEl.textContent = 'Please enter a valid email address.';
-    alertEl.className = 'alert-box show alert-err';
-    return;
-  }
-
-  if (typeof PaystackPop === 'undefined') {
-    alertEl.textContent = 'Payment system not loaded. Please refresh and try again.';
-    alertEl.className = 'alert-box show alert-err';
-    return;
-  }
-
-  var btn = document.getElementById('shop-pay-btn');
-  btn.disabled = true;
-  btn.textContent = 'Loading payment...';
-
-  var prices = { basic: 7500, classic: 15000 };
-  var amount = prices[shopPlan];
-
+function copyAllCodes(codesStr) {
+  var codes = codesStr.split(',').join('\n');
   try {
-    var handler = PaystackPop.setup({
-      key: PAYSTACK_KEY,
-      email: email,
-      amount: amount * 100,
-      currency: 'NGN',
-      ref: 'dge_coupon_' + Date.now(),
-      metadata: {
-        custom_fields: [
-          { display_name: 'Plan', variable_name: 'plan', value: shopPlan },
-          { display_name: 'Type', variable_name: 'type', value: 'coupon_purchase' }
-        ]
-      },
-      callback: function(response) {
-        // Generate coupon code
-        var code = genCode();
-        revealedCouponCode = code;
-
-        // Save to Supabase
-        saveCouponToSupabase(code, shopPlan, email);
-
-        // Notify you on Telegram
-        var msg = '🎟 <b>New Coupon Purchased!</b>
-
-' +
-          '📧 Email: ' + email + '
-' +
-          '💼 Plan: ' + shopPlan.toUpperCase() + '
-' +
-          '💰 Amount: ₦' + amount.toLocaleString() + '
-' +
-          '🎫 Code: <b>' + code + '</b>
-' +
-          '🔖 Ref: ' + response.reference + '
-' +
-          '📅 Time: ' + new Date().toLocaleString();
-        sendTelegramNotif(msg);
-
-        // Show coupon to user
-        document.getElementById('shop-step1').style.display = 'none';
-        document.getElementById('revealed-code').textContent = code;
-        document.getElementById('shop-step2').style.display = 'block';
-
-        btn.disabled = false;
-        btn.textContent = 'Pay & Get My Coupon →';
-      },
-      onClose: function() {
-        btn.disabled = false;
-        btn.textContent = 'Pay & Get My Coupon →';
-      }
-    });
-    handler.openIframe();
+    navigator.clipboard.writeText(codes);
+    alert('✅ Codes copied to clipboard!');
   } catch(e) {
-    alertEl.textContent = 'Payment error: ' + e.message;
-    alertEl.className = 'alert-box show alert-err';
-    btn.disabled = false;
-    btn.textContent = 'Pay & Get My Coupon →';
+    alert('Codes:\n' + codes);
   }
 }
 
-function copyRevealedCode() {
+function getCouponsList() {
+  if (couponFilter === 'all') return coupons;
+  if (couponFilter === 'unused') return coupons.filter(function(c){return !c.used});
+  if (couponFilter === 'used') return coupons.filter(function(c){return c.used});
+  if (couponFilter === 'free') return coupons.filter(function(c){return c.type==='free'});
+  return coupons;
+}
+
+function renderCoupons(list) {
+  var data = list || getCouponsList();
+  document.getElementById('coupon-count').textContent = coupons.length + ' coupons';
+  document.getElementById('coupons-tbody').innerHTML = data.length ? data.map(function(c, i) {
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td>' +
+      '<td><strong style="font-family:monospace">'+c.code+'</strong></td>' +
+      '<td><span class="pill '+(c.plan==='classic'?'pc':'pb')+'">'+c.plan+'</span></td>' +
+      '<td><span class="pill '+(c.type==='free'?'pa':'pp')+'">'+(c.type==='free'?'🎁 Free':'💳 Paid')+'</span></td>' +
+      '<td><span class="pill '+(c.used?'prj':'pa')+'">'+(c.used?'Used':'Unused')+'</span></td>' +
+      '<td style="color:var(--muted);font-size:12px">'+(c.used_by||'—')+'</td>' +
+      '<td style="color:var(--muted);font-size:12px">'+c.created+'</td>' +
+      '<td><div class="brow"><button class="btn bv" onclick="copyCoupon(\''+c.code+'\')">Copy</button>'+(!c.used?'<button class="btn brj" onclick="deleteCoupon('+c.id+')">Delete</button>':'')+'</div></td></tr>';
+  }).join('') : '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">No coupons generated yet.</td></tr>';
+}
+
+function copyCoupon(code) {
+  try { navigator.clipboard.writeText(code); alert('Copied: ' + code); } catch(e) { alert('Code: ' + code); }
+}
+
+function deleteCoupon(id) {
+  if (confirm('Delete this coupon?')) {
+    coupons = coupons.filter(function(c){return c.id !== id});
+    try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
+    renderCoupons();
+  }
+}
+
+function filterCoupons(f, el) {
+  couponFilter = f;
+  document.querySelectorAll('#sec-coupons .ft').forEach(function(t){t.classList.remove('on')});
+  el.classList.add('on');
+  renderCoupons();
+}
+
+function searchCoupons(q) {
+  renderCoupons(coupons.filter(function(c){return c.code.toLowerCase().includes(q.toLowerCase())}));
+}
+
+function loadCoupons() {
   try {
-    navigator.clipboard.writeText(revealedCouponCode);
-    alert('✅ Code copied: ' + revealedCouponCode);
-  } catch(e) {
-    alert('Your code: ' + revealedCouponCode);
-  }
+    var saved = localStorage.getItem('dge_coupons');
+    if (saved) coupons = JSON.parse(saved);
+  } catch(e){}
 }
 
-function useCodeNow() {
-  // Close shop modal, open registration modal with code pre-filled
-  closeCouponShop();
-  openModal(shopPlan);
-  setTimeout(function() {
-    var input = document.getElementById('coupon-code');
-    if (input) {
-      input.value = revealedCouponCode;
-      checkCoupon();
-    }
-  }, 400);
-}
+function doLogin() {
+  try {
+    var email = (document.getElementById('lem').value || '').trim();
+    var pass  = document.getElementById('lpw').value || '';
+    var err   = document.getElementById('lerr');
+    err.style.display = 'none';
 
-// ── MODAL ─────────────────────────────────────────────────────────
-function openModal(plan) {
-  setPlan(plan || 'basic');
-  document.getElementById('reg-overlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-  document.getElementById('reg-alert').className = 'alert-box';
-  document.getElementById('coupon-code').value = '';
-  document.getElementById('coupon-status').innerHTML = '';
-  validCoupon = null;
-}
-function closeModal() {
-  document.getElementById('reg-overlay').classList.remove('show');
-  document.body.style.overflow = '';
-}
-document.getElementById('reg-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-function openCouponShop() {
-  document.getElementById('coupon-shop-overlay').classList.add('show');
-}
-function closeCouponShop() {
-  document.getElementById('coupon-shop-overlay').classList.remove('show');
-}
-document.getElementById('coupon-shop-overlay').addEventListener('click', function(e) {
-  if (e.target === this) closeCouponShop();
-});
-
-function setPlan(p) {
-  curPlan = p;
-  document.getElementById('tab-basic').classList.toggle('on', p === 'basic');
-  document.getElementById('tab-classic').classList.toggle('on', p === 'classic');
-}
-
-// ── COUPON VALIDATION ───────────────────────────────────────────────
-function checkCoupon() {
-  var code = document.getElementById('coupon-code').value.trim().toUpperCase();
-  var statusEl = document.getElementById('coupon-status');
-  validCoupon = null;
-
-  clearTimeout(couponCheckTimeout);
-
-  if (!code) {
-    statusEl.innerHTML = '';
-    return;
-  }
-
-  statusEl.innerHTML = '<span class="coupon-checking">Checking coupon...</span>';
-
-  couponCheckTimeout = setTimeout(function() {
-
-    // ── MASTER ADMIN CODES — always work regardless of Supabase ──
-    var ADMIN_CODES = ['ADMIN-FREE-2026', 'TECHHUB-MASTER', 'DIGIEARN-ADMIN', 'TECHHUB-2026'];
-    if (ADMIN_CODES.indexOf(code) > -1) {
-      validCoupon = { code: code, plan: curPlan, type: 'admin' };
-      statusEl.innerHTML = '<span class="coupon-valid">✓ Valid admin coupon! Free registration.</span>';
+    if (!email || !pass) {
+      err.textContent = 'Please enter your email and password.';
+      err.style.display = 'block';
       return;
     }
 
-    // ── CHECK SUPABASE ──
-    if (!db) {
-      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not connect to server. Try again or use an admin code.</span>';
-      return;
-    }
-
-    db.from('coupons').select('*').eq('code', code).eq('used', false).then(function(result) {
-      if (result.error || !result.data || result.data.length === 0) {
-        statusEl.innerHTML = '<span class="coupon-invalid">✗ Invalid or already used coupon code.</span>';
-        validCoupon = null;
-        return;
-      }
-
-      var coupon = result.data[0];
-
-      // Check expiry
-      if (coupon.expires_at && new Date(coupon.expires_at) < new Date()) {
-        statusEl.innerHTML = '<span class="coupon-invalid">✗ This coupon has expired.</span>';
-        validCoupon = null;
-        return;
-      }
-
-      // If coupon has a plan set, auto-switch to that plan
-      if (coupon.plan && coupon.plan !== curPlan) {
-        setPlan(coupon.plan);
-        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + coupon.plan + ' coupon! Switched to ' + coupon.plan + ' plan for you.</span>';
-      } else {
-        statusEl.innerHTML = '<span class="coupon-valid">✓ Valid ' + (coupon.plan || curPlan) + ' coupon! Ready to register.</span>';
-      }
-
-      validCoupon = coupon;
-
-    }).catch(function(err) {
-      console.log('Coupon check error:', err);
-      statusEl.innerHTML = '<span class="coupon-invalid">✗ Could not verify coupon. Please try again.</span>';
-    });
-
-  }, 600);
-}
-
-// ── REGISTER ──────────────────────────────────────────────────────
-function doRegister() {
-  var first    = (document.getElementById('r-first').value || '').trim();
-  var last     = (document.getElementById('r-last').value || '').trim();
-  var email    = (document.getElementById('r-email').value || '').trim();
-  var phone    = (document.getElementById('r-phone').value || '').trim();
-  var password = (document.getElementById('r-pass').value || '');
-  var refCode  = (document.getElementById('r-ref').value || '').trim().toUpperCase();
-  var bank     = (document.getElementById('r-bank').value || '');
-  var acct     = (document.getElementById('r-acct').value || '').trim();
-  var acctName = (document.getElementById('r-acctname').value || '').trim();
-  var couponCode = document.getElementById('coupon-code').value.trim().toUpperCase();
-
-  if (!couponCode) { showAlert('Please enter your coupon code.', 'err'); return; }
-  if (!validCoupon) {
-    // Try one more time with admin codes before blocking
-    var ADMIN_CODES = ['ADMIN-FREE-2026', 'TECHHUB-MASTER', 'DIGIEARN-ADMIN', 'TECHHUB-2026'];
-    if (ADMIN_CODES.indexOf(couponCode.toUpperCase()) > -1) {
-      validCoupon = { code: couponCode.toUpperCase(), plan: curPlan, type: 'admin' };
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+      document.getElementById('login-page').style.display = 'none';
+      document.getElementById('login-page').style.cssText = 'display:none!important';
+      var app = document.getElementById('app-page');
+      app.style.display = 'flex';
+      app.classList.add('show');
+      init();
     } else {
-      showAlert('Please enter a valid coupon code and wait for it to be verified (green tick ✓).', 'err');
-      return;
+      err.textContent = 'Wrong email or password. Try again.';
+      err.style.display = 'block';
     }
+  } catch(e) {
+    alert('Login error: ' + e.message);
   }
-  if (!first)    { showAlert('Please enter your first name.', 'err'); return; }
-  if (!last)     { showAlert('Please enter your last name.', 'err'); return; }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showAlert('Please enter a valid email address.', 'err'); return; }
-  if (!phone)    { showAlert('Please enter your phone number.', 'err'); return; }
-  if (password.length < 8) { showAlert('Password must be at least 8 characters.', 'err'); return; }
-  if (!bank)     { showAlert('Please select your bank.', 'err'); return; }
-  if (acct.replace(/\D/g,'').length !== 10) { showAlert('Please enter your 10-digit account number.', 'err'); return; }
-  if (!acctName) { showAlert('Please enter your account name.', 'err'); return; }
-
-  var btn = document.getElementById('reg-btn');
-  btn.disabled = true;
-  btn.textContent = 'Creating account...';
-
-  var bonus = curPlan === 'classic' ? 10 : 5;
-
-  function finishRegistration() {
-    if (!db) {
-      closeModal();
-      showSuccessPage(first, email, curPlan, bonus);
-      btn.disabled = false;
-      btn.textContent = 'Redeem Coupon & Register →';
-      return;
-    }
-
-    db.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          full_name: first + ' ' + last,
-          phone: phone,
-          plan: curPlan,
-          bank_name: bank,
-          account_number: acct,
-          account_name: acctName,
-          referral_code: refCode,
-          coupon_used: couponCode,
-          earnings_usd: bonus,
-          earnings_ngn: bonus * 1500,
-          signup_bonus_usd: bonus,
-          withdraw_count: 0,
-          joined: new Date().toISOString()
-        },
-        emailRedirectTo: window.location.origin + '/earn-dashboard.html'
-      }
-    }).then(function(result) {
-      btn.disabled = false;
-      btn.textContent = 'Redeem Coupon & Register →';
-      if (result.error) {
-        if (result.error.message.indexOf('already registered') > -1) {
-          showAlert('This email is already registered. Please log in instead.', 'err');
-        } else {
-          showAlert('Account error: ' + result.error.message, 'err');
-        }
-      } else {
-        // Mark coupon as used
-        if (validCoupon.id) {
-          db.from('coupons').update({used: true, used_by: email, used_at: new Date().toISOString()}).eq('id', validCoupon.id).then(function(){});
-        }
-        closeModal();
-        showSuccessPage(first, email, curPlan, bonus);
-      }
-    }).catch(function(err) {
-      btn.disabled = false;
-      btn.textContent = 'Redeem Coupon & Register →';
-      showAlert('An error occurred: ' + err.message, 'err');
-    });
-  }
-
-  finishRegistration();
 }
 
-function showSuccessPage(name, email, plan, bonus) {
-  document.body.innerHTML = '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#F9F8F6;font-family:sans-serif;padding:2rem"><div style="background:white;border-radius:24px;padding:2.5rem;max-width:460px;width:100%;text-align:center;box-shadow:0 4px 40px rgba(0,0,0,.08)"><div style="font-size:52px;margin-bottom:1rem">🎉</div><h1 style="font-size:26px;font-weight:800;margin-bottom:.5rem">Welcome, ' + name.split(' ')[0] + '!</h1><p style="color:#6B7280;margin-bottom:1.25rem;line-height:1.7;font-size:14px">Your <strong>' + (plan === 'classic' ? 'Classic' : 'Basic') + '</strong> account has been created using your coupon. Check your email at <strong>' + email + '</strong> and click the confirmation link to activate.</p><div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $' + bonus + ' signup bonus has been credited to your account!</div><div style="background:#F5F3FF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">🏦 Withdrawals: Mon–Fri · 10am–4pm · ' + (plan === 'classic' ? 'Min $35' : 'Min $40') + '</div><a href="/earn-dashboard.html" style="display:block;background:#7C3AED;color:white;padding:13px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none">Go to Dashboard →</a></div></div>';
+function doLogout() {
+  document.getElementById('app-page').classList.remove('show');
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('lpw').value = '';
+  document.getElementById('lerr').style.display = 'none';
 }
 
-function showAlert(msg, type) {
-  var el = document.getElementById('reg-alert');
-  el.textContent = msg;
-  el.className = 'alert-box show ' + (type === 'err' ? 'alert-err' : 'alert-ok');
-  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+// ── NAV ───────────────────────────────────────────────────────────
+var TITLES = {dashboard:'Dashboard',coupons:'Coupon Management',users:'All Members',withdrawals:'Withdrawal Requests',courses:'Courses',tasks:'Daily Tasks',spin:'Spin Prizes',announce:'Announcements',settings:'Platform Settings'};
+function go(id, el) {
+  document.querySelectorAll('.sec').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('sec-'+id).classList.add('active');
+  document.querySelectorAll('.s-item').forEach(function(i){i.classList.remove('active')});
+  if (el) el.classList.add('active');
+  document.getElementById('ttitle').textContent = TITLES[id] || id;
+  if (id==='coupons') renderCoupons();
+  if (id==='users') renderUsers();
+  if (id==='withdrawals') renderWithdrawals();
+  if (id==='courses') renderCourses();
+  if (id==='tasks') renderTasks();
+  if (id==='spin') renderSpin();
+  if (id==='announce') renderAnn();
 }
 
-// Pre-fill referral code from URL
-(function() {
-  var ref = new URLSearchParams(window.location.search).get('ref');
-  if (ref) {
-    var el = document.getElementById('r-ref');
-    if (el) el.value = ref;
+// ── DATA ──────────────────────────────────────────────────────────
+var users=[], withdrawals=[], courses=[], tasks=[], spins=[], anns=[];
+var uFilter='all', wFilter='pending';
+
+function init() {
+  loadCoupons();
+  users = [
+    {id:1,name:'Kofi Chambers',email:'kofi@example.com',phone:'08012345678',plan:'classic',bal:42.50,joined:'May 1, 2026',status:'active'},
+    {id:2,name:'Amaka Obi',email:'amaka@example.com',phone:'08023456789',plan:'basic',bal:18.00,joined:'May 3, 2026',status:'active'},
+    {id:3,name:'Tunde Adeyemi',email:'tunde@example.com',phone:'08034567890',plan:'classic',bal:55.00,joined:'Apr 28, 2026',status:'active'},
+    {id:4,name:'Ngozi Eze',email:'ngozi@example.com',phone:'08045678901',plan:'basic',bal:12.00,joined:'May 5, 2026',status:'active'},
+    {id:5,name:'Emeka Nwosu',email:'emeka@example.com',phone:'08056789012',plan:'classic',bal:38.00,joined:'Apr 25, 2026',status:'suspended'},
+  ];
+  withdrawals = [
+    {id:1,user:'Tunde Adeyemi',email:'tunde@example.com',amount:82500,bank:'GTBank',acct:'0123456789',acctName:'Tunde A.',plan:'classic',date:'May 8, 2026',status:'pending'},
+    {id:2,user:'Amaka Obi',email:'amaka@example.com',amount:27000,bank:'Access Bank',acct:'0987654321',acctName:'Amaka O.',plan:'basic',date:'May 7, 2026',status:'pending'},
+    {id:3,user:'Kofi Chambers',email:'kofi@example.com',amount:60000,bank:'Zenith Bank',acct:'1234509876',acctName:'Kofi C.',plan:'classic',date:'May 6, 2026',status:'paid'},
+    {id:4,user:'Ngozi Eze',email:'ngozi@example.com',amount:10000,bank:'Opay',acct:'4567890123',acctName:'Ngozi E.',plan:'basic',date:'May 3, 2026',status:'rejected'},
+  ];
+  courses = [
+    {id:1,title:'Digital Marketing Masterclass',cat:'Digital Marketing',price:15000,students:48,status:'active'},
+    {id:2,title:'Web Development Bootcamp',cat:'Coding & Web Dev',price:25000,students:62,status:'active'},
+    {id:3,title:'Graphic Design with Canva',cat:'Graphic Design',price:12000,students:31,status:'active'},
+    {id:4,title:'Video Editing Pro',cat:'Video Editing',price:12000,students:24,status:'active'},
+  ];
+  tasks = [
+    {id:1,icon:'📺',name:'Watch Ad Video',desc:'30-second ad',basic:50,classic:200,status:'active'},
+    {id:2,icon:'📋',name:'Fill Daily Survey',desc:'5 questions',basic:100,classic:400,status:'active'},
+    {id:3,icon:'❤️',name:'Like & Follow',desc:'Like 3, follow 2',basic:50,classic:200,status:'active'},
+    {id:4,icon:'🎬',name:'Watch YouTube Video',desc:'2-min video',basic:75,classic:300,status:'active'},
+    {id:5,icon:'🔁',name:'Share Social Post',desc:'Share to timeline',basic:75,classic:300,status:'active'},
+    {id:6,icon:'📝',name:'Write a Review',desc:'Product review',basic:150,classic:600,status:'active'},
+  ];
+  spins = [
+    {user:'Kofi Chambers',prize:'Cash',amount:5000,date:'May 6, 2026',status:'credited'},
+    {user:'Tunde Adeyemi',prize:'Free Course',amount:0,date:'May 6, 2026',status:'credited'},
+    {user:'Amaka Obi',prize:'Cash',amount:2000,date:'May 6, 2026',status:'credited'},
+    {user:'Ngozi Eze',prize:'Try Again',amount:0,date:'May 6, 2026',status:'—'},
+  ];
+  loadDash();
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────────
+function loadDash() {
+  var nb=users.filter(function(u){return u.plan==='basic'}).length;
+  var nc=users.filter(function(u){return u.plan==='classic'}).length;
+  var rev=nb*7000+nc*12000;
+  var pend=withdrawals.filter(function(w){return w.status==='pending'});
+  var paid=withdrawals.filter(function(w){return w.status==='paid'}).reduce(function(s,w){return s+w.amount},0);
+  document.getElementById('d-rev').textContent='₦'+rev.toLocaleString();
+  document.getElementById('d-mem').textContent=users.length;
+  document.getElementById('d-split').textContent=nb+' Basic · '+nc+' Classic';
+  document.getElementById('d-pend').textContent=pend.length;
+  document.getElementById('d-paid').textContent='₦'+paid.toLocaleString();
+  document.getElementById('ds-b').textContent=nb;
+  document.getElementById('ds-c').textContent=nc;
+  document.getElementById('ds-e').textContent=courses.reduce(function(s,c){return s+c.students},0);
+  document.getElementById('ds-s').textContent=spins.filter(function(s){return s.status==='credited'}).length;
+  document.getElementById('sb-w').textContent=pend.length;
+  var days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  var vals=[84000,120000,48000,156000,96000,0,0];
+  var max=Math.max.apply(null,vals)||1;
+  document.getElementById('rev-chart').innerHTML=days.map(function(d,i){
+    return '<div class="cb"><div class="cvl">'+(vals[i]?'₦'+(vals[i]/1000).toFixed(0)+'k':'')+'</div><div class="cbar" style="height:'+(vals[i]?(vals[i]/max*90+10):4)+'px;background:'+(vals[i]?'var(--p)':'var(--bd)')+'"></div><div class="clb">'+d+'</div></div>';
+  }).join('');
+  document.getElementById('d-rw').innerHTML=pend.length?pend.slice(0,4).map(function(w){
+    return '<div class="sr"><div><div style="font-weight:500;font-size:13px">'+w.user+'</div><div style="font-size:11px;color:var(--muted)">'+w.bank+' · '+w.acct+'</div></div><div style="text-align:right"><div style="font-weight:700;font-size:14px">₦'+w.amount.toLocaleString()+'</div><span class="pill pp">pending</span></div></div>';
+  }).join(''):'<div style="text-align:center;padding:1.5rem;color:var(--muted);font-size:13px">✅ No pending withdrawals</div>';
+  document.getElementById('d-ru').innerHTML=users.slice(0,5).map(function(u){
+    return '<div class="sr"><div><div style="font-weight:500;font-size:13px">'+u.name+'</div><div style="font-size:11px;color:var(--muted)">'+u.email+'</div></div><div style="text-align:right"><span class="pill '+(u.plan==='classic'?'pc':'pb')+'">'+u.plan+'</span><div style="font-size:11px;color:var(--muted);margin-top:3px">'+u.joined+'</div></div></div>';
+  }).join('');
+}
+
+// ── USERS ─────────────────────────────────────────────────────────
+function getUList(){
+  var list=users.slice();
+  if(uFilter==='basic'||uFilter==='classic') return list.filter(function(u){return u.plan===uFilter});
+  if(uFilter==='active'||uFilter==='suspended') return list.filter(function(u){return u.status===uFilter});
+  return list;
+}
+function renderUsers(list){
+  var data=list||getUList();
+  document.getElementById('uc-label').textContent=data.length+' members';
+  document.getElementById('u-tbody').innerHTML=data.length?data.map(function(u,i){
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td><td><strong>'+u.name+'</strong></td><td style="color:var(--muted);font-size:12px">'+u.email+'</td><td style="color:var(--muted);font-size:12px">'+u.phone+'</td><td><span class="pill '+(u.plan==='classic'?'pc':'pb')+'">'+u.plan+'</span></td><td style="font-weight:600">$'+u.bal.toFixed(2)+'</td><td style="color:var(--muted);font-size:12px">'+u.joined+'</td><td><span class="pill '+(u.status==='active'?'pa':'ps')+'">'+u.status+'</span></td><td><div class="brow"><button class="btn bv" onclick="alert(\'Viewing: '+u.name+'\')">View</button><button class="btn '+(u.status==='active'?'bsu':'bac')+'" onclick="toggleU('+u.id+')">'+(u.status==='active'?'Suspend':'Activate')+'</button></div></td></tr>';
+  }).join(''):'<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--muted)">No members found.</td></tr>';
+}
+function fuFilter(f,el){uFilter=f;document.querySelectorAll('#sec-users .ft').forEach(function(t){t.classList.remove('on')});el.classList.add('on');renderUsers();}
+function searchU(q){renderUsers(users.filter(function(u){return (u.name+u.email).toLowerCase().includes(q.toLowerCase())}));}
+function toggleU(id){var u=users.find(function(x){return x.id===id});if(!u)return;var a=u.status==='active'?'suspend':'activate';if(confirm(a.charAt(0).toUpperCase()+a.slice(1)+' '+u.name+'?')){u.status=u.status==='active'?'suspended':'active';renderUsers();alert('✅ '+u.name+' has been '+a+'d.');}}
+
+// ── WITHDRAWALS ───────────────────────────────────────────────────
+function getWList(){if(wFilter==='all')return withdrawals.slice();return withdrawals.filter(function(w){return w.status===wFilter});}
+function renderWithdrawals(list){
+  var data=list||getWList();
+  var pend=withdrawals.filter(function(w){return w.status==='pending'});
+  document.getElementById('w-pcount').textContent=pend.length+' pending';
+  document.getElementById('w-total').textContent='Pending: ₦'+pend.reduce(function(s,w){return s+w.amount},0).toLocaleString();
+  document.getElementById('w-tbody').innerHTML=data.length?data.map(function(w,i){
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td><td><strong>'+w.user+'</strong><div style="font-size:11px;color:var(--muted)">'+w.email+'</div></td><td style="font-weight:700;font-size:15px">₦'+w.amount.toLocaleString()+'</td><td>'+w.bank+'</td><td style="font-family:monospace;font-weight:600">'+w.acct+'</td><td>'+w.acctName+'</td><td><span class="pill '+(w.plan==='classic'?'pc':'pb')+'">'+w.plan+'</span></td><td style="color:var(--muted);font-size:12px">'+w.date+'</td><td><span class="pill '+(w.status==='pending'?'pp':w.status==='paid'?'ppd':'prj')+'">'+w.status+'</span></td><td><div class="brow">'+(w.status==='pending'?'<button class="btn ba" onclick="approveW('+w.id+')">✓ Approve</button><button class="btn brj" onclick="rejectW('+w.id+')">Reject</button>':'<span style="font-size:12px;color:var(--muted)">'+(w.status==='paid'?'✅ Paid':'❌ Rejected')+'</span>')+'</div></td></tr>';
+  }).join(''):'<tr><td colspan="10" style="text-align:center;padding:2rem;color:var(--muted)">No withdrawals found.</td></tr>';
+}
+function fwFilter(f,el){wFilter=f;document.querySelectorAll('#sec-withdrawals .ft').forEach(function(t){t.classList.remove('on')});el.classList.add('on');renderWithdrawals();}
+function searchW(q){renderWithdrawals(withdrawals.filter(function(w){return (w.user+w.email).toLowerCase().includes(q.toLowerCase())}));}
+function approveW(id){
+  var w=withdrawals.find(function(x){return x.id===id});if(!w)return;
+  if(confirm('✅ Approve ₦'+w.amount.toLocaleString()+' for '+w.user+'?\n\nBank: '+w.bank+'\nAccount: '+w.acct+'\nName: '+w.acctName+'\n\nClick OK only after you have sent the payment.')){
+    w.status='paid';document.getElementById('sb-w').textContent=withdrawals.filter(function(x){return x.status==='pending'}).length;renderWithdrawals();alert('✅ Marked as paid. Member will be notified.');
   }
-})();
+}
+function rejectW(id){
+  var w=withdrawals.find(function(x){return x.id===id});if(!w)return;
+  var reason=prompt('Reason for rejecting '+w.user+'\'s withdrawal?');
+  if(reason!==null){w.status='rejected';document.getElementById('sb-w').textContent=withdrawals.filter(function(x){return x.status==='pending'}).length;renderWithdrawals();}
+}
+
+// ── COURSES ───────────────────────────────────────────────────────
+function renderCourses(){
+  document.getElementById('cc-label').textContent=courses.length+' courses';
+  document.getElementById('c-tbody').innerHTML=courses.map(function(c,i){
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td><td><strong>'+c.title+'</strong></td><td style="color:var(--muted)">'+c.cat+'</td><td style="font-weight:600">₦'+c.price.toLocaleString()+'</td><td>'+c.students+'</td><td><span class="pill pa">'+c.status+'</span></td><td><div class="brow"><button class="btn bed" onclick="alert(\'Edit: '+c.title+'\')">Edit</button><button class="btn brj" onclick="removeC('+c.id+')">Remove</button></div></td></tr>';
+  }).join('');
+}
+function addCourse(){
+  var title=document.getElementById('cf-title').value.trim();
+  var cat=document.getElementById('cf-cat').value;
+  var price=parseInt(document.getElementById('cf-price').value);
+  if(!title||!cat||!price){alert('Please fill in Title, Category and Price.');return;}
+  courses.push({id:Date.now(),title:title,cat:cat,price:price,students:0,status:'active'});
+  renderCourses();
+  ['cf-title','cf-cat','cf-price','cf-dur','cf-instr','cf-desc'].forEach(function(id){document.getElementById(id).value='';});
+  alert('✅ Course "'+title+'" added!');
+}
+function removeC(id){var c=courses.find(function(x){return x.id===id});if(c&&confirm('Remove "'+c.title+'"?')){courses=courses.filter(function(x){return x.id!==id});renderCourses();}}
+
+// ── TASKS ─────────────────────────────────────────────────────────
+function renderTasks(){
+  document.getElementById('t-tbody').innerHTML=tasks.map(function(t,i){
+    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td><td><strong>'+t.icon+' '+t.name+'</strong><div style="font-size:11px;color:var(--muted)">'+t.desc+'</div></td><td><input type="number" value="'+t.basic+'" style="width:75px;padding:4px 8px;border:1px solid var(--bd);border-radius:6px;font-size:13px" onchange="tasks['+i+'].basic=parseInt(this.value)"/></td><td><input type="number" value="'+t.classic+'" style="width:75px;padding:4px 8px;border:1px solid var(--bd);border-radius:6px;font-size:13px" onchange="tasks['+i+'].classic=parseInt(this.value)"/></td><td><span class="pill '+(t.status==='active'?'pa':'ps')+'">'+t.status+'</span></td><td><div class="brow"><button class="btn '+(t.status==='active'?'bsu':'bac')+'" onclick="toggleT('+i+')">'+(t.status==='active'?'Disable':'Enable')+'</button><button class="btn brj" onclick="removeT('+i+')">Remove</button></div></td></tr>';
+  }).join('');
+}
+function toggleT(i){tasks[i].status=tasks[i].status==='active'?'disabled':'active';renderTasks();}
+function removeT(i){if(confirm('Remove "'+tasks[i].name+'"?')){tasks.splice(i,1);renderTasks();}}
+function addTask(){
+  var name=document.getElementById('tf-name').value.trim();
+  var basic=parseInt(document.getElementById('tf-basic').value);
+  var classic=parseInt(document.getElementById('tf-classic').value);
+  if(!name||!basic||!classic){alert('Please fill Task Name, Basic Pay and Classic Pay.');return;}
+  tasks.push({id:Date.now(),icon:document.getElementById('tf-icon').value||'✅',name:name,desc:document.getElementById('tf-desc').value||'',basic:basic,classic:classic,status:'active'});
+  renderTasks();
+  ['tf-name','tf-desc','tf-icon','tf-basic','tf-classic'].forEach(function(id){document.getElementById(id).value='';});
+  alert('✅ Task "'+name+'" added!');
+}
+
+// ── SPIN ──────────────────────────────────────────────────────────
+var PRIZES=[
+  {color:'#7C3AED',label:'₦5,000 Cash',type:'cash',value:5000,on:true},
+  {color:'#00C853',label:'₦10,000 Cash',type:'cash',value:10000,on:true},
+  {color:'#5B21B6',label:'Free Any Course',type:'course',value:0,on:true},
+  {color:'#185FA5',label:'₦2,000 Cash',type:'cash',value:2000,on:true},
+  {color:'#f5576c',label:'50% Discount',type:'discount',value:50,on:true},
+  {color:'#43e97b',label:'Free Beginner Course',type:'course_basic',value:0,on:true},
+  {color:'#F59E0B',label:'₦3,000 Cash',type:'cash',value:3000,on:true},
+  {color:'#B0B0B0',label:'Try Again Next Week',type:'none',value:0,on:true},
+];
+function renderSpin(){
+  var total=spins.filter(function(s){return s.prize==='Cash'&&s.status==='credited'}).reduce(function(s,x){return s+x.amount},0);
+  document.getElementById('spin-tot').textContent='Total cash: ₦'+total.toLocaleString();
+  document.getElementById('prize-list').innerHTML=PRIZES.map(function(p,i){
+    return '<div class="prize-item"><div class="pc2" style="background:'+p.color+'"></div><div class="pl2">'+p.label+'</div>'+(p.type==='cash'?'<input class="pi2" type="number" value="'+p.value+'" onchange="PRIZES['+i+'].value=parseInt(this.value)"/>':'<span style="font-size:12px;color:var(--muted)">No cash</span>')+'<label class="tg" style="flex-shrink:0"><input type="checkbox" '+(p.on?'checked':'')+' onchange="PRIZES['+i+'].on=this.checked"/><span class="tgs"></span></label></div>';
+  }).join('');
+  document.getElementById('spin-tbody').innerHTML=spins.map(function(s){
+    return '<tr><td><strong>'+s.user+'</strong></td><td>'+s.prize+'</td><td style="font-weight:600">'+(s.amount?'₦'+s.amount.toLocaleString():'—')+'</td><td style="color:var(--muted);font-size:12px">'+s.date+'</td><td><span class="pill '+(s.status==='credited'?'ppd':'pp')+'">'+s.status+'</span></td></tr>';
+  }).join('');
+}
+
+// ── ANNOUNCEMENTS ─────────────────────────────────────────────────
+function renderAnn(){
+  document.getElementById('ann-cnt').textContent=anns.length+' sent';
+  document.getElementById('ann-hist').innerHTML=anns.length?anns.slice().reverse().map(function(a){
+    return '<div class="ann-item"><div class="an-title">'+a.title+'</div><div class="an-meta">'+a.target+' · '+a.type+' · '+a.date+'</div><div class="an-body">'+a.msg+'</div></div>';
+  }).join(''):'<div style="text-align:center;padding:2rem;color:var(--muted);font-size:13px">No announcements yet.</div>';
+}
+function sendAnn(){
+  var title=document.getElementById('an-title').value.trim();
+  var msg=document.getElementById('an-msg').value.trim();
+  if(!title||!msg){alert('Please enter a title and message.');return;}
+  anns.push({title:title,target:document.getElementById('an-target').value,type:document.getElementById('an-type').value,msg:msg,date:new Date().toLocaleDateString()});
+  document.getElementById('an-title').value='';document.getElementById('an-msg').value='';
+  renderAnn();alert('✅ Announcement sent!');
+}
+
+// ── SETTINGS ─────────────────────────────────────────────────────
+function saveSettings(){alert('✅ All settings saved successfully!');}
+function saveCreds(){
+  var e=document.getElementById('s-ae').value.trim();
+  var p=document.getElementById('s-ap').value;
+  if(!e||!p){alert('Email and password cannot be empty.');return;}
+  ADMIN_EMAIL=e;ADMIN_PASS=p;
+  try{localStorage.setItem('dge',e);localStorage.setItem('dgp',p);}catch(ex){}
+  alert('✅ Credentials updated! Use the new login next time.');
+}
 </script>
 </body>
 </html>
