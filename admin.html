@@ -534,6 +534,7 @@ function generateCoupons() {
   var notes = document.getElementById('cp-notes').value.trim() || 'Admin generated';
   if (qty > 100) { alert('Maximum 100 coupons at once.'); return; }
 
+  // Generate codes immediately
   var newCodes = [];
   var expiry = new Date();
   expiry.setDate(expiry.getDate() + 7);
@@ -541,41 +542,71 @@ function generateCoupons() {
   for (var i = 0; i < qty; i++) {
     var code = genCouponCode();
     newCodes.push(code);
-    coupons.unshift({ id: Date.now()+i, code:code, plan:plan, type:type, used:false, used_by:null, notes:notes, created: new Date().toLocaleDateString() });
+    coupons.unshift({
+      id: Date.now()+i, code:code, plan:plan, type:type,
+      used:false, used_by:null, notes:notes,
+      created: new Date().toLocaleDateString()
+    });
   }
+
+  // Save to localStorage immediately
   try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
 
-  var genBtn = document.querySelector('.badd');
-  if (genBtn) { genBtn.disabled=true; genBtn.textContent='Saving...'; }
+  // Show codes immediately - don't wait for Supabase
+  renderCoupons();
+  document.getElementById('cp-notes').value = '';
+  window._lastCodes = newCodes;
 
-  function showCodes(saved) {
-    renderCoupons();
-    document.getElementById('cp-notes').value = '';
-    if (genBtn) { genBtn.disabled=false; genBtn.textContent='Generate Coupons'; }
-    var warn = saved ? '' : '<div style="background:#FEF2F2;color:#DC2626;border-radius:8px;padding:8px;margin-top:8px;font-size:12px">Warning: Saved locally only. Users may not be able to redeem these until database reconnects.</div>';
-    var label = saved ? 'Saved to database!' : 'Generated (local only)';
-    document.getElementById('generated-codes').innerHTML =
-      '<div class="info ig"><strong>OK ' + qty + ' coupon(s) ' + label + '</strong>' +
-      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">' +
-      newCodes.map(function(c){ return '<div style="font-family:monospace;font-weight:700;padding:6px 12px;background:white;border-radius:6px;border:1px solid #E5E7EB">' + c + '</div>'; }).join('') +
-      '</div>' +
-      '<button class="btn bv" onclick="doCopyAll()" style="margin-top:10px">Copy All Codes</button>' +
-      warn + '</div>';
-    window._lastCodes = newCodes;
-  }
+  document.getElementById('generated-codes').innerHTML =
+    '<div class="info ig">' +
+    '<strong>✅ ' + qty + ' coupon(s) generated!</strong>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">' +
+    newCodes.map(function(c){
+      return '<div style="font-family:monospace;font-weight:700;padding:6px 12px;background:white;border-radius:6px;border:1px solid #E5E7EB;font-size:14px">' + c + '</div>';
+    }).join('') +
+    '</div>' +
+    '<button class="btn bv" onclick="doCopyAll()" style="margin-top:10px;padding:8px 16px">📋 Copy All Codes</button>' +
+    '<div id="db-save-status" style="font-size:12px;color:var(--muted);margin-top:6px">Saving to database...</div>' +
+    '</div>';
 
+  // Try saving to Supabase in background (won't block UI)
   if (db) {
     var rows = newCodes.map(function(c) {
-      return { code:c, plan:plan, type:type, used:false, notes:notes, expires_at:expiry.toISOString(), created_at:new Date().toISOString() };
+      return {
+        code: c, plan: plan, type: type,
+        used: false, notes: notes,
+        expires_at: expiry.toISOString(),
+        created_at: new Date().toISOString()
+      };
     });
+
+    // Set a timeout - if Supabase takes more than 5 seconds, show warning
+    var dbTimer = setTimeout(function() {
+      var statusEl = document.getElementById('db-save-status');
+      if (statusEl) statusEl.innerHTML = '<span style="color:orange">⚠️ Database slow - codes still work locally. Try refreshing admin to sync.</span>';
+    }, 5000);
+
     db.from('coupons').insert(rows).then(function(r) {
-      showCodes(!r.error);
-      if (r.error) console.log('Supabase insert error:', r.error);
-    }).catch(function(e) { showCodes(false); });
+      clearTimeout(dbTimer);
+      var statusEl = document.getElementById('db-save-status');
+      if (statusEl) {
+        if (r.error) {
+          statusEl.innerHTML = '<span style="color:var(--red)">⚠️ DB error: ' + r.error.message + '. Codes saved locally.</span>';
+        } else {
+          statusEl.innerHTML = '<span style="color:var(--gd)">✅ Saved to database! Users can now redeem these codes.</span>';
+        }
+      }
+    }).catch(function(e) {
+      clearTimeout(dbTimer);
+      var statusEl = document.getElementById('db-save-status');
+      if (statusEl) statusEl.innerHTML = '<span style="color:var(--red)">⚠️ Could not reach database. Codes saved locally only.</span>';
+    });
   } else {
-    showCodes(false);
+    var statusEl = document.getElementById('db-save-status');
+    if (statusEl) statusEl.innerHTML = '<span style="color:orange">⚠️ Not connected to database. Codes saved locally only.</span>';
   }
 }
+
 
 function doCopyAll() {
   var codes = window._lastCodes || [];
