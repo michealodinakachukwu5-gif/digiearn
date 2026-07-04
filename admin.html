@@ -167,6 +167,7 @@ tr:hover td{background:#FAFAFA}
 
 @media(max-width:900px){.sidebar{display:none}.metrics{grid-template-columns:repeat(2,1fr)}.two,.sg,.fgrid{grid-template-columns:1fr}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -494,6 +495,12 @@ var ADMIN_PASS  = 'DigiAdmin2026!';
 try { ADMIN_EMAIL = localStorage.getItem('dge') || ADMIN_EMAIL; } catch(e){}
 try { ADMIN_PASS  = localStorage.getItem('dgp') || ADMIN_PASS;  } catch(e){}
 
+// Supabase
+var SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+var db = null;
+try { db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch(e){ console.log('Supabase:', e); }
+
 // ── LOGIN ─────────────────────────────────────────────────────────
 
 // ── COUPONS ───────────────────────────────────────────────────────
@@ -517,72 +524,60 @@ function toggleFreeNote() {
 }
 
 function generateCoupons() {
-  var plan = document.getElementById('cp-plan').value;
-  var type = document.getElementById('cp-type').value;
-  var qty = parseInt(document.getElementById('cp-qty').value) || 1;
-  var notes = document.getElementById('cp-notes').value.trim();
-
+  var plan  = document.getElementById('cp-plan').value;
+  var type  = document.getElementById('cp-type').value;
+  var qty   = parseInt(document.getElementById('cp-qty').value) || 1;
+  var notes = document.getElementById('cp-notes').value.trim() || 'Admin generated';
   if (qty > 100) { alert('Maximum 100 coupons at once.'); return; }
 
   var newCodes = [];
+  var expiry = new Date();
+  expiry.setDate(expiry.getDate() + 7);
+
   for (var i = 0; i < qty; i++) {
     var code = genCouponCode();
-    var coupon = {
-      id: Date.now() + i,
-      code: code,
-      plan: plan,
-      type: type,
-      used: false,
-      used_by: null,
-      notes: notes,
-      created: new Date().toLocaleDateString()
-    };
-    coupons.unshift(coupon);
     newCodes.push(code);
+    coupons.unshift({ id: Date.now()+i, code:code, plan:plan, type:type, used:false, used_by:null, notes:notes, created: new Date().toLocaleDateString() });
   }
-
   try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
 
-  renderCoupons();
-  document.getElementById('generated-codes').innerHTML =
-    '<div class="info ig"><strong>✅ ' + qty + ' coupon(s) generated!</strong><br>' +
-    newCodes.map(function(c){return '<div style="font-family:monospace;font-size:14px;font-weight:700;margin-top:6px;padding:6px 10px;background:white;border-radius:6px;display:inline-block;margin-right:6px">'+c+'</div>'}).join('') +
-    '<br><button class="btn bv" style="margin-top:10px" onclick="copyAllCodes(\''+newCodes.join(',')+'\')">📋 Copy All Codes</button></div>';
+  var genBtn = document.querySelector('.badd');
+  if (genBtn) { genBtn.disabled=true; genBtn.textContent='Saving...'; }
 
-  document.getElementById('cp-notes').value = '';
-}
+  function showCodes(saved) {
+    renderCoupons();
+    document.getElementById('cp-notes').value = '';
+    if (genBtn) { genBtn.disabled=false; genBtn.textContent='Generate Coupons'; }
+    var warn = saved ? '' : '<div style="background:#FEF2F2;color:#DC2626;border-radius:8px;padding:8px;margin-top:8px;font-size:12px">Warning: Saved locally only. Users may not be able to redeem these until database reconnects.</div>';
+    var label = saved ? 'Saved to database!' : 'Generated (local only)';
+    document.getElementById('generated-codes').innerHTML =
+      '<div class="info ig"><strong>OK ' + qty + ' coupon(s) ' + label + '</strong>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">' +
+      newCodes.map(function(c){ return '<div style="font-family:monospace;font-weight:700;padding:6px 12px;background:white;border-radius:6px;border:1px solid #E5E7EB">' + c + '</div>'; }).join('') +
+      '</div>' +
+      '<button class="btn bv" onclick="doCopyAll()" style="margin-top:10px">Copy All Codes</button>' +
+      warn + '</div>';
+    window._lastCodes = newCodes;
+  }
 
-function copyAllCodes(codesStr) {
-  var codes = codesStr.split(',').join('\n');
-  try {
-    navigator.clipboard.writeText(codes);
-    alert('✅ Codes copied to clipboard!');
-  } catch(e) {
-    alert('Codes:\n' + codes);
+  if (db) {
+    var rows = newCodes.map(function(c) {
+      return { code:c, plan:plan, type:type, used:false, notes:notes, expires_at:expiry.toISOString(), created_at:new Date().toISOString() };
+    });
+    db.from('coupons').insert(rows).then(function(r) {
+      showCodes(!r.error);
+      if (r.error) console.log('Supabase insert error:', r.error);
+    }).catch(function(e) { showCodes(false); });
+  } else {
+    showCodes(false);
   }
 }
 
-function getCouponsList() {
-  if (couponFilter === 'all') return coupons;
-  if (couponFilter === 'unused') return coupons.filter(function(c){return !c.used});
-  if (couponFilter === 'used') return coupons.filter(function(c){return c.used});
-  if (couponFilter === 'free') return coupons.filter(function(c){return c.type==='free'});
-  return coupons;
-}
-
-function renderCoupons(list) {
-  var data = list || getCouponsList();
-  document.getElementById('coupon-count').textContent = coupons.length + ' coupons';
-  document.getElementById('coupons-tbody').innerHTML = data.length ? data.map(function(c, i) {
-    return '<tr><td style="color:var(--muted)">'+(i+1)+'</td>' +
-      '<td><strong style="font-family:monospace">'+c.code+'</strong></td>' +
-      '<td><span class="pill '+(c.plan==='classic'?'pc':'pb')+'">'+c.plan+'</span></td>' +
-      '<td><span class="pill '+(c.type==='free'?'pa':'pp')+'">'+(c.type==='free'?'🎁 Free':'💳 Paid')+'</span></td>' +
-      '<td><span class="pill '+(c.used?'prj':'pa')+'">'+(c.used?'Used':'Unused')+'</span></td>' +
-      '<td style="color:var(--muted);font-size:12px">'+(c.used_by||'—')+'</td>' +
-      '<td style="color:var(--muted);font-size:12px">'+c.created+'</td>' +
-      '<td><div class="brow"><button class="btn bv" onclick="copyCoupon(\''+c.code+'\')">Copy</button>'+(!c.used?'<button class="btn brj" onclick="deleteCoupon('+c.id+')">Delete</button>':'')+'</div></td></tr>';
-  }).join('') : '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">No coupons generated yet.</td></tr>';
+function doCopyAll() {
+  var codes = window._lastCodes || [];
+  var text = codes.join('\n');
+  try { navigator.clipboard.writeText(text); alert('Copied ' + codes.length + ' code(s)!\n\n' + text); }
+  catch(e) { alert('Codes:\n' + text); }
 }
 
 function copyCoupon(code) {
@@ -609,10 +604,39 @@ function searchCoupons(q) {
 }
 
 function loadCoupons() {
+  // Load from localStorage first (instant)
   try {
     var saved = localStorage.getItem('dge_coupons');
     if (saved) coupons = JSON.parse(saved);
   } catch(e){}
+
+  // Then fetch from Supabase (live data)
+  if (db) {
+    db.from('coupons').select('*').order('created_at', {ascending: false}).then(function(result) {
+      if (!result.error && result.data && result.data.length > 0) {
+        // Merge Supabase data with local
+        var dbCoupons = result.data.map(function(c) {
+          return {
+            id: c.id,
+            code: c.code,
+            plan: c.plan,
+            type: c.type || 'paid',
+            used: c.used,
+            used_by: c.used_by,
+            notes: c.notes || '',
+            created: c.created_at ? new Date(c.created_at).toLocaleDateString() : 'N/A'
+          };
+        });
+        coupons = dbCoupons;
+        // Update localStorage
+        try { localStorage.setItem('dge_coupons', JSON.stringify(coupons)); } catch(e){}
+        // Re-render if on coupons page
+        if (document.getElementById('sec-coupons') && document.getElementById('sec-coupons').classList.contains('active')) {
+          renderCoupons();
+        }
+      }
+    }).catch(function(){});
+  }
 }
 
 function doLogin() {
