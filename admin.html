@@ -515,8 +515,7 @@ function genCouponCode() {
   var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   var seg = function() {
     var s = '';
-    for (var i=0; i<4; i++) s += chars[Math.floor(Math.random()*chars.length)];
-    return s;
+    for (var i = 0; i < 4; i++) s += chars[Math.floor(Math.random() * chars.length)];
     return s;
   };
   return 'DE-' + seg() + '-' + seg();
