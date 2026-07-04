@@ -177,7 +177,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
         <div class="ms" id="prog-text">$0 of $45 target</div>
         <div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div></div>
       </div>
-      <div class="metric"><div class="ml">Today's Earnings</div><div class="mv" id="today-earn">₦0</div><div class="ms" id="daily-limit">Daily limit: ₦500</div></div>
+      <div class="metric"><div class="ml">Today's Earnings</div><div class="mv" id="today-earn">₦0</div><div class="ms" id="daily-limit">Daily limit: ₦1,000</div></div>
       <div class="metric"><div class="ml">Tasks Done Today</div><div class="mv" id="tasks-done">0/6</div><div class="ms">Keep going!</div></div>
       <div class="metric"><div class="ml">Referral Bonus</div><div class="mv" id="ref-bonus-display">₦0</div><div class="ms">From referrals</div></div>
     </div>
@@ -260,8 +260,34 @@ function isWithdrawalOpen(){
 }
 
 async function init(){
-  const {data:{user}}=await supabase.auth.getUser();
-  if(!user){window.location.href='/index.html';return;}
+  let user = null;
+  try {
+    const result = await supabase.auth.getUser();
+    user = result.data && result.data.user ? result.data.user : null;
+  } catch(e) { console.log('Auth error:', e); }
+
+  // If not logged in, show demo mode instead of redirecting
+  if (!user) {
+    // Demo mode - show sample data
+    userPlan = 'basic';
+    totalNgn = 7500;
+    document.getElementById('user-initials').textContent = 'ME';
+    document.getElementById('user-name').textContent = 'Demo User';
+    document.getElementById('user-plan').textContent = 'Basic Member';
+    document.getElementById('plan-badge').textContent = '💼 Basic';
+    document.getElementById('bonus-display').textContent = '$5.00';
+    document.getElementById('daily-limit').textContent = 'Daily limit: ₦1,000';
+    document.getElementById('ref-code').textContent = 'DEMO1234';
+    document.getElementById('w-bank').value = 'GTBank';
+    document.getElementById('w-acct').value = '0123456789';
+    const h = new Date().getHours();
+    document.getElementById('greeting-text').textContent = (h<12?'Good morning':h<17?'Good afternoon':'Good evening') + ', Demo User! 👋';
+    updateMetrics();
+    renderTasks();
+    updateWithdrawalBanner();
+    setInterval(updateWithdrawalBanner, 60000);
+    return;
+  }
   userData=user.user_metadata;
   userPlan=userData.plan||'basic';
   const name=userData.full_name||'User';
@@ -275,7 +301,7 @@ async function init(){
   document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
   document.getElementById('plan-badge').textContent=userPlan==='classic'?'👑 Classic':'💼 Basic';
   document.getElementById('bonus-display').textContent='$'+bonus+'.00';
-  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'500');
+  document.getElementById('daily-limit').textContent='Daily limit: ₦'+(userPlan==='classic'?'2,000':'1,000');
 
   const h=new Date().getHours();
   document.getElementById('greeting-text').textContent=(h<12?'Good morning':h<17?'Good afternoon':'Good evening')+', '+name.split(' ')[0]+'! 👋';
@@ -291,7 +317,7 @@ async function init(){
 
 function updateMetrics(){
   const usd=totalNgn/USD_RATE;
-  const minT=userPlan==='classic'?40:45;
+  const minT=userPlan==='classic'?35:40;
   const pct=Math.min((usd/minT)*100,100);
   document.getElementById('total-usd').textContent='$'+usd.toFixed(2);
   document.getElementById('prog-text').textContent='$'+usd.toFixed(2)+' of $'+minT+' target';
@@ -307,7 +333,7 @@ function updateMetrics(){
 function updateWithdrawalBanner(){
   const open=isWithdrawalOpen();
   const usd=totalNgn/USD_RATE;
-  const minT=userPlan==='classic'?40:45;
+  const minT=userPlan==='classic'?35:40;
   const eligible=usd>=minT;
   const banner=document.getElementById('window-banner');
   const btn=document.getElementById('withdraw-btn');
@@ -350,7 +376,7 @@ function completeTask(id){
   if(completedTasks.has(id)){alert('Already done! Come back tomorrow.');return;}
   const task=TASKS.find(t=>t.id===id);
   const earn=task.earn[userPlan];
-  const limit=userPlan==='classic'?2000:500;
+  const limit=userPlan==='classic'?2000:1000;
   if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.');return;}
   completedTasks.add(id);todayEarnings+=earn;totalNgn+=earn;
   updateMetrics();renderTasks();
@@ -369,7 +395,7 @@ function copyRef(){
 }
 
 function openWithdraw(){
-  const usd=totalNgn/USD_RATE,minT=userPlan==='classic'?40:45;
+  const usd=totalNgn/USD_RATE,minT=userPlan==='classic'?35:40;
   const box=document.getElementById('w-status'),btn=document.getElementById('w-btn');
   const open=isWithdrawalOpen(),eligible=usd>=minT;
   if(!open){box.className='info-box info-red';box.textContent='🔒 Withdrawal closed. Open Mon–Fri 10am–4pm only.';btn.disabled=true;}
