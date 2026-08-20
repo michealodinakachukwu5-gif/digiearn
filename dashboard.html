@@ -324,7 +324,7 @@ body{
 <script>
 const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const USD_RATE = 1500;
 const FIRST_WITHDRAW_USD = 45;
@@ -405,7 +405,7 @@ function updateWithdrawalBanner(){
 }
 
 async function init(){
-  const {data:{user}} = await supabase.auth.getUser();
+  const {data:{user}} = await supabaseClient.auth.getUser();
   if(!user){window.location.href='/index.html';return;}
 
   userData = user.user_metadata;
@@ -489,7 +489,7 @@ function completeTask(id){
   addActivityRow(document.getElementById('tx-list-full'), task.name, earn);
   addActivityRow(document.getElementById('tx-list-history'), task.name, earn);
 
-  supabase.auth.updateUser({data:{earnings_ngn:totalNgn}});
+  supabaseClient.auth.updateUser({data:{earnings_ngn:totalNgn}});
 }
 
 function addActivityRow(container, name, amount){
@@ -578,8 +578,8 @@ async function submitWithdrawal(){
   const btn=document.getElementById('w-submit-btn');
   btn.disabled=true;btn.textContent='Submitting...';
 
-  const {data:{user}}=await supabase.auth.getUser();
-  const {error}=await supabase.from('withdrawals').insert({
+  const {data:{user}}=await supabaseClient.auth.getUser();
+  const {error}=await supabaseClient.from('withdrawals').insert({
     user_id:user.id,
     amount,
     bank:userData.bank_name,
@@ -595,7 +595,7 @@ async function submitWithdrawal(){
     return;
   }
 
-  await supabase.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
+  await supabaseClient.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
   totalNgn -= amount;
   userData.withdraw_count = (userData.withdraw_count||0)+1;
 
@@ -617,7 +617,7 @@ async function submitWithdrawal(){
 }
 
 async function handleLogout(){
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   window.location.href='/index.html';
 }
 
