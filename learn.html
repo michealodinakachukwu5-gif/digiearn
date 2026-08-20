@@ -368,7 +368,7 @@ footer{background:var(--text);color:white;padding:3rem 2rem;text-align:center}
 const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
 const PAYSTACK_KEY = 'pk_live_831770e2c350d569d81a74835bee761772138ce8';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── COURSES DATA ────────────────────────────────────────────────
 const COURSES = [
@@ -463,7 +463,7 @@ function handleEnroll(){
     channels:CHANNELS[selectedPayOpt],
     metadata:{course_id:currentCourse.id,course_title:currentCourse.title,name,phone},
     callback:async function(response){
-      await supabase.from('enrollments').insert({
+      await supabaseClient.from('enrollments').insert({
         student_name:name,email,phone,
         course_id:currentCourse.id,
         course_title:currentCourse.title,
@@ -624,7 +624,7 @@ function showSpinResult(seg){
   document.getElementById('spin-modal').classList.add('show');
 
   if(seg.prize!=='none'){
-    supabase.from('spin_results').insert({prize_type:seg.prize,prize_amount:seg.amount,won_at:new Date().toISOString()});
+    supabaseClient.from('spin_results').insert({prize_type:seg.prize,prize_amount:seg.amount,won_at:new Date().toISOString()});
   }
 }
 
