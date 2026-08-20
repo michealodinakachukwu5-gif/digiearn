@@ -298,7 +298,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--tex
 <script>
 const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const USD_RATE = 1500;
 
 // Sample enrolled courses (in production, load from Supabase enrollments table)
@@ -335,7 +335,7 @@ let spinAngle = 0, isSpinning = false;
 
 // ── INIT ──────────────────────────────────────────────────────────
 async function init() {
-  const {data:{user}} = await supabase.auth.getUser();
+  const {data:{user}} = await supabaseClient.auth.getUser();
   if (!user) { window.location.href = '/index.html'; return; }
 
   userData = user.user_metadata;
@@ -476,7 +476,7 @@ function markLessonDone() {
   if (course && course.done >= course.lessons) unlockAchievement(3);
 
   // Save progress to Supabase
-  supabase.from('lesson_progress').insert({
+  supabaseClient.from('lesson_progress').insert({
     course_id: currentCourse.id,
     lesson_index: currentLesson - 1,
     completed_at: new Date().toISOString()
@@ -627,13 +627,13 @@ function showSpinResult(seg) {
     updateMetrics();
     addActivity('dot-gold', `🎰 Won ₦${seg.amount.toLocaleString()} from the weekly spin!`);
     unlockAchievement(5);
-    supabase.auth.updateUser({data:{spin_winnings_ngn: spinWinnings}});
+    supabaseClient.auth.updateUser({data:{spin_winnings_ngn: spinWinnings}});
   } else if (seg.prize !== 'none') {
     addActivity('dot-blue', `🎰 Won a spin prize: ${titles[seg.prize]}`);
     unlockAchievement(5);
   }
 
-  supabase.from('spin_results').insert({
+  supabaseClient.from('spin_results').insert({
     prize_type: seg.prize,
     prize_amount: seg.amount,
     won_at: new Date().toISOString()
@@ -641,7 +641,7 @@ function showSpinResult(seg) {
 }
 
 async function handleLogout() {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   window.location.href = '/index.html';
 }
 
