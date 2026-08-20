@@ -521,6 +521,7 @@ footer{background:var(--ink2);padding:3rem 2rem;text-align:center}
     <a href="#tasks">Tasks</a>
     <a href="#plans">Plans</a>
     <a href="business.html">For Businesses</a>
+    <a href="#" onclick="openFlow('login');return false;">Sign In</a>
   </div>
   <button class="nav-cta" onclick="openFlow('buy')">Start Earning →</button>
 </nav>
@@ -590,6 +591,7 @@ footer{background:var(--ink2);padding:3rem 2rem;text-align:center}
     <div class="hero-btns">
       <button class="btn-primary" onclick="openFlow('buy')">Get Started — From $5</button>
       <button class="btn-ghost" onclick="openFlow('register')">Already have a coupon?</button>
+      <button class="btn-ghost" onclick="openFlow('login')">Already a member? Sign In</button>
     </div>
     <div class="hero-stats">
       <div class="hstat"><strong>8,400+</strong><span>Members</span></div>
@@ -771,6 +773,7 @@ footer{background:var(--ink2);padding:3rem 2rem;text-align:center}
       <div class="modal-tabs">
         <div class="mtab on" id="tab-buy" onclick="switchTab('buy')">🎟 Buy Coupon</div>
         <div class="mtab" id="tab-register" onclick="switchTab('register')">📝 Register</div>
+        <div class="mtab" id="tab-login" onclick="switchTab('login')">🔑 Sign In</div>
       </div>
 
       <!-- ── BUY COUPON TAB ── -->
@@ -854,6 +857,16 @@ footer{background:var(--ink2);padding:3rem 2rem;text-align:center}
         <div style="font-size:11px;color:var(--dim);text-align:center;margin-top:8px">By registering you agree to our Terms. Withdrawals: Mon–Fri 10am–4pm.</div>
       </div>
 
+      <!-- ── SIGN IN TAB ── -->
+      <div id="login-tab" style="display:none">
+        <div style="font-size:13px;color:var(--dim);margin-bottom:1rem;line-height:1.6">Welcome back. Sign in with the email and password you registered with.</div>
+        <div class="alert" id="login-alert"></div>
+        <div class="fg"><label>Email Address *</label><input type="email" id="l-email" placeholder="you@example.com"/></div>
+        <div class="fg"><label>Password *</label><input type="password" id="l-pass" placeholder="Your password"/></div>
+        <button class="submit-btn" id="login-btn" onclick="doLogin()">🔑 Sign In →</button>
+        <div style="font-size:11px;color:var(--dim);text-align:center;margin-top:8px">Not registered yet? <span class="get-coupon-link" style="display:inline" onclick="switchTab('register')">Create an account →</span></div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -899,9 +912,47 @@ document.getElementById('main-overlay').addEventListener('click', function(e) {
 function switchTab(tab) {
   document.getElementById('tab-buy').classList.toggle('on', tab === 'buy');
   document.getElementById('tab-register').classList.toggle('on', tab === 'register');
-  document.getElementById('buy-tab').style.display     = tab === 'buy'      ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('on', tab === 'login');
+  document.getElementById('buy-tab').style.display      = tab === 'buy'      ? 'block' : 'none';
   document.getElementById('register-tab').style.display = tab === 'register' ? 'block' : 'none';
-  document.getElementById('modal-title').textContent   = tab === 'buy' ? 'Get a Coupon' : 'Create Account';
+  document.getElementById('login-tab').style.display    = tab === 'login'    ? 'block' : 'none';
+  document.getElementById('modal-title').textContent    = tab === 'buy' ? 'Get a Coupon' : tab === 'login' ? 'Sign In' : 'Create Account';
+}
+
+// ── SIGN IN ─────────────────────────────────────────────────
+function doLogin() {
+  var email = (document.getElementById('l-email').value || '').trim();
+  var pass  = document.getElementById('l-pass').value || '';
+  var alertEl = document.getElementById('login-alert');
+  alertEl.className = 'alert';
+
+  if (!email || email.indexOf('@') < 1) { alertEl.textContent = 'Please enter a valid email.'; alertEl.className = 'alert show alert-err'; return; }
+  if (!pass) { alertEl.textContent = 'Please enter your password.'; alertEl.className = 'alert show alert-err'; return; }
+  if (!sb) { alertEl.textContent = 'Login system not loaded. Please refresh the page.'; alertEl.className = 'alert show alert-err'; return; }
+
+  var btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  sb.auth.signInWithPassword({ email: email, password: pass }).then(function(res) {
+    btn.disabled = false;
+    btn.textContent = 'Sign In →';
+    if (res.error) {
+      alertEl.textContent = res.error.message.indexOf('Email not confirmed') > -1
+        ? 'Please confirm your email first — check your inbox for the confirmation link.'
+        : res.error.message.indexOf('Invalid login') > -1
+        ? 'Incorrect email or password.'
+        : res.error.message;
+      alertEl.className = 'alert show alert-err';
+      return;
+    }
+    window.location.href = 'dashboard.html';
+  }).catch(function(err) {
+    btn.disabled = false;
+    btn.textContent = 'Sign In →';
+    alertEl.textContent = 'An error occurred: ' + err.message;
+    alertEl.className = 'alert show alert-err';
+  });
 }
 
 // ── BUY COUPON ──────────────────────────────────────────────
@@ -1190,8 +1241,8 @@ function showSuccess(name, email, plan, bonus) {
     '<p style="color:#6B6B80;font-size:14px;line-height:1.7;margin-bottom:1.25rem">Your <strong>' + (plan === 'classic' ? 'Classic' : 'Basic') + '</strong> account has been created! Check <strong>' + email + '</strong> for a confirmation email and click the link to activate.</p>' +
     '<div style="background:#E6F9EE;border-radius:12px;padding:1rem;margin-bottom:.75rem;font-size:14px;color:#00922B;font-weight:600">🎁 $' + bonus + ' signup bonus has been added to your account!</div>' +
     '<div style="background:#F0EBFF;border-radius:12px;padding:1rem;margin-bottom:1.5rem;font-size:13px;color:#5B21B6">Withdrawals: Mon–Fri · 10am–4pm · Min ' + (plan === 'classic' ? '$35' : '$40') + '</div>' +
-    '<a href="dashboard.html" style="display:block;background:#7C3AED;color:white;padding:14px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none">Go to Dashboard →</a>' +
-    '<p style="font-size:12px;color:#6B6B80;margin-top:1rem">Already confirmed? <a href="dashboard.html" style="color:#7C3AED;font-weight:600">Click here to log in</a></p>' +
+    '<div style="background:#FEF9E7;border-radius:12px;padding:1rem;margin-bottom:1.25rem;font-size:13px;color:#92700C;text-align:left;line-height:1.6">📧 <strong>Check your email</strong> and click the confirmation link before signing in — until then, the dashboard will send you back here.</div>' +
+    '<a href="index.html" style="display:block;background:#7C3AED;color:white;padding:14px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none">Back to Home — Sign In After Confirming →</a>' +
     '</div></div>';
 }
 
