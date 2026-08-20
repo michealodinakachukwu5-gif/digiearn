@@ -4,244 +4,270 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dashboard — DigiEarn</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#7C3AED;#7C3AED;--gold-dark:#5B21B6;#5B21B6;--gold-light:#F5F3FF;#F5F3FF;--green:#00C853;--green-dark:#00922B;--green-light:#E6F9EE;--text:#0F0F0F;--muted:#6B7280;--border:#E5E7EB;--bg:#F9F8F6;--white:#FFFFFF;--radius:12px;--red:#DC2626;--red-light:#FEF2F2}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
-.sidebar{width:220px;background:var(--text);display:flex;flex-direction:column;padding:1.5rem 0;flex-shrink:0;min-height:100vh}
-.s-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:white;padding:0 1.25rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.1)}
-.s-logo span{color:var(--gold)}
-.s-nav{padding:1rem 0;flex:1}
-.s-item{display:flex;align-items:center;gap:10px;padding:10px 1.25rem;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
-.s-item:hover,.s-item.active{background:rgba(255,255,255,.08);color:white}
+:root{
+  --ink:#12241C; --ink-soft:#1C3327;
+  --paper:#F6F1E4; --paper-dim:#EFE8D6;
+  --naira:#0F7A4B; --naira-dark:#0A5B38;
+  --gold:#C9992B; --gold-light:#F3E4BE;
+  --rust:#B5432E; --rust-light:#F6E2DD;
+  --line:#D8CFB8; --muted:#6B6455;
+  --radius:10px;
+}
+body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);display:flex;min-height:100vh}
+
+/* ── PASSBOOK SPINE SIDEBAR ── */
+.sidebar{width:224px;background:linear-gradient(180deg,var(--ink) 0%,var(--ink-soft) 100%);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;position:relative;border-right:3px double rgba(201,153,43,.35)}
+.sidebar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:repeating-linear-gradient(180deg,var(--gold) 0 2px,transparent 2px 14px);opacity:.5}
+.s-logo{font-family:'Fraunces',serif;font-size:21px;font-weight:700;color:var(--paper);padding:1.6rem 1.25rem 1.1rem 1.6rem;letter-spacing:.02em}
+.s-logo span{color:var(--gold);font-style:italic}
+.s-logo small{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;color:rgba(246,241,228,.4);margin-top:2px;text-transform:uppercase}
+.s-nav{padding:.5rem 0;flex:1}
+.s-item{display:flex;align-items:center;gap:10px;padding:11px 1.25rem 11px 1.6rem;font-size:13.5px;color:rgba(246,241,228,.55);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
+.s-item:hover,.s-item.active{background:rgba(246,241,228,.06);color:var(--paper)}
 .s-item.active{border-left-color:var(--gold)}
-.s-icon{font-size:17px;width:22px;text-align:center}
-.s-badge{margin-left:auto;background:var(--gold);color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px}
-.s-user{padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:10px}
-.s-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:white;font-size:14px;flex-shrink:0}
-.s-name{font-size:13px;font-weight:500;color:white}
-.s-plan{font-size:11px;color:rgba(255,255,255,.5)}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.topbar{background:var(--white);border-bottom:1px solid var(--border);padding:1rem 1.75rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.page-title{font-size:18px;font-weight:600}
+.s-icon{font-size:16px;width:20px;text-align:center}
+.s-badge{margin-left:auto;background:var(--gold);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px}
+.s-user{padding:1rem 1.25rem 1.4rem 1.6rem;border-top:1px solid rgba(246,241,228,.12);display:flex;align-items:center;gap:10px}
+.s-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);font-size:13px;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
+.s-name{font-size:13px;font-weight:500;color:var(--paper)}
+.s-plan{font-size:10.5px;color:rgba(246,241,228,.45);font-family:'IBM Plex Mono',monospace;letter-spacing:.03em}
+
+/* ── MAIN LEDGER PAGE ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--paper);background-image:repeating-linear-gradient(180deg,transparent 0 39px,var(--line) 39px 40px);}
+.topbar{background:var(--paper);border-bottom:2px solid var(--ink);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--ink)}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.plan-badge{font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px;background:var(--gold-light);color:var(--gold-dark)}
-.withdraw-btn{background:var(--green);color:white;padding:9px 18px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.withdraw-btn:disabled{opacity:.5;cursor:not-allowed}
-.content{padding:1.75rem;overflow-y:auto;flex:1}
-.greeting{margin-bottom:1.5rem}
-.greeting h1{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:3px}
-.greeting p{font-size:14px;color:var(--muted)}
+.plan-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--gold-light);color:#8A6410;border:1px solid var(--gold)}
+.withdraw-btn{background:var(--naira);color:var(--paper);padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.01em}
+.withdraw-btn:disabled{opacity:.4;cursor:not-allowed}
+.content{padding:1.75rem 2rem 2.5rem;overflow-y:auto;flex:1}
+.greeting{margin-bottom:1.1rem}
+.greeting h1{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:2px;color:var(--ink)}
+.greeting p{font-size:13.5px;color:var(--muted)}
 
-/* WITHDRAWAL WINDOW BANNER */
-.window-banner{border-radius:var(--radius);padding:10px 16px;font-size:13px;font-weight:500;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
-.window-open{background:var(--green-light);color:var(--green-dark);border:1px solid #6ee7a7}
-.window-closed{background:var(--red-light);color:var(--red);border:1px solid #fca5a5}
+/* WITHDRAWAL WINDOW — teller-window sign */
+.window-banner{border-radius:var(--radius);padding:11px 16px;font-size:13px;font-weight:500;margin-bottom:1.5rem;display:flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;border:1.5px dashed}
+.window-open{background:#E7F3EC;color:var(--naira-dark);border-color:var(--naira)}
+.window-closed{background:var(--rust-light);color:var(--rust);border-color:var(--rust)}
 
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:1.75rem}
-.metric{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:1.1rem}
-.metric-label{font-size:12px;color:var(--muted);margin-bottom:5px}
-.metric-value{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1}
-.metric-sub{font-size:12px;color:var(--muted);margin-top:3px}
-.metric.gold-card{background:var(--gold);border-color:var(--gold)}
-.metric.gold-card .metric-label,.metric.gold-card .metric-sub{color:rgba(255,255,255,.75)}
-.metric.gold-card .metric-value{color:white}
-.progress-bar{height:6px;background:rgba(255,255,255,.3);border-radius:999px;margin-top:8px;overflow:hidden}
-.progress-fill{height:100%;border-radius:999px;background:white;transition:width .5s}
-.two-col{display:grid;grid-template-columns:1fr 320px;gap:1.25rem;margin-bottom:1.25rem}
-.card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.25rem}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.card-title{font-size:15px;font-weight:600}
-.task-list{display:flex;flex-direction:column;gap:10px}
-.task-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color .15s}
-.task-item:hover{border-color:var(--gold)}
-.task-item.done{background:var(--green-light);border-color:#6ee7a7;cursor:default}
-.t-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.ti-ad{background:#F5F3FF}.ti-survey{background:#EDE8FB}.ti-social{background:#E6F9EE}
-.t-name{font-size:14px;font-weight:500;margin-bottom:2px}
-.t-desc{font-size:12px;color:var(--muted)}
-.t-earn{font-size:14px;font-weight:700;color:var(--green-dark)}
-.t-status{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;margin-top:3px;display:inline-block}
-.ts-available{background:var(--gold-light);color:var(--gold-dark)}
-.ts-done{background:var(--green-light);color:var(--green-dark)}
-.ref-box{background:var(--text);border-radius:14px;padding:1.25rem;color:white;margin-bottom:1rem}
-.ref-title{font-size:14px;font-weight:600;margin-bottom:6px}
+/* ── SIGNATURE: TORN RECEIPT TALLY STRIP ── */
+.tally-strip{background:var(--ink);color:var(--paper);border-radius:6px 6px 0 0;padding:1.1rem 1.4rem .9rem;margin-bottom:0;position:relative}
+.tally-strip::after{content:'';display:block;position:absolute;left:0;right:0;bottom:-9px;height:10px;background:
+  linear-gradient(135deg,var(--ink) 25%,transparent 25%) 0 0/12px 12px,
+  linear-gradient(225deg,var(--ink) 25%,transparent 25%) 0 0/12px 12px;
+  background-repeat:repeat-x;}
+.tally-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.tally-row{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace}
+.tally-total{font-size:30px;font-weight:700;letter-spacing:-.01em}
+.tally-sub{font-size:11.5px;color:rgba(246,241,228,.55)}
+.tally-progress{height:4px;background:rgba(246,241,228,.15);border-radius:99px;margin-top:10px;overflow:hidden}
+.tally-progress-fill{height:100%;background:var(--gold);transition:width .5s}
+
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:1.75rem;margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
+.metric{padding:1rem 1.2rem;border-right:1px dashed var(--line)}
+.metric:last-child{border-right:none}
+.metric-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.metric-value{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1;color:var(--ink)}
+.metric-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
+
+.two-col{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;margin-bottom:1.25rem}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:2px solid var(--ink)}
+.card-title{font-family:'Fraunces',serif;font-size:15.5px;font-weight:600;color:var(--ink)}
+
+/* task list = receipt line items with dotted leaders */
+.task-list{display:flex;flex-direction:column;gap:2px}
+.task-item{display:flex;align-items:center;gap:12px;padding:11px 4px;cursor:pointer;transition:background .15s;border-bottom:1px dotted var(--line)}
+.task-item:hover{background:var(--paper-dim)}
+.task-item.done{opacity:.55;cursor:default}
+.t-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:var(--gold-light)}
+.t-name{font-size:13.5px;font-weight:600;margin-bottom:1px;color:var(--ink)}
+.t-desc{font-size:11.5px;color:var(--muted)}
+.t-earn{font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;color:var(--naira-dark)}
+.t-status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;margin-top:3px;display:inline-block;font-family:'IBM Plex Mono',monospace;letter-spacing:.03em}
+.ts-available{background:var(--gold-light);color:#8A6410}
+.ts-done{background:#E7F3EC;color:var(--naira-dark)}
+
+/* referral — a stamped card */
+.ref-box{background:var(--ink);border-radius:var(--radius);padding:1.25rem;color:var(--paper);margin-bottom:1rem;position:relative;overflow:hidden}
+.ref-box::before{content:'⟡';position:absolute;top:-10px;right:-4px;font-size:80px;color:rgba(201,153,43,.08)}
+.ref-title{font-family:'Fraunces',serif;font-size:14.5px;font-weight:600;margin-bottom:8px}
 .ref-code-wrap{display:flex;gap:8px;margin-bottom:12px}
-.ref-code{flex:1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:8px 12px;font-size:13px;font-family:monospace;color:white;font-weight:600;letter-spacing:.05em;word-break:break-all}
-.ref-copy{background:var(--gold);color:white;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap}
+.ref-code{flex:1;background:rgba(246,241,228,.08);border:1px dashed rgba(201,153,43,.5);border-radius:8px;padding:9px 12px;font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--gold);font-weight:600;letter-spacing:.05em;word-break:break-all}
+.ref-copy{background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
 .ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ref-stat{background:rgba(255,255,255,.08);border-radius:8px;padding:.75rem;text-align:center}
-.ref-stat strong{display:block;font-family:'Syne',sans-serif;font-size:20px;color:var(--gold);font-weight:800}
-.ref-stat span{font-size:11px;color:rgba(255,255,255,.55)}
+.ref-stat{background:rgba(246,241,228,.06);border-radius:8px;padding:.7rem;text-align:center}
+.ref-stat strong{display:block;font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--gold);font-weight:700}
+.ref-stat span{font-size:10.5px;color:rgba(246,241,228,.5)}
+
 .tx-list{display:flex;flex-direction:column}
-.tx-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.tx-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px dotted var(--line);font-size:12.5px}
 .tx-row:last-child{border-bottom:none}
-.tx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:10px}
-.dot-g{background:var(--green)}.dot-a{background:var(--gold)}.dot-r{background:var(--red)}
+.tx-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-right:10px}
+.dot-g{background:var(--naira)}.dot-a{background:var(--gold)}.dot-r{background:var(--rust)}
 .tx-left{display:flex;align-items:center}
-.tx-name{font-weight:500}
-.tx-date{font-size:11px;color:var(--muted)}
-.tx-in{color:var(--green-dark);font-weight:700}
+.tx-name{font-weight:500;color:var(--ink)}
+.tx-date{font-size:10.5px;color:var(--muted)}
+.tx-in{color:var(--naira-dark);font-weight:700;font-family:'IBM Plex Mono',monospace}
 
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,36,28,.65);z-index:100;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.show{display:flex}
-.modal{background:var(--white);border-radius:20px;padding:1.75rem;width:100%;max-width:420px}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
-.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
-.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:var(--muted)}
+.modal{background:var(--paper);border-radius:14px;padding:1.75rem;width:100%;max-width:420px;border:1px solid var(--line)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.8rem;border-bottom:2px solid var(--ink)}
+.modal-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--ink)}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
 .form-group{margin-bottom:1rem}
-.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:4px}
-.form-group input,.form-group select{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Space Grotesk',sans-serif;font-size:14px;color:var(--text);outline:none}
-.form-group input:focus{border-color:var(--green)}
-.info-box{border-radius:var(--radius);padding:10px 14px;font-size:13px;margin-bottom:1rem;line-height:1.6}
-.info-green{background:var(--green-light);color:var(--green-dark);border:1px solid #6ee7a7}
-.info-red{background:var(--red-light);color:var(--red);border:1px solid #fca5a5}
-.info-gold{background:var(--gold-light);color:var(--gold-dark);border:1px solid #A78BFA}
-.modal-btn{width:100%;padding:12px;background:var(--green);color:white;border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:'Space Grotesk',sans-serif}
-.modal-btn:disabled{opacity:.5;cursor:not-allowed}
-.modal-cancel{width:100%;padding:10px;background:none;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;cursor:pointer;margin-top:8px;font-family:'Space Grotesk',sans-serif;color:var(--text)}
-
-@media(max-width:900px){.metrics{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.sidebar{display:none}}
+.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.form-group input{width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--radius);font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);outline:none;background:var(--paper)}
+.form-group input:focus{border-color:var(--naira)}
+.info-box{border-radius:var(--radius);padding:11px 14px;font-size:12.5px;margin-bottom:1rem;line-height:1.6;font-family:'IBM Plex Mono',monospace;border:1.5px dashed}
+.info-green{background:#E7F3EC;color:var(--naira-dark);border-color:var(--naira)}
+.info-red{background:var(--rust-light);color:var(--rust);border-color:var(--rust)}
+.info-gold{background:var(--gold-light);color:#8A6410;border-color:var(--gold)}
+.modal-btn{width:100%;padding:12px;background:var(--naira);color:var(--paper);border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
+.modal-btn:disabled{opacity:.4;cursor:not-allowed}
+.modal-cancel{width:100%;padding:10px;background:none;border:1px solid var(--line);border-radius:var(--radius);font-size:13px;cursor:pointer;margin-top:8px;font-family:'Inter',sans-serif;color:var(--ink)}
+@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.sidebar{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <!-- ═══ AD NETWORKS ═══ -->
-<!-- Adsterra -->
 <script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
-<!-- AdMaven -->
 <script type="text/javascript" src="https://aclibrary.com/ac.js"></script>
-<!-- BidVertiser -->
 <script src="https://serve.bidvertiser.com/bdvr.ads.min.js" async></script>
 <!-- ════════════════ -->
 </head>
 <body>
-
 <div class="sidebar">
-  <div class="s-logo">Digi<span>Earn</span></div>
-  <div class="s-nav">
-    <div class="s-item active"><span class="s-icon">⊞</span> Dashboard</div>
-    <div class="s-item"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></div>
-    <div class="s-item"><span class="s-icon">💰</span> Earnings</div>
-    <div class="s-item"><span class="s-icon">👥</span> Referrals</div>
-    <div class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</div>
-    <div class="s-item"><span class="s-icon">📜</span> History</div>
-    <div class="s-item"><span class="s-icon">👤</span> Profile</div>
-    <div class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</div>
-  </div>
-  <div class="s-user">
-    <div class="s-avatar" id="user-initials">--</div>
-    <div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
-  </div>
+<div class="s-logo">Digi<span>Earn</span><small>Member Passbook</small></div>
+<div class="s-nav">
+<div class="s-item active"><span class="s-icon">⊞</span> Dashboard</div>
+<div class="s-item"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></div>
+<div class="s-item"><span class="s-icon">💰</span> Earnings</div>
+<div class="s-item"><span class="s-icon">👥</span> Referrals</div>
+<div class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</div>
+<div class="s-item"><span class="s-icon">📜</span> History</div>
+<div class="s-item"><span class="s-icon">👤</span> Profile</div>
+<div class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</div>
+</div>
+<div class="s-user">
+<div class="s-avatar" id="user-initials">--</div>
+<div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
+</div>
+</div>
+<div class="main">
+<div class="topbar">
+<div class="page-title">Dashboard</div>
+<div class="topbar-right">
+<span class="plan-badge" id="plan-badge">--</span>
+<button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
+</div>
+</div>
+<div class="content">
+<div class="greeting">
+<h1 id="greeting-text">Good day! 👋</h1>
+<p id="greeting-sub">Complete your tasks to earn today.</p>
 </div>
 
-<div class="main">
-  <div class="topbar">
-    <div class="page-title">Dashboard</div>
-    <div class="topbar-right">
-      <span class="plan-badge" id="plan-badge">--</span>
-      <button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
-    </div>
-  </div>
-  <div class="content">
-    <div class="greeting">
-      <h1 id="greeting-text">Good day! 👋</h1>
-      <p id="greeting-sub">Complete your tasks to earn today.</p>
-    </div>
+<div class="window-banner" id="window-banner">
+<span id="window-icon">⏳</span>
+<span id="window-msg">Checking withdrawal window...</span>
+</div>
 
-    <!-- Withdrawal window status -->
-    <div class="window-banner" id="window-banner">
-      <span id="window-icon">⏳</span>
-      <span id="window-msg">Checking withdrawal window...</span>
-    </div>
+<!-- SIGNATURE: torn receipt tally -->
+<div class="tally-strip">
+<div class="tally-label">Today's Tally · Running Total</div>
+<div class="tally-row">
+<span class="tally-total" id="total-usd">$0.00</span>
+<span class="tally-sub" id="total-ngn">₦0</span>
+</div>
+<div class="tally-sub" id="progress-text" style="margin-top:4px">$0 of $45 target</div>
+<div class="tally-progress"><div class="tally-progress-fill" id="progress-fill" style="width:0%"></div></div>
+</div>
 
-    <div class="metrics">
-      <div class="metric gold-card">
-        <div class="metric-label">Total Earnings (USD)</div>
-        <div class="metric-value" id="total-usd">$0.00</div>
-        <div class="metric-sub" id="progress-text">$0 of $45 target</div>
-        <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Total Earnings (NGN)</div>
-        <div class="metric-value" id="total-ngn">₦0</div>
-        <div class="metric-sub">At current rate</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Today's Earnings</div>
-        <div class="metric-value" id="today-earn">₦0</div>
-        <div class="metric-sub" id="daily-limit">Limit: ₦500/day</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Referral Bonus</div>
-        <div class="metric-value" id="ref-earn">₦0</div>
-        <div class="metric-sub">From referrals</div>
-      </div>
-    </div>
+<div class="metrics">
+<div class="metric">
+<div class="metric-label">Today's Earnings</div>
+<div class="metric-value" id="today-earn">₦0</div>
+<div class="metric-sub" id="daily-limit">Limit: ₦500/day</div>
+</div>
+<div class="metric">
+<div class="metric-label">Referral Bonus</div>
+<div class="metric-value" id="ref-earn">₦0</div>
+<div class="metric-sub">From referrals</div>
+</div>
+<div class="metric">
+<div class="metric-label">Tasks Complete</div>
+<div class="metric-value" id="tasks-counter">0/6 done</div>
+<div class="metric-sub">Resets daily</div>
+</div>
+</div>
 
-    <div class="two-col">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Today's Tasks</div>
-          <span style="font-size:13px;color:var(--muted)" id="tasks-counter">0/6 done</span>
-        </div>
-        <div class="task-list" id="task-list"></div>
-      </div>
-
-      <div>
-        <div class="ref-box">
-          <div class="ref-title">Your Referral Link 🔗</div>
-          <div class="ref-code-wrap">
-            <div class="ref-code" id="ref-code">Loading...</div>
-            <button class="ref-copy" onclick="copyRef()">Copy</button>
-          </div>
-          <div class="ref-stats">
-            <div class="ref-stat"><strong id="ref-count">0</strong><span>Referrals</span></div>
-            <div class="ref-stat"><strong id="ref-bonus">₦0</strong><span>Bonus earned</span></div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header"><div class="card-title">Recent Activity</div></div>
-          <div class="tx-list" id="tx-list">
-            <div class="tx-row"><div class="tx-left"><div class="tx-dot dot-a"></div><div><div class="tx-name">No activity yet</div><div class="tx-date">Complete tasks to earn</div></div></div><div style="color:var(--muted)">—</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="two-col">
+<div class="card">
+<div class="card-header">
+<div class="card-title">Today's Tasks</div>
+</div>
+<div class="task-list" id="task-list"></div>
+</div>
+<div>
+<div class="ref-box">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code">Loading...</div>
+<button class="ref-copy" onclick="copyRef()">Copy</button>
+</div>
+<div class="ref-stats">
+<div class="ref-stat"><strong id="ref-count">0</strong><span>Referrals</span></div>
+<div class="ref-stat"><strong id="ref-bonus">₦0</strong><span>Bonus earned</span></div>
+</div>
+</div>
+<div class="card">
+<div class="card-header"><div class="card-title">Recent Activity</div></div>
+<div class="tx-list" id="tx-list">
+<div class="tx-row"><div class="tx-left"><div class="tx-dot dot-a"></div><div><div class="tx-name">No activity yet</div><div class="tx-date">Complete tasks to earn</div></div></div><div style="color:var(--muted)">—</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 <!-- WITHDRAW MODAL -->
 <div class="modal-overlay" id="withdraw-modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div class="modal-title">🏦 Withdraw Earnings</div>
-      <button class="modal-close" onclick="closeWithdraw()">×</button>
-    </div>
-    <div id="w-status-box" class="info-box info-green"></div>
-    <div class="form-group">
-      <label>Amount to Withdraw (₦)</label>
-      <input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/>
-    </div>
-    <div class="form-group">
-      <label>Your Bank</label>
-      <input type="text" id="w-bank" readonly/>
-    </div>
-    <div class="form-group">
-      <label>Account Number</label>
-      <input type="text" id="w-acct" readonly/>
-    </div>
-    <div class="form-group">
-      <label>Account Name</label>
-      <input type="text" id="w-acct-name" readonly/>
-    </div>
-    <div class="info-box info-gold">
-      ⏱ Withdrawals processed within 24 hours on business days.<br>
-      📅 Available: Mon–Fri · 10:00 AM – 4:00 PM only.<br>
-      💰 Basic minimum: $45 · Classic minimum: $40 (~₦90,000)
-    </div>
-    <button class="modal-btn" id="w-submit-btn" onclick="submitWithdrawal()">Request Withdrawal</button>
-    <button class="modal-cancel" onclick="closeWithdraw()">Cancel</button>
-  </div>
+<div class="modal">
+<div class="modal-head">
+<div class="modal-title">🏦 Withdraw Earnings</div>
+<button class="modal-close" onclick="closeWithdraw()">×</button>
+</div>
+<div id="w-status-box" class="info-box info-green"></div>
+<div class="form-group">
+<label>Amount to Withdraw (₦)</label>
+<input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/>
+</div>
+<div class="form-group">
+<label>Your Bank</label>
+<input type="text" id="w-bank" readonly/>
+</div>
+<div class="form-group">
+<label>Account Number</label>
+<input type="text" id="w-acct" readonly/>
+</div>
+<div class="form-group">
+<label>Account Name</label>
+<input type="text" id="w-acct-name" readonly/>
+</div>
+<div class="info-box info-gold">
+⏱ Withdrawals processed within 24 hours on business days.<br>
+📅 Available: Mon–Fri · 10:00 AM – 4:00 PM only.<br>
+💰 Basic minimum: $45 · Classic minimum: $40 (~₦90,000)
+</div>
+<button class="modal-btn" id="w-submit-btn" onclick="submitWithdrawal()">Request Withdrawal</button>
+<button class="modal-cancel" onclick="closeWithdraw()">Cancel</button>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -250,28 +276,32 @@ const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const USD_RATE = 1500; // ₦1,500 per $1
-const FIRST_WITHDRAW_USD = 45;   // Basic: $45
-const CLASSIC_WITHDRAW_USD = 40;  // Classic: $40 (lower threshold)
-// No repeat threshold - same limit always applies
-const USD_RATE_NGN = USD_RATE;
+const USD_RATE = 1500;
+const FIRST_WITHDRAW_USD = 45;
+const CLASSIC_WITHDRAW_USD = 40;
+const REPEAT_WITHDRAW_USD = 20;
 
 const TASKS = [
-  {id:1,icon:'📺',bg:'ti-ad',    name:'Watch Ad Video',      desc:'Watch a 30-second ad',         earn:{basic:50, classic:200}},
-  {id:2,icon:'📋',bg:'ti-survey',name:'Fill Daily Survey',    desc:'Answer 5 quick questions',     earn:{basic:100,classic:400}},
-  {id:3,icon:'❤️',bg:'ti-social',name:'Like & Follow Task',   desc:'Like 3 posts, follow 2 pages', earn:{basic:50, classic:200}},
-  {id:4,icon:'🎬',bg:'ti-ad',    name:'Watch YouTube Video',  desc:'Watch a 2-minute video',       earn:{basic:75, classic:300}},
-  {id:5,icon:'🔁',bg:'ti-social',name:'Share Social Post',    desc:'Share to your timeline',       earn:{basic:75, classic:300}},
-  {id:6,icon:'📝',bg:'ti-survey',name:'Write a Review',       desc:'Leave a product review',       earn:{basic:150,classic:600}},
+{id:1,icon:'📺', name:'Watch Ad Video', desc:'Watch a 30-second ad', earn:{basic:50, classic:200}},
+{id:2,icon:'📋', name:'Fill Daily Survey', desc:'Answer 5 quick questions', earn:{basic:100,classic:400}},
+{id:3,icon:'❤️', name:'Like & Follow Task', desc:'Like 3 posts, follow 2 pages', earn:{basic:50, classic:200}},
+{id:4,icon:'🎬', name:'Watch YouTube Video', desc:'Watch a 2-minute video', earn:{basic:75, classic:300}},
+{id:5,icon:'🔁', name:'Share Social Post', desc:'Share to your timeline', earn:{basic:75, classic:300}},
+{id:6,icon:'📝', name:'Write a Review', desc:'Leave a product review', earn:{basic:150,classic:600}},
 ];
 
 let userData=null, userPlan='basic', completedTasks=new Set();
 let todayEarnings=0, totalNgn=0, refBonus=0;
 
-// ── WITHDRAWAL WINDOW CHECK ──────────────────────────────────────
+function getMinWithdrawUsd(){
+  const wc = (userData && userData.withdraw_count) || 0;
+  if(wc > 0) return REPEAT_WITHDRAW_USD;
+  return (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+}
+
 function isWithdrawalOpen(){
   const now = new Date();
-  const day = now.getDay(); // 0=Sun,1=Mon...5=Fri,6=Sat
+  const day = now.getDay();
   const hour = now.getHours();
   const min = now.getMinutes();
   const isWeekday = day >= 1 && day <= 5;
@@ -286,17 +316,18 @@ function updateWithdrawalBanner(){
   const icon = document.getElementById('window-icon');
   const btn = document.getElementById('withdraw-btn');
   const totalUsd = totalNgn / USD_RATE;
+  const minUsd = getMinWithdrawUsd();
 
   if(!isWithdrawalOpen()){
     banner.className='window-banner window-closed';
     icon.textContent='🔒';
     msg.textContent='Withdrawal window closed. Opens Mon–Fri, 10:00 AM – 4:00 PM.';
     btn.disabled=true;
-  } else if(totalUsd < MIN_WITHDRAW_USD){
+  } else if(totalUsd < minUsd){
     banner.className='window-banner window-closed';
     icon.textContent='💰';
-    const needed=(MIN_WITHDRAW_USD - totalUsd).toFixed(2);
-    msg.textContent=`You need $${needed} more to reach the $45 minimum (first withdrawal). Keep completing tasks!`;
+    const needed=(minUsd - totalUsd).toFixed(2);
+    msg.textContent=`You need $${needed} more to reach the $${minUsd} minimum. Keep completing tasks!`;
     btn.disabled=true;
   } else {
     banner.className='window-banner window-open';
@@ -306,7 +337,6 @@ function updateWithdrawalBanner(){
   }
 }
 
-// ── INIT ─────────────────────────────────────────────────────────
 async function init(){
   const {data:{user}} = await supabase.auth.getUser();
   if(!user){window.location.href='/index.html';return;}
@@ -315,7 +345,6 @@ async function init(){
   userPlan = userData.plan||'basic';
   const name = userData.full_name||'User';
   const initials = name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
-
   document.getElementById('user-initials').textContent=initials;
   document.getElementById('user-name').textContent=name;
   document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
@@ -340,20 +369,17 @@ async function init(){
 
   renderTasks();
   updateWithdrawalBanner();
-  setInterval(updateWithdrawalBanner, 60000); // re-check every minute
+  setInterval(updateWithdrawalBanner, 60000);
 }
 
 function updateMetrics(){
   const usd=(totalNgn/USD_RATE);
-  const pct=Math.min((usd/MIN_WITHDRAW_USD)*100,100);
+  const minUsd = getMinWithdrawUsd();
+  const pctT = Math.min((usd/minUsd)*100,100);
   document.getElementById('total-usd').textContent='$'+usd.toFixed(2);
   document.getElementById('total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
-  document.getElementById('progress-fill').style.width=pct.toFixed(1)+'%';
-  const wc = userData.withdraw_count || 0;
-  const minT = wc===0 ? FIRST_WITHDRAW_USD : REPEAT_WITHDRAW_USD;
-  const pctT = Math.min((usd/minT)*100,100);
   document.getElementById('progress-fill').style.width=pctT.toFixed(1)+'%';
-  document.getElementById('progress-text').textContent='$'+usd.toFixed(2)+' of $'+minRequired+' target';
+  document.getElementById('progress-text').textContent='$'+usd.toFixed(2)+' of $'+minUsd+' target';
   document.getElementById('today-earn').textContent='₦'+todayEarnings.toLocaleString();
   document.getElementById('tasks-counter').textContent=completedTasks.size+'/6 done';
   document.getElementById('tasks-badge').textContent=6-completedTasks.size;
@@ -364,17 +390,17 @@ function updateMetrics(){
 function renderTasks(){
   const list=document.getElementById('task-list');
   list.innerHTML=TASKS.map(t=>`
-    <div class="task-item${completedTasks.has(t.id)?' done':''}" id="task-${t.id}" onclick="completeTask(${t.id})">
-      <div class="t-icon ${t.bg}">${t.icon}</div>
-      <div style="flex:1">
-        <div class="t-name">${t.name}</div>
-        <div class="t-desc">${t.desc}</div>
-      </div>
-      <div style="text-align:right">
-        <div class="t-earn">+₦${t.earn[userPlan]}</div>
-        <div class="t-status ${completedTasks.has(t.id)?'ts-done':'ts-available'}">${completedTasks.has(t.id)?'Done ✓':'Start'}</div>
-      </div>
-    </div>`).join('');
+<div class="task-item${completedTasks.has(t.id)?' done':''}" id="task-${t.id}" onclick="completeTask(${t.id})">
+<div class="t-icon">${t.icon}</div>
+<div style="flex:1">
+<div class="t-name">${t.name}</div>
+<div class="t-desc">${t.desc}</div>
+</div>
+<div style="text-align:right">
+<div class="t-earn">+₦${t.earn[userPlan]}</div>
+<div class="t-status ${completedTasks.has(t.id)?'ts-done':'ts-available'}">${completedTasks.has(t.id)?'Done ✓':'Start'}</div>
+</div>
+</div>`).join('');
 }
 
 function completeTask(id){
@@ -383,14 +409,12 @@ function completeTask(id){
   const earn=task.earn[userPlan];
   const limit=userPlan==='classic'?2000:1000;
   if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.\nYour limit: ₦'+limit.toLocaleString()+'/day');return;}
-
   completedTasks.add(id);
   todayEarnings+=earn;
   totalNgn+=earn;
   updateMetrics();
   renderTasks();
 
-  // Add to activity feed
   const txList=document.getElementById('tx-list');
   if(txList.children.length===1&&txList.children[0].querySelector('.tx-dot.dot-a'))txList.innerHTML='';
   const row=document.createElement('div');
@@ -398,7 +422,6 @@ function completeTask(id){
   row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-g"></div><div><div class="tx-name">${task.name}</div><div class="tx-date">Just now</div></div></div><div class="tx-in">+₦${earn}</div>`;
   txList.prepend(row);
 
-  // Save to Supabase
   supabase.auth.updateUser({data:{earnings_ngn:totalNgn}});
 }
 
@@ -408,14 +431,12 @@ function copyRef(){
   navigator.clipboard.writeText(url).then(()=>alert('Referral link copied!\n\n'+url));
 }
 
-// ── WITHDRAWAL ────────────────────────────────────────────────────
 function openWithdraw(){
   const totalUsd=totalNgn/USD_RATE;
   const box=document.getElementById('w-status-box');
   const btn=document.getElementById('w-submit-btn');
   const open=isWithdrawalOpen();
-  const withdrawCount = userData.withdraw_count || 0;
-  const minRequired = (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+  const minRequired = getMinWithdrawUsd();
   const eligible = totalUsd >= minRequired;
 
   if(!open){
@@ -424,7 +445,7 @@ function openWithdraw(){
     btn.disabled=true;
   } else if(!eligible){
     box.className='info-box info-red';
-    box.textContent=`💰 You need $${(MIN_WITHDRAW_USD-totalUsd).toFixed(2)} more to reach the $45 minimum (first withdrawal). Keep earning!`;
+    box.textContent=`💰 You need $${(minRequired-totalUsd).toFixed(2)} more to reach the $${minRequired} minimum. Keep earning!`;
     btn.disabled=true;
   } else {
     box.className='info-box info-green';
@@ -439,10 +460,8 @@ function closeWithdraw(){document.getElementById('withdraw-modal').classList.rem
 async function submitWithdrawal(){
   if(!isWithdrawalOpen()){alert('Withdrawal window is closed. Please try Mon–Fri between 10am and 4pm.');return;}
   const totalUsd=totalNgn/USD_RATE;
-  const wCount = userData.withdraw_count || 0;
-  const minReq = (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+  const minReq = getMinWithdrawUsd();
   if(totalUsd<minReq){alert('You need at least $'+minReq+' to withdraw.');return;}
-
   const amount=parseInt(document.getElementById('w-amount').value);
   if(!amount||amount<1000){alert('Minimum withdrawal amount is ₦1,000.');return;}
   if(amount>totalNgn){alert('Insufficient balance. Your balance: ₦'+Math.round(totalNgn).toLocaleString());return;}
@@ -467,7 +486,6 @@ async function submitWithdrawal(){
     return;
   }
 
-  // Increment withdrawal count
   await supabase.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
   totalNgn -= amount;
   userData.withdraw_count = (userData.withdraw_count||0)+1;
@@ -484,14 +502,8 @@ async function handleLogout(){
 
 init();
 </script>
-
-<!-- AdMaven Auto Tag -->
 <script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'd4s64aqfhd',
-    });
+if (typeof aclib !== 'undefined') { aclib.runAutoTag({ zoneId: 'd4s64aqfhd' }); }
 </script>
-<!-- BidVertiser Zone -->
-<!-- Bidvertiser2104798 -->
 </body>
 </html>
