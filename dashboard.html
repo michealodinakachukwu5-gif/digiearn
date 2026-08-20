@@ -4,190 +4,202 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dashboard — DigiEarn</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --ink:#12241C; --ink-soft:#1C3327;
-  --paper:#F6F1E4; --paper-dim:#EFE8D6;
-  --naira:#0F7A4B; --naira-dark:#0A5B38;
-  --gold:#C9992B; --gold-light:#F3E4BE;
-  --rust:#B5432E; --rust-light:#F6E2DD;
-  --line:#D8CFB8; --muted:#6B6455;
-  --radius:10px;
+  --bg1:#1A1035; --bg2:#2D1B69;
+  --violet:#7C5CFF; --violet-glow:rgba(124,92,255,.45);
+  --mint:#00E5A0; --mint-glow:rgba(0,229,160,.4);
+  --coral:#FF6B6B; --coral-glow:rgba(255,107,107,.4);
+  --gold:#FFB020;
+  --glass:rgba(255,255,255,.06); --glass-brd:rgba(255,255,255,.12);
+  --text:#F4F2FF; --muted:#A99FD1;
+  --radius:20px;
 }
-body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);display:flex;min-height:100vh}
-
-/* ── PASSBOOK SPINE SIDEBAR ── */
-.sidebar{width:224px;background:linear-gradient(180deg,var(--ink) 0%,var(--ink-soft) 100%);display:flex;flex-direction:column;flex-shrink:0;min-height:100vh;position:relative;border-right:3px double rgba(201,153,43,.35)}
-.sidebar::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:repeating-linear-gradient(180deg,var(--gold) 0 2px,transparent 2px 14px);opacity:.5}
-.s-logo{font-family:'Fraunces',serif;font-size:21px;font-weight:700;color:var(--paper);padding:1.6rem 1.25rem 1.1rem 1.6rem;letter-spacing:.02em}
-.s-logo span{color:var(--gold);font-style:italic}
-.s-logo small{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;color:rgba(246,241,228,.4);margin-top:2px;text-transform:uppercase}
-.s-nav{padding:.5rem 0;flex:1}
-.s-item{display:flex;align-items:center;gap:10px;padding:11px 1.25rem 11px 1.6rem;font-size:13.5px;color:rgba(246,241,228,.55);cursor:pointer;transition:all .15s;border-left:3px solid transparent}
-.s-item:hover,.s-item.active{background:rgba(246,241,228,.06);color:var(--paper)}
-.s-item.active{border-left-color:var(--gold)}
+body{
+  font-family:'Manrope',sans-serif;color:var(--text);display:flex;min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(124,92,255,.35), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(0,229,160,.18), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(255,107,107,.15), transparent 45%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 100%);
+  background-attachment:fixed;
+}
+.sidebar{width:230px;flex-shrink:0;min-height:100vh;padding:1.5rem 1rem;display:flex;flex-direction:column}
+.s-panel{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-brd);border-radius:24px;flex:1;display:flex;flex-direction:column;padding:1.4rem 0;box-shadow:0 20px 50px -20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08)}
+.s-logo{font-size:20px;font-weight:800;padding:0 1.4rem 1.4rem;letter-spacing:-.02em}
+.s-logo span{background:linear-gradient(135deg,var(--violet),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-nav{padding:.5rem 0;flex:1;display:flex;flex-direction:column;gap:3px}
+.s-item{display:flex;align-items:center;gap:11px;padding:11px 1.4rem;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;margin:0 .7rem;border-radius:12px;background:none;border:none;text-align:left;width:calc(100% - 1.4rem);font-family:inherit}
+.s-item:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.s-item.active{background:linear-gradient(135deg,var(--violet),#5B3FE0);color:white;box-shadow:0 8px 20px -6px var(--violet-glow)}
 .s-icon{font-size:16px;width:20px;text-align:center}
-.s-badge{margin-left:auto;background:var(--gold);color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;padding:2px 7px;border-radius:999px}
-.s-user{padding:1rem 1.25rem 1.4rem 1.6rem;border-top:1px solid rgba(246,241,228,.12);display:flex;align-items:center;gap:10px}
-.s-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink);font-size:13px;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
-.s-name{font-size:13px;font-weight:500;color:var(--paper)}
-.s-plan{font-size:10.5px;color:rgba(246,241,228,.45);font-family:'IBM Plex Mono',monospace;letter-spacing:.03em}
-
-/* ── MAIN LEDGER PAGE ── */
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--paper);background-image:repeating-linear-gradient(180deg,transparent 0 39px,var(--line) 39px 40px);}
-.topbar{background:var(--paper);border-bottom:2px solid var(--ink);padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-.page-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--ink)}
+.s-badge{margin-left:auto;background:var(--mint);color:var(--bg1);font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px}
+.s-user{margin:1rem .7rem 0;padding:.9rem 1rem;border-radius:14px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:10px}
+.s-avatar{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--coral));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:14px;flex-shrink:0;box-shadow:0 6px 14px -4px var(--coral-glow)}
+.s-name{font-size:13px;font-weight:700;color:var(--text)}
+.s-plan{font-size:10.5px;color:var(--muted)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:1.5rem 2rem .5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-size:19px;font-weight:800}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.plan-badge{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--gold-light);color:#8A6410;border:1px solid var(--gold)}
-.withdraw-btn{background:var(--naira);color:var(--paper);padding:10px 20px;border-radius:var(--radius);font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;letter-spacing:.01em}
-.withdraw-btn:disabled{opacity:.4;cursor:not-allowed}
-.content{padding:1.75rem 2rem 2.5rem;overflow-y:auto;flex:1}
-.greeting{margin-bottom:1.1rem}
-.greeting h1{font-family:'Fraunces',serif;font-size:24px;font-weight:600;margin-bottom:2px;color:var(--ink)}
+.plan-badge{font-size:11.5px;font-weight:700;padding:6px 14px;border-radius:999px;background:rgba(255,176,32,.15);color:var(--gold);border:1px solid rgba(255,176,32,.35)}
+.withdraw-btn{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;padding:11px 22px;border-radius:14px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 24px -8px var(--mint-glow);transition:transform .15s}
+.withdraw-btn:hover:not(:disabled){transform:translateY(-2px)}
+.withdraw-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.content{padding:1.25rem 2rem 2.5rem;overflow-y:auto;flex:1}
+.view{display:none}
+.view.active{display:block}
+.greeting{margin-bottom:1.4rem}
+.greeting h1{font-size:25px;font-weight:800;margin-bottom:2px}
 .greeting p{font-size:13.5px;color:var(--muted)}
-
-/* WITHDRAWAL WINDOW — teller-window sign */
-.window-banner{border-radius:var(--radius);padding:11px 16px;font-size:13px;font-weight:500;margin-bottom:1.5rem;display:flex;align-items:center;gap:9px;font-family:'IBM Plex Mono',monospace;border:1.5px dashed}
-.window-open{background:#E7F3EC;color:var(--naira-dark);border-color:var(--naira)}
-.window-closed{background:var(--rust-light);color:var(--rust);border-color:var(--rust)}
-
-/* ── SIGNATURE: TORN RECEIPT TALLY STRIP ── */
-.tally-strip{background:var(--ink);color:var(--paper);border-radius:6px 6px 0 0;padding:1.1rem 1.4rem .9rem;margin-bottom:0;position:relative}
-.tally-strip::after{content:'';display:block;position:absolute;left:0;right:0;bottom:-9px;height:10px;background:
-  linear-gradient(135deg,var(--ink) 25%,transparent 25%) 0 0/12px 12px,
-  linear-gradient(225deg,var(--ink) 25%,transparent 25%) 0 0/12px 12px;
-  background-repeat:repeat-x;}
-.tally-label{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
-.tally-row{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace}
-.tally-total{font-size:30px;font-weight:700;letter-spacing:-.01em}
-.tally-sub{font-size:11.5px;color:rgba(246,241,228,.55)}
-.tally-progress{height:4px;background:rgba(246,241,228,.15);border-radius:99px;margin-top:10px;overflow:hidden}
-.tally-progress-fill{height:100%;background:var(--gold);transition:width .5s}
-
-.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-bottom:1.75rem;margin-top:14px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper)}
-.metric{padding:1rem 1.2rem;border-right:1px dashed var(--line)}
-.metric:last-child{border-right:none}
-.metric-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
-.metric-value{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1;color:var(--ink)}
-.metric-sub{font-size:11.5px;color:var(--muted);margin-top:4px}
-
+.window-banner{border-radius:16px;padding:12px 18px;font-size:13px;font-weight:600;margin-bottom:1.4rem;display:flex;align-items:center;gap:9px;backdrop-filter:blur(12px)}
+.window-open{background:rgba(0,229,160,.12);color:#6FFFCB;border:1px solid rgba(0,229,160,.35)}
+.window-closed{background:rgba(255,107,107,.12);color:#FFA0A0;border:1px solid rgba(255,107,107,.35)}
+.orb-section{display:flex;align-items:center;gap:2rem;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-brd);border-radius:28px;padding:1.6rem 2rem;margin-bottom:1.5rem;box-shadow:0 25px 60px -25px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);flex-wrap:wrap}
+.orb-wrap{position:relative;width:126px;height:126px;flex-shrink:0}
+.orb-glow{position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(circle,var(--violet-glow),transparent 70%);filter:blur(6px)}
+.orb-ring{position:relative;width:126px;height:126px;border-radius:50%;background:conic-gradient(var(--mint) var(--pct,0%), rgba(255,255,255,.08) var(--pct,0%));display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -10px rgba(0,0,0,.6), inset 0 2px 6px rgba(255,255,255,.15), inset 0 -6px 14px rgba(0,0,0,.35)}
+.orb-inner{width:98px;height:98px;border-radius:50%;background:linear-gradient(160deg,#2A1C58,#1A1035);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(0,0,0,.5)}
+.orb-usd{font-size:20px;font-weight:800}
+.orb-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.orb-details{flex:1;min-width:200px}
+.orb-details h2{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.orb-ngn{font-size:32px;font-weight:800;letter-spacing:-.02em}
+.orb-sub{font-size:13px;color:var(--muted);margin-top:4px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+.metric{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-brd);border-radius:18px;padding:1.15rem 1.3rem;box-shadow:0 14px 30px -16px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);transition:transform .2s}
+.metric:hover{transform:translateY(-3px)}
+.metric-label{font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.metric-value{font-size:21px;font-weight:800}
+.metric-sub{font-size:11.5px;color:var(--muted);margin-top:3px}
 .two-col{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;margin-bottom:1.25rem}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:1.3rem}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:2px solid var(--ink)}
-.card-title{font-family:'Fraunces',serif;font-size:15.5px;font-weight:600;color:var(--ink)}
-
-/* task list = receipt line items with dotted leaders */
-.task-list{display:flex;flex-direction:column;gap:2px}
-.task-item{display:flex;align-items:center;gap:12px;padding:11px 4px;cursor:pointer;transition:background .15s;border-bottom:1px dotted var(--line)}
-.task-item:hover{background:var(--paper-dim)}
-.task-item.done{opacity:.55;cursor:default}
-.t-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:var(--gold-light)}
-.t-name{font-size:13.5px;font-weight:600;margin-bottom:1px;color:var(--ink)}
+.card{background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--glass-brd);border-radius:22px;padding:1.4rem;box-shadow:0 20px 45px -22px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.card-title{font-size:15.5px;font-weight:800}
+.task-list{display:flex;flex-direction:column;gap:10px}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;border:1px solid transparent}
+.task-item:hover{background:rgba(255,255,255,.07);border-color:var(--glass-brd);transform:translateX(3px)}
+.task-item.done{opacity:.45;cursor:default}
+.t-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:linear-gradient(135deg,rgba(124,92,255,.35),rgba(124,92,255,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 6px 14px -6px var(--violet-glow)}
+.t-name{font-size:13.5px;font-weight:700;margin-bottom:2px}
 .t-desc{font-size:11.5px;color:var(--muted)}
-.t-earn{font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;color:var(--naira-dark)}
-.t-status{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;margin-top:3px;display:inline-block;font-family:'IBM Plex Mono',monospace;letter-spacing:.03em}
-.ts-available{background:var(--gold-light);color:#8A6410}
-.ts-done{background:#E7F3EC;color:var(--naira-dark)}
-
-/* referral — a stamped card */
-.ref-box{background:var(--ink);border-radius:var(--radius);padding:1.25rem;color:var(--paper);margin-bottom:1rem;position:relative;overflow:hidden}
-.ref-box::before{content:'⟡';position:absolute;top:-10px;right:-4px;font-size:80px;color:rgba(201,153,43,.08)}
-.ref-title{font-family:'Fraunces',serif;font-size:14.5px;font-weight:600;margin-bottom:8px}
-.ref-code-wrap{display:flex;gap:8px;margin-bottom:12px}
-.ref-code{flex:1;background:rgba(246,241,228,.08);border:1px dashed rgba(201,153,43,.5);border-radius:8px;padding:9px 12px;font-size:13px;font-family:'IBM Plex Mono',monospace;color:var(--gold);font-weight:600;letter-spacing:.05em;word-break:break-all}
-.ref-copy{background:var(--gold);color:var(--ink);border:none;border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
-.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.ref-stat{background:rgba(246,241,228,.06);border-radius:8px;padding:.7rem;text-align:center}
-.ref-stat strong{display:block;font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--gold);font-weight:700}
-.ref-stat span{font-size:10.5px;color:rgba(246,241,228,.5)}
-
+.t-earn{font-size:13.5px;font-weight:800;color:var(--mint)}
+.t-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;margin-top:3px;display:inline-block}
+.ts-available{background:rgba(255,176,32,.15);color:var(--gold)}
+.ts-done{background:rgba(0,229,160,.15);color:var(--mint)}
+.ref-box{background:linear-gradient(150deg,#3B2A78,#241454);border-radius:20px;padding:1.35rem;margin-bottom:1.1rem;box-shadow:0 20px 40px -18px rgba(124,92,255,.4), inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden}
+.ref-box::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,var(--mint-glow),transparent 70%)}
+.ref-title{font-size:14.5px;font-weight:800;margin-bottom:9px;position:relative}
+.ref-code-wrap{display:flex;gap:8px;margin-bottom:12px;position:relative}
+.ref-code{flex:1;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:9px 12px;font-size:13px;font-family:monospace;font-weight:700;letter-spacing:.05em;word-break:break-all}
+.ref-copy{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;border:none;border-radius:10px;padding:9px 15px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+.ref-stat{background:rgba(255,255,255,.06);border-radius:12px;padding:.7rem;text-align:center}
+.ref-stat strong{display:block;font-size:18px;font-weight:800}
+.ref-stat span{font-size:10.5px;color:var(--muted)}
 .tx-list{display:flex;flex-direction:column}
-.tx-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px dotted var(--line);font-size:12.5px}
+.tx-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--glass-brd);font-size:12.5px}
 .tx-row:last-child{border-bottom:none}
-.tx-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-right:10px}
-.dot-g{background:var(--naira)}.dot-a{background:var(--gold)}.dot-r{background:var(--rust)}
+.tx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:10px;box-shadow:0 0 8px currentColor}
+.dot-g{background:var(--mint);color:var(--mint)}.dot-a{background:var(--gold);color:var(--gold)}.dot-r{background:var(--coral);color:var(--coral)}
 .tx-left{display:flex;align-items:center}
-.tx-name{font-weight:500;color:var(--ink)}
+.tx-name{font-weight:600}
 .tx-date{font-size:10.5px;color:var(--muted)}
-.tx-in{color:var(--naira-dark);font-weight:700;font-family:'IBM Plex Mono',monospace}
-
-/* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(18,36,28,.65);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.tx-in{color:var(--mint);font-weight:800}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.empty-state .e-icon{font-size:40px;margin-bottom:.75rem}
+.empty-state h3{color:var(--text);font-size:15px;margin-bottom:4px}
+.empty-state p{font-size:13px}
+.simple-list{display:flex;flex-direction:column;gap:10px}
+.simple-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--glass-brd)}
+.simple-row .l-name{font-weight:700;font-size:13.5px}
+.simple-row .l-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.profile-field{background:rgba(255,255,255,.04);border:1px solid var(--glass-brd);border-radius:14px;padding:1rem 1.2rem}
+.profile-field label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.profile-field div{font-size:14.5px;font-weight:700;margin-top:4px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,6,25,.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.show{display:flex}
-.modal{background:var(--paper);border-radius:14px;padding:1.75rem;width:100%;max-width:420px;border:1px solid var(--line)}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.8rem;border-bottom:2px solid var(--ink)}
-.modal-title{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--ink)}
-.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)}
+.modal{background:linear-gradient(160deg,#241454,#1A1035);border:1px solid var(--glass-brd);border-radius:24px;padding:1.9rem;width:100%;max-width:420px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem}
+.modal-title{font-size:19px;font-weight:800}
+.modal-close{background:rgba(255,255,255,.08);border:none;width:30px;height:30px;border-radius:10px;font-size:18px;cursor:pointer;color:var(--text)}
 .form-group{margin-bottom:1rem}
-.form-group label{display:block;font-size:12px;font-weight:600;margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
-.form-group input{width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:var(--radius);font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ink);outline:none;background:var(--paper)}
-.form-group input:focus{border-color:var(--naira)}
-.info-box{border-radius:var(--radius);padding:11px 14px;font-size:12.5px;margin-bottom:1rem;line-height:1.6;font-family:'IBM Plex Mono',monospace;border:1.5px dashed}
-.info-green{background:#E7F3EC;color:var(--naira-dark);border-color:var(--naira)}
-.info-red{background:var(--rust-light);color:var(--rust);border-color:var(--rust)}
-.info-gold{background:var(--gold-light);color:#8A6410;border-color:var(--gold)}
-.modal-btn{width:100%;padding:12px;background:var(--naira);color:var(--paper);border:none;border-radius:var(--radius);font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif}
-.modal-btn:disabled{opacity:.4;cursor:not-allowed}
-.modal-cancel{width:100%;padding:10px;background:none;border:1px solid var(--line);border-radius:var(--radius);font-size:13px;cursor:pointer;margin-top:8px;font-family:'Inter',sans-serif;color:var(--ink)}
-@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.sidebar{display:none}}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid var(--glass-brd);border-radius:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);outline:none;background:rgba(255,255,255,.05)}
+.form-group input:focus{border-color:var(--mint)}
+.info-box{border-radius:14px;padding:11px 15px;font-size:12.5px;margin-bottom:1rem;line-height:1.6}
+.info-green{background:rgba(0,229,160,.12);color:#6FFFCB;border:1px solid rgba(0,229,160,.35)}
+.info-red{background:rgba(255,107,107,.12);color:#FFA0A0;border:1px solid rgba(255,107,107,.35)}
+.info-gold{background:rgba(255,176,32,.12);color:var(--gold);border:1px solid rgba(255,176,32,.35)}
+.modal-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 12px 26px -10px var(--mint-glow)}
+.modal-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.modal-cancel{width:100%;padding:11px;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);border-radius:14px;font-size:13px;cursor:pointer;margin-top:9px;color:var(--text)}
+@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.sidebar{display:none}.orb-section{flex-direction:column;text-align:center}.profile-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<!-- ═══ AD NETWORKS ═══ -->
 <script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
 <script type="text/javascript" src="https://aclibrary.com/ac.js"></script>
 <script src="https://serve.bidvertiser.com/bdvr.ads.min.js" async></script>
-<!-- ════════════════ -->
 </head>
 <body>
 <div class="sidebar">
-<div class="s-logo">Digi<span>Earn</span><small>Member Passbook</small></div>
+<div class="s-panel">
+<div class="s-logo">Digi<span>Earn</span></div>
 <div class="s-nav">
-<div class="s-item active"><span class="s-icon">⊞</span> Dashboard</div>
-<div class="s-item"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></div>
-<div class="s-item"><span class="s-icon">💰</span> Earnings</div>
-<div class="s-item"><span class="s-icon">👥</span> Referrals</div>
-<div class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</div>
-<div class="s-item"><span class="s-icon">📜</span> History</div>
-<div class="s-item"><span class="s-icon">👤</span> Profile</div>
-<div class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</div>
+<button class="s-item active" data-view="dashboard" onclick="showView('dashboard')"><span class="s-icon">⊞</span> Dashboard</button>
+<button class="s-item" data-view="tasks" onclick="showView('tasks')"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></button>
+<button class="s-item" data-view="earnings" onclick="showView('earnings')"><span class="s-icon">💰</span> Earnings</button>
+<button class="s-item" data-view="referrals" onclick="showView('referrals')"><span class="s-icon">👥</span> Referrals</button>
+<button class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</button>
+<button class="s-item" data-view="history" onclick="showView('history')"><span class="s-icon">📜</span> History</button>
+<button class="s-item" data-view="profile" onclick="showView('profile')"><span class="s-icon">👤</span> Profile</button>
+<button class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</button>
 </div>
 <div class="s-user">
 <div class="s-avatar" id="user-initials">--</div>
 <div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
 </div>
 </div>
+</div>
 <div class="main">
 <div class="topbar">
-<div class="page-title">Dashboard</div>
+<div class="page-title" id="page-title">Dashboard</div>
 <div class="topbar-right">
 <span class="plan-badge" id="plan-badge">--</span>
 <button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
 </div>
 </div>
 <div class="content">
+
+<!-- ═══ DASHBOARD VIEW ═══ -->
+<div class="view active" id="view-dashboard">
 <div class="greeting">
 <h1 id="greeting-text">Good day! 👋</h1>
 <p id="greeting-sub">Complete your tasks to earn today.</p>
 </div>
-
 <div class="window-banner" id="window-banner">
 <span id="window-icon">⏳</span>
 <span id="window-msg">Checking withdrawal window...</span>
 </div>
-
-<!-- SIGNATURE: torn receipt tally -->
-<div class="tally-strip">
-<div class="tally-label">Today's Tally · Running Total</div>
-<div class="tally-row">
-<span class="tally-total" id="total-usd">$0.00</span>
-<span class="tally-sub" id="total-ngn">₦0</span>
+<div class="orb-section">
+<div class="orb-wrap">
+<div class="orb-glow"></div>
+<div class="orb-ring" id="orb-ring">
+<div class="orb-inner">
+<div class="orb-usd" id="total-usd">$0.00</div>
+<div class="orb-label">Balance</div>
 </div>
-<div class="tally-sub" id="progress-text" style="margin-top:4px">$0 of $45 target</div>
-<div class="tally-progress"><div class="tally-progress-fill" id="progress-fill" style="width:0%"></div></div>
 </div>
-
+</div>
+<div class="orb-details">
+<h2>Total Earnings</h2>
+<div class="orb-ngn" id="total-ngn">₦0</div>
+<div class="orb-sub" id="progress-text">$0 of $45 target</div>
+</div>
+</div>
 <div class="metrics">
 <div class="metric">
 <div class="metric-label">Today's Earnings</div>
@@ -205,12 +217,9 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);displ
 <div class="metric-sub">Resets daily</div>
 </div>
 </div>
-
 <div class="two-col">
 <div class="card">
-<div class="card-header">
-<div class="card-title">Today's Tasks</div>
-</div>
+<div class="card-header"><div class="card-title">Today's Tasks</div></div>
 <div class="task-list" id="task-list"></div>
 </div>
 <div>
@@ -234,9 +243,64 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);displ
 </div>
 </div>
 </div>
+
+<!-- ═══ MY TASKS VIEW ═══ -->
+<div class="view" id="view-tasks">
+<div class="greeting"><h1>My Tasks</h1><p>Everything available to complete today.</p></div>
+<div class="card"><div class="task-list" id="task-list-full"></div></div>
 </div>
 
-<!-- WITHDRAW MODAL -->
+<!-- ═══ EARNINGS VIEW ═══ -->
+<div class="view" id="view-earnings">
+<div class="greeting"><h1>Earnings</h1><p>Your full earnings breakdown.</p></div>
+<div class="metrics" style="margin-bottom:1.4rem">
+<div class="metric"><div class="metric-label">Total (USD)</div><div class="metric-value" id="e-total-usd">$0.00</div></div>
+<div class="metric"><div class="metric-label">Total (NGN)</div><div class="metric-value" id="e-total-ngn">₦0</div></div>
+<div class="metric"><div class="metric-label">Today</div><div class="metric-value" id="e-today">₦0</div></div>
+</div>
+<div class="card"><div class="card-header"><div class="card-title">Earnings Activity</div></div><div class="tx-list" id="tx-list-full"></div></div>
+</div>
+
+<!-- ═══ REFERRALS VIEW ═══ -->
+<div class="view" id="view-referrals">
+<div class="greeting"><h1>Referrals</h1><p>Invite friends, earn bonuses.</p></div>
+<div class="ref-box" style="max-width:480px">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code-2">Loading...</div>
+<button class="ref-copy" onclick="copyRef()">Copy</button>
+</div>
+<div class="ref-stats">
+<div class="ref-stat"><strong id="ref-count-2">0</strong><span>Referrals</span></div>
+<div class="ref-stat"><strong id="ref-bonus-2">₦0</strong><span>Bonus earned</span></div>
+</div>
+</div>
+</div>
+
+<!-- ═══ HISTORY VIEW ═══ -->
+<div class="view" id="view-history">
+<div class="greeting"><h1>History</h1><p>Task completions and withdrawal requests.</p></div>
+<div class="card"><div class="card-header"><div class="card-title">All Activity</div></div><div class="tx-list" id="tx-list-history"></div></div>
+</div>
+
+<!-- ═══ PROFILE VIEW ═══ -->
+<div class="view" id="view-profile">
+<div class="greeting"><h1>Profile</h1><p>Your account details.</p></div>
+<div class="card">
+<div class="profile-grid">
+<div class="profile-field"><label>Full Name</label><div id="p-name">--</div></div>
+<div class="profile-field"><label>Plan</label><div id="p-plan">--</div></div>
+<div class="profile-field"><label>Bank</label><div id="p-bank">--</div></div>
+<div class="profile-field"><label>Account Number</label><div id="p-acct">--</div></div>
+<div class="profile-field"><label>Account Name</label><div id="p-acct-name">--</div></div>
+<div class="profile-field"><label>Referral Code</label><div id="p-ref">--</div></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
 <div class="modal-overlay" id="withdraw-modal">
 <div class="modal">
 <div class="modal-head">
@@ -244,22 +308,10 @@ body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);displ
 <button class="modal-close" onclick="closeWithdraw()">×</button>
 </div>
 <div id="w-status-box" class="info-box info-green"></div>
-<div class="form-group">
-<label>Amount to Withdraw (₦)</label>
-<input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/>
-</div>
-<div class="form-group">
-<label>Your Bank</label>
-<input type="text" id="w-bank" readonly/>
-</div>
-<div class="form-group">
-<label>Account Number</label>
-<input type="text" id="w-acct" readonly/>
-</div>
-<div class="form-group">
-<label>Account Name</label>
-<input type="text" id="w-acct-name" readonly/>
-</div>
+<div class="form-group"><label>Amount to Withdraw (₦)</label><input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/></div>
+<div class="form-group"><label>Your Bank</label><input type="text" id="w-bank" readonly/></div>
+<div class="form-group"><label>Account Number</label><input type="text" id="w-acct" readonly/></div>
+<div class="form-group"><label>Account Name</label><input type="text" id="w-acct-name" readonly/></div>
 <div class="info-box info-gold">
 ⏱ Withdrawals processed within 24 hours on business days.<br>
 📅 Available: Mon–Fri · 10:00 AM – 4:00 PM only.<br>
@@ -292,6 +344,23 @@ const TASKS = [
 
 let userData=null, userPlan='basic', completedTasks=new Set();
 let todayEarnings=0, totalNgn=0, refBonus=0;
+let activityFeed=[]; // {name, amount, time, type}
+
+// ── VIEW ROUTER ──────────────────────────────────────────────────
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.s-item[data-view]').forEach(b=>b.classList.remove('active'));
+  const btn=document.querySelector(`.s-item[data-view="${name}"]`);
+  if(btn) btn.classList.add('active');
+  const titles={dashboard:'Dashboard',tasks:'My Tasks',earnings:'Earnings',referrals:'Referrals',history:'History',profile:'Profile'};
+  document.getElementById('page-title').textContent=titles[name]||'Dashboard';
+  if(name==='tasks') renderTasks('task-list-full');
+  if(name==='earnings') renderEarningsView();
+  if(name==='referrals') renderReferralsView();
+  if(name==='history') renderHistoryView();
+  if(name==='profile') renderProfileView();
+}
 
 function getMinWithdrawUsd(){
   const wc = (userData && userData.withdraw_count) || 0;
@@ -367,7 +436,7 @@ async function init(){
   document.getElementById('w-acct').value=userData.account_number||'';
   document.getElementById('w-acct-name').value=userData.account_name||'';
 
-  renderTasks();
+  renderTasks('task-list');
   updateWithdrawalBanner();
   setInterval(updateWithdrawalBanner, 60000);
 }
@@ -378,7 +447,7 @@ function updateMetrics(){
   const pctT = Math.min((usd/minUsd)*100,100);
   document.getElementById('total-usd').textContent='$'+usd.toFixed(2);
   document.getElementById('total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
-  document.getElementById('progress-fill').style.width=pctT.toFixed(1)+'%';
+  document.getElementById('orb-ring').style.setProperty('--pct', pctT.toFixed(1)+'%');
   document.getElementById('progress-text').textContent='$'+usd.toFixed(2)+' of $'+minUsd+' target';
   document.getElementById('today-earn').textContent='₦'+todayEarnings.toLocaleString();
   document.getElementById('tasks-counter').textContent=completedTasks.size+'/6 done';
@@ -387,8 +456,9 @@ function updateMetrics(){
   updateWithdrawalBanner();
 }
 
-function renderTasks(){
-  const list=document.getElementById('task-list');
+function renderTasks(targetId){
+  const list=document.getElementById(targetId);
+  if(!list) return;
   list.innerHTML=TASKS.map(t=>`
 <div class="task-item${completedTasks.has(t.id)?' done':''}" id="task-${t.id}" onclick="completeTask(${t.id})">
 <div class="t-icon">${t.icon}</div>
@@ -413,16 +483,57 @@ function completeTask(id){
   todayEarnings+=earn;
   totalNgn+=earn;
   updateMetrics();
-  renderTasks();
+  renderTasks('task-list');
+  renderTasks('task-list-full');
 
-  const txList=document.getElementById('tx-list');
-  if(txList.children.length===1&&txList.children[0].querySelector('.tx-dot.dot-a'))txList.innerHTML='';
-  const row=document.createElement('div');
-  row.className='tx-row';
-  row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-g"></div><div><div class="tx-name">${task.name}</div><div class="tx-date">Just now</div></div></div><div class="tx-in">+₦${earn}</div>`;
-  txList.prepend(row);
+  activityFeed.unshift({name:task.name, amount:earn, time:'Just now', type:'earn'});
+  addActivityRow(document.getElementById('tx-list'), task.name, earn);
+  addActivityRow(document.getElementById('tx-list-full'), task.name, earn);
+  addActivityRow(document.getElementById('tx-list-history'), task.name, earn);
 
   supabase.auth.updateUser({data:{earnings_ngn:totalNgn}});
+}
+
+function addActivityRow(container, name, amount){
+  if(!container) return;
+  if(container.children.length===1 && container.children[0].querySelector && container.children[0].querySelector('.tx-dot.dot-a')) container.innerHTML='';
+  const row=document.createElement('div');
+  row.className='tx-row';
+  row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-g"></div><div><div class="tx-name">${name}</div><div class="tx-date">Just now</div></div></div><div class="tx-in">+₦${amount}</div>`;
+  container.prepend(row);
+}
+
+function renderEarningsView(){
+  document.getElementById('e-total-usd').textContent='$'+(totalNgn/USD_RATE).toFixed(2);
+  document.getElementById('e-total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
+  document.getElementById('e-today').textContent='₦'+todayEarnings.toLocaleString();
+  const c=document.getElementById('tx-list-full');
+  if(c.children.length===0){
+    c.innerHTML='<div class="empty-state"><div class="e-icon">💸</div><h3>No earnings yet</h3><p>Complete a task to see it here.</p></div>';
+  }
+}
+
+function renderReferralsView(){
+  const code=document.getElementById('ref-code').textContent;
+  document.getElementById('ref-code-2').textContent=code;
+  document.getElementById('ref-count-2').textContent=document.getElementById('ref-count').textContent;
+  document.getElementById('ref-bonus-2').textContent=document.getElementById('ref-bonus').textContent;
+}
+
+function renderHistoryView(){
+  const c=document.getElementById('tx-list-history');
+  if(c.children.length===0){
+    c.innerHTML='<div class="empty-state"><div class="e-icon">📜</div><h3>No history yet</h3><p>Your task and withdrawal activity will show up here.</p></div>';
+  }
+}
+
+function renderProfileView(){
+  document.getElementById('p-name').textContent=userData.full_name||'--';
+  document.getElementById('p-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1);
+  document.getElementById('p-bank').textContent=userData.bank_name||'--';
+  document.getElementById('p-acct').textContent=userData.account_number||'--';
+  document.getElementById('p-acct-name').textContent=userData.account_name||'--';
+  document.getElementById('p-ref').textContent=document.getElementById('ref-code').textContent;
 }
 
 function copyRef(){
@@ -489,6 +600,18 @@ async function submitWithdrawal(){
   await supabase.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
   totalNgn -= amount;
   userData.withdraw_count = (userData.withdraw_count||0)+1;
+
+  const wRow=(container)=>{
+    if(!container) return;
+    if(container.children.length===1 && container.children[0].querySelector && container.children[0].querySelector('.tx-dot.dot-a')) container.innerHTML='';
+    const row=document.createElement('div');
+    row.className='tx-row';
+    row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-r"></div><div><div class="tx-name">Withdrawal requested</div><div class="tx-date">Just now · pending</div></div></div><div style="color:var(--coral);font-weight:800">-₦${amount.toLocaleString()}</div>`;
+    container.prepend(row);
+  };
+  wRow(document.getElementById('tx-list-history'));
+  wRow(document.getElementById('tx-list-full'));
+
   updateMetrics();
   closeWithdraw();
   alert('✅ Withdrawal request of ₦'+amount.toLocaleString()+' submitted!\n\nYou will receive payment within 24 hours to your '+userData.bank_name+' account.\n\nThank you for using DigiEarn!');
