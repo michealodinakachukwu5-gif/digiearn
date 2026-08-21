@@ -141,6 +141,10 @@ body{
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <!-- Ad network scripts removed for this test build — Adsterra/aclib/BidVertiser were the suspected source of the "supabase already declared" crash. Re-add later ONE at a time if you want to confirm which one it was. -->
+<!-- ═══ AD NETWORKS ═══ -->
+<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
+<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
+<!-- ════════════════ -->
 </head>
 <body>
 <div class="sidebar">
@@ -331,14 +335,18 @@ const FIRST_WITHDRAW_USD = 45;
 const CLASSIC_WITHDRAW_USD = 40;
 const REPEAT_WITHDRAW_USD = 20;
 
+const ADSTERRA_SMARTLINK = 'https://www.effectivecpmnetwork.com/gx1q7jgr?key=0889f96dbbcb9239cd3e3ecd4d3ff2aa';
+
 const TASKS = [
-{id:1,icon:'📺', name:'Watch Ad Video', desc:'Watch a 30-second ad', earn:{basic:50, classic:200}},
+{id:1,icon:'📺', name:'Watch Ad Video', desc:'Watch a 30-second ad', earn:{basic:50, classic:200}, isAd:true, waitSec:15},
 {id:2,icon:'📋', name:'Fill Daily Survey', desc:'Answer 5 quick questions', earn:{basic:100,classic:400}},
 {id:3,icon:'❤️', name:'Like & Follow Task', desc:'Like 3 posts, follow 2 pages', earn:{basic:50, classic:200}},
-{id:4,icon:'🎬', name:'Watch YouTube Video', desc:'Watch a 2-minute video', earn:{basic:75, classic:300}},
+{id:4,icon:'🎬', name:'Watch YouTube Video', desc:'Watch a 2-minute video', earn:{basic:75, classic:300}, isAd:true, waitSec:20},
 {id:5,icon:'🔁', name:'Share Social Post', desc:'Share to your timeline', earn:{basic:75, classic:300}},
 {id:6,icon:'📝', name:'Write a Review', desc:'Leave a product review', earn:{basic:150,classic:600}},
 ];
+
+let adTimers = {}; // {taskId: {ready:bool, remaining:sec, intervalId}}
 
 let userData=null, userPlan='basic', completedTasks=new Set();
 let todayEarnings=0, totalNgn=0, refBonus=0;
@@ -457,8 +465,28 @@ function updateMetrics(){
 function renderTasks(targetId){
   const list=document.getElementById(targetId);
   if(!list) return;
-  list.innerHTML=TASKS.map(t=>`
-<div class="task-item${completedTasks.has(t.id)?' done':''}" id="task-${t.id}" onclick="completeTask(${t.id})">
+  list.innerHTML=TASKS.map(t=>{
+    const done = completedTasks.has(t.id);
+    const timer = adTimers[t.id];
+    let statusHtml, clickAttr;
+    if(done){
+      statusHtml = '<div class="t-status ts-done">Done ✓</div>';
+      clickAttr = '';
+    } else if(t.isAd && timer && timer.ready){
+      statusHtml = '<div class="t-status ts-available" style="background:rgba(0,229,160,.2);color:#00E5A0">Claim ✓</div>';
+      clickAttr = `onclick="claimAdTask(${t.id})"`;
+    } else if(t.isAd && timer && !timer.ready){
+      statusHtml = `<div class="t-status ts-available">Watching ${timer.remaining}s...</div>`;
+      clickAttr = '';
+    } else if(t.isAd){
+      statusHtml = '<div class="t-status ts-available">Start</div>';
+      clickAttr = `onclick="startAdTask(${t.id})"`;
+    } else {
+      statusHtml = '<div class="t-status ts-available">Start</div>';
+      clickAttr = `onclick="completeTask(${t.id})"`;
+    }
+    return `
+<div class="task-item${done?' done':''}" id="task-${t.id}" ${clickAttr}>
 <div class="t-icon">${t.icon}</div>
 <div style="flex:1">
 <div class="t-name">${t.name}</div>
@@ -466,9 +494,38 @@ function renderTasks(targetId){
 </div>
 <div style="text-align:right">
 <div class="t-earn">+₦${t.earn[userPlan]}</div>
-<div class="t-status ${completedTasks.has(t.id)?'ts-done':'ts-available'}">${completedTasks.has(t.id)?'Done ✓':'Start'}</div>
+${statusHtml}
 </div>
-</div>`).join('');
+</div>`;
+  }).join('');
+}
+
+// ── AD TASK FLOW (Adsterra SmartLink) ─────────────────────────────
+function startAdTask(id){
+  if(completedTasks.has(id)) return;
+  const task=TASKS.find(t=>t.id===id);
+  window.open(ADSTERRA_SMARTLINK, '_blank');
+  adTimers[id] = { ready:false, remaining:task.waitSec };
+  renderTasks('task-list'); renderTasks('task-list-full');
+
+  const iv = setInterval(()=>{
+    const t = adTimers[id];
+    if(!t) { clearInterval(iv); return; }
+    t.remaining--;
+    if(t.remaining<=0){
+      t.ready = true;
+      clearInterval(iv);
+    }
+    renderTasks('task-list'); renderTasks('task-list-full');
+  }, 1000);
+  adTimers[id].intervalId = iv;
+}
+
+function claimAdTask(id){
+  const timer = adTimers[id];
+  if(!timer || !timer.ready) return;
+  delete adTimers[id];
+  completeTask(id);
 }
 
 function completeTask(id){
@@ -623,13 +680,8 @@ async function handleLogout(){
 
 init();
 </script>
-
-<!-- Ad Networks — loaded last, safely, after everything else is ready -->
-<script>
-window.addEventListener('load', function() {
-  try { var s=document.createElement('script');s.src='https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js';document.body.appendChild(s); } catch(e){}
-  try { var s2=document.createElement('script');s2.src='https://cdn.ad-maven.com/aclib.min.js';s2.onload=function(){try{aclib.runAutoTag({zoneId:'d4s64aqfhd'});}catch(e){}};document.body.appendChild(s2); } catch(e){}
-});
+<script type="text/javascript">
+if (typeof aclib !== 'undefined') { aclib.runAutoTag({ zoneId: 'd4s64aqfhd' }); }
 </script>
 </body>
 </html>
