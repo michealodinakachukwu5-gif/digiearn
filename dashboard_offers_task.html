@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard — DigiEarn</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg1:#1A1035; --bg2:#2D1B69;
+  --violet:#7C5CFF; --violet-glow:rgba(124,92,255,.45);
+  --mint:#00E5A0; --mint-glow:rgba(0,229,160,.4);
+  --coral:#FF6B6B; --coral-glow:rgba(255,107,107,.4);
+  --gold:#FFB020;
+  --glass:rgba(255,255,255,.06); --glass-brd:rgba(255,255,255,.12);
+  --text:#F4F2FF; --muted:#A99FD1;
+  --radius:20px;
+}
+body{
+  font-family:'Manrope',sans-serif;color:var(--text);display:flex;min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(124,92,255,.35), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(0,229,160,.18), transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(255,107,107,.15), transparent 45%),
+    linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 100%);
+  background-attachment:fixed;
+}
+.sidebar{width:230px;flex-shrink:0;min-height:100vh;padding:1.5rem 1rem;display:flex;flex-direction:column}
+.s-panel{background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-brd);border-radius:24px;flex:1;display:flex;flex-direction:column;padding:1.4rem 0;box-shadow:0 20px 50px -20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08)}
+.s-logo{font-size:20px;font-weight:800;padding:0 1.4rem 1.4rem;letter-spacing:-.02em}
+.s-logo span{background:linear-gradient(135deg,var(--violet),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+.s-nav{padding:.5rem 0;flex:1;display:flex;flex-direction:column;gap:3px}
+.s-item{display:flex;align-items:center;gap:11px;padding:11px 1.4rem;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .2s;margin:0 .7rem;border-radius:12px;background:none;border:none;text-align:left;width:calc(100% - 1.4rem);font-family:inherit}
+.s-item:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.s-item.active{background:linear-gradient(135deg,var(--violet),#5B3FE0);color:white;box-shadow:0 8px 20px -6px var(--violet-glow)}
+.s-icon{font-size:16px;width:20px;text-align:center}
+.s-badge{margin-left:auto;background:var(--mint);color:var(--bg1);font-size:10px;font-weight:800;padding:2px 7px;border-radius:999px}
+.s-user{margin:1rem .7rem 0;padding:.9rem 1rem;border-radius:14px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:10px}
+.s-avatar{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--gold),var(--coral));display:flex;align-items:center;justify-content:center;font-weight:800;color:white;font-size:14px;flex-shrink:0;box-shadow:0 6px 14px -4px var(--coral-glow)}
+.s-name{font-size:13px;font-weight:700;color:var(--text)}
+.s-plan{font-size:10.5px;color:var(--muted)}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{padding:1.5rem 2rem .5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.page-title{font-size:19px;font-weight:800}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.plan-badge{font-size:11.5px;font-weight:700;padding:6px 14px;border-radius:999px;background:rgba(255,176,32,.15);color:var(--gold);border:1px solid rgba(255,176,32,.35)}
+.withdraw-btn{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;padding:11px 22px;border-radius:14px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;box-shadow:0 10px 24px -8px var(--mint-glow);transition:transform .15s}
+.withdraw-btn:hover:not(:disabled){transform:translateY(-2px)}
+.withdraw-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.content{padding:1.25rem 2rem 2.5rem;overflow-y:auto;flex:1}
+.view{display:none}
+.view.active{display:block}
+.greeting{margin-bottom:1.4rem}
+.greeting h1{font-size:25px;font-weight:800;margin-bottom:2px}
+.greeting p{font-size:13.5px;color:var(--muted)}
+.window-banner{border-radius:16px;padding:12px 18px;font-size:13px;font-weight:600;margin-bottom:1.4rem;display:flex;align-items:center;gap:9px;backdrop-filter:blur(12px)}
+.window-open{background:rgba(0,229,160,.12);color:#6FFFCB;border:1px solid rgba(0,229,160,.35)}
+.window-closed{background:rgba(255,107,107,.12);color:#FFA0A0;border:1px solid rgba(255,107,107,.35)}
+.orb-section{display:flex;align-items:center;gap:2rem;background:var(--glass);backdrop-filter:blur(20px);border:1px solid var(--glass-brd);border-radius:28px;padding:1.6rem 2rem;margin-bottom:1.5rem;box-shadow:0 25px 60px -25px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.08);flex-wrap:wrap}
+.orb-wrap{position:relative;width:126px;height:126px;flex-shrink:0}
+.orb-glow{position:absolute;inset:-18px;border-radius:50%;background:radial-gradient(circle,var(--violet-glow),transparent 70%);filter:blur(6px)}
+.orb-ring{position:relative;width:126px;height:126px;border-radius:50%;background:conic-gradient(var(--mint) var(--pct,0%), rgba(255,255,255,.08) var(--pct,0%));display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -10px rgba(0,0,0,.6), inset 0 2px 6px rgba(255,255,255,.15), inset 0 -6px 14px rgba(0,0,0,.35)}
+.orb-inner{width:98px;height:98px;border-radius:50%;background:linear-gradient(160deg,#2A1C58,#1A1035);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:inset 0 2px 8px rgba(0,0,0,.5)}
+.orb-usd{font-size:20px;font-weight:800}
+.orb-label{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.orb-details{flex:1;min-width:200px}
+.orb-details h2{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.orb-ngn{font-size:32px;font-weight:800;letter-spacing:-.02em}
+.orb-sub{font-size:13px;color:var(--muted);margin-top:4px}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:1.5rem}
+.metric{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-brd);border-radius:18px;padding:1.15rem 1.3rem;box-shadow:0 14px 30px -16px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);transition:transform .2s}
+.metric:hover{transform:translateY(-3px)}
+.metric-label{font-size:11.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+.metric-value{font-size:21px;font-weight:800}
+.metric-sub{font-size:11.5px;color:var(--muted);margin-top:3px}
+.two-col{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;margin-bottom:1.25rem}
+.offerwall-banner{background:linear-gradient(120deg,#3B2A78,#1A1035);border-radius:22px;padding:1.4rem 1.8rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-shadow:0 20px 45px -20px rgba(124,92,255,.4), inset 0 1px 0 rgba(255,255,255,.08);border:1px solid var(--glass-brd)}
+.offerwall-banner h3{font-size:16px;font-weight:800;margin-bottom:4px}
+.offerwall-banner p{font-size:12.5px;color:var(--muted)}
+.offerwall-btn{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;padding:11px 22px;border-radius:14px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;white-space:nowrap;box-shadow:0 10px 24px -8px var(--mint-glow)}
+.card{background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--glass-brd);border-radius:22px;padding:1.4rem;box-shadow:0 20px 45px -22px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.card-title{font-size:15.5px;font-weight:800}
+.task-list{display:flex;flex-direction:column;gap:10px}
+.task-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.03);cursor:pointer;transition:all .2s;border:1px solid transparent}
+.task-item:hover{background:rgba(255,255,255,.07);border-color:var(--glass-brd);transform:translateX(3px)}
+.task-item.done{opacity:.45;cursor:default}
+.t-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:linear-gradient(135deg,rgba(124,92,255,.35),rgba(124,92,255,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.15), 0 6px 14px -6px var(--violet-glow)}
+.t-name{font-size:13.5px;font-weight:700;margin-bottom:2px}
+.t-desc{font-size:11.5px;color:var(--muted)}
+.t-earn{font-size:13.5px;font-weight:800;color:var(--mint)}
+.t-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:999px;margin-top:3px;display:inline-block}
+.ts-available{background:rgba(255,176,32,.15);color:var(--gold)}
+.ts-done{background:rgba(0,229,160,.15);color:var(--mint)}
+.ref-box{background:linear-gradient(150deg,#3B2A78,#241454);border-radius:20px;padding:1.35rem;margin-bottom:1.1rem;box-shadow:0 20px 40px -18px rgba(124,92,255,.4), inset 0 1px 0 rgba(255,255,255,.1);position:relative;overflow:hidden}
+.ref-box::after{content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,var(--mint-glow),transparent 70%)}
+.ref-title{font-size:14.5px;font-weight:800;margin-bottom:9px;position:relative}
+.ref-code-wrap{display:flex;gap:8px;margin-bottom:12px;position:relative}
+.ref-code{flex:1;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:9px 12px;font-size:13px;font-family:monospace;font-weight:700;letter-spacing:.05em;word-break:break-all}
+.ref-copy{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;border:none;border-radius:10px;padding:9px 15px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+.ref-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative}
+.ref-stat{background:rgba(255,255,255,.06);border-radius:12px;padding:.7rem;text-align:center}
+.ref-stat strong{display:block;font-size:18px;font-weight:800}
+.ref-stat span{font-size:10.5px;color:var(--muted)}
+.tx-list{display:flex;flex-direction:column}
+.tx-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--glass-brd);font-size:12.5px}
+.tx-row:last-child{border-bottom:none}
+.tx-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:10px;box-shadow:0 0 8px currentColor}
+.dot-g{background:var(--mint);color:var(--mint)}.dot-a{background:var(--gold);color:var(--gold)}.dot-r{background:var(--coral);color:var(--coral)}
+.tx-left{display:flex;align-items:center}
+.tx-name{font-weight:600}
+.tx-date{font-size:10.5px;color:var(--muted)}
+.tx-in{color:var(--mint);font-weight:800}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.empty-state .e-icon{font-size:40px;margin-bottom:.75rem}
+.empty-state h3{color:var(--text);font-size:15px;margin-bottom:4px}
+.empty-state p{font-size:13px}
+.simple-list{display:flex;flex-direction:column;gap:10px}
+.simple-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--glass-brd)}
+.simple-row .l-name{font-weight:700;font-size:13.5px}
+.simple-row .l-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.profile-field{background:rgba(255,255,255,.04);border:1px solid var(--glass-brd);border-radius:14px;padding:1rem 1.2rem}
+.profile-field label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.profile-field div{font-size:14.5px;font-weight:700;margin-top:4px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,6,25,.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:linear-gradient(160deg,#241454,#1A1035);border:1px solid var(--glass-brd);border-radius:24px;padding:1.9rem;width:100%;max-width:420px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem}
+.modal-title{font-size:19px;font-weight:800}
+.modal-close{background:rgba(255,255,255,.08);border:none;width:30px;height:30px;border-radius:10px;font-size:18px;cursor:pointer;color:var(--text)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid var(--glass-brd);border-radius:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);outline:none;background:rgba(255,255,255,.05)}
+.form-group input:focus{border-color:var(--mint)}
+.info-box{border-radius:14px;padding:11px 15px;font-size:12.5px;margin-bottom:1rem;line-height:1.6}
+.info-green{background:rgba(0,229,160,.12);color:#6FFFCB;border:1px solid rgba(0,229,160,.35)}
+.info-red{background:rgba(255,107,107,.12);color:#FFA0A0;border:1px solid rgba(255,107,107,.35)}
+.info-gold{background:rgba(255,176,32,.12);color:var(--gold);border:1px solid rgba(255,176,32,.35)}
+.modal-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 12px 26px -10px var(--mint-glow)}
+.modal-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.modal-cancel{width:100%;padding:11px;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);border-radius:14px;font-size:13px;cursor:pointer;margin-top:9px;color:var(--text)}
+@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.sidebar{display:none}.orb-section{flex-direction:column;text-align:center}.profile-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!-- Ad network scripts removed for this test build — Adsterra/aclib/BidVertiser were the suspected source of the "supabase already declared" crash. Re-add later ONE at a time if you want to confirm which one it was. -->
+<!-- ═══ AD NETWORKS ═══ -->
+<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
+<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
+<!-- ════════════════ -->
+</head>
+<body>
+<div class="sidebar">
+<div class="s-panel">
+<div class="s-logo">Digi<span>Earn</span></div>
+<div class="s-nav">
+<button class="s-item active" data-view="dashboard" onclick="showView('dashboard')"><span class="s-icon">⊞</span> Dashboard</button>
+<button class="s-item" data-view="tasks" onclick="showView('tasks')"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></button>
+<button class="s-item" data-view="earnings" onclick="showView('earnings')"><span class="s-icon">💰</span> Earnings</button>
+<button class="s-item" data-view="referrals" onclick="showView('referrals')"><span class="s-icon">👥</span> Referrals</button>
+<button class="s-item" onclick="openOfferwall()"><span class="s-icon">🎯</span> Earn More</button>
+<button class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</button>
+<button class="s-item" data-view="history" onclick="showView('history')"><span class="s-icon">📜</span> History</button>
+<button class="s-item" data-view="profile" onclick="showView('profile')"><span class="s-icon">👤</span> Profile</button>
+<button class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</button>
+</div>
+<div class="s-user">
+<div class="s-avatar" id="user-initials">--</div>
+<div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
+</div>
+</div>
+</div>
+<div class="main">
+<div class="topbar">
+<div class="page-title" id="page-title">Dashboard</div>
+<div class="topbar-right">
+<span class="plan-badge" id="plan-badge">--</span>
+<button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
+</div>
+</div>
+<div class="content">
+
+<!-- ═══ DASHBOARD VIEW ═══ -->
+<div class="view active" id="view-dashboard">
+<div class="greeting">
+<h1 id="greeting-text">Good day! 👋</h1>
+<p id="greeting-sub">Complete your tasks to earn today.</p>
+</div>
+<div class="window-banner" id="window-banner">
+<span id="window-icon">⏳</span>
+<span id="window-msg">Checking withdrawal window...</span>
+</div>
+<div class="orb-section">
+<div class="orb-wrap">
+<div class="orb-glow"></div>
+<div class="orb-ring" id="orb-ring">
+<div class="orb-inner">
+<div class="orb-usd" id="total-usd">$0.00</div>
+<div class="orb-label">Balance</div>
+</div>
+</div>
+</div>
+<div class="orb-details">
+<h2>Total Earnings</h2>
+<div class="orb-ngn" id="total-ngn">₦0</div>
+<div class="orb-sub" id="progress-text">$0 of $45 target</div>
+</div>
+</div>
+<div class="metrics">
+<div class="metric">
+<div class="metric-label">Today's Earnings</div>
+<div class="metric-value" id="today-earn">₦0</div>
+<div class="metric-sub" id="daily-limit">Limit: ₦500/day</div>
+</div>
+<div class="metric">
+<div class="metric-label">Referral Bonus</div>
+<div class="metric-value" id="ref-earn">₦0</div>
+<div class="metric-sub">From referrals</div>
+</div>
+<div class="metric">
+<div class="metric-label">Tasks Complete</div>
+<div class="metric-value" id="tasks-counter">0/6 done</div>
+<div class="metric-sub">Resets daily</div>
+</div>
+</div>
+<div class="offerwall-banner">
+<div>
+<h3>🎯 Complete Offers, Earn More</h3>
+<p>Install apps, sign up for trials, and complete other offers for bigger rewards.</p>
+</div>
+<button class="offerwall-btn" onclick="openOfferwall()">Browse Offers →</button>
+</div>
+<div class="two-col">
+<div class="card">
+<div class="card-header"><div class="card-title">Today's Tasks</div></div>
+<div class="task-list" id="task-list"></div>
+</div>
+<div>
+<div class="ref-box">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code">Loading...</div>
+<button class="ref-copy" onclick="copyRef()">Copy</button>
+</div>
+<div class="ref-stats">
+<div class="ref-stat"><strong id="ref-count">0</strong><span>Referrals</span></div>
+<div class="ref-stat"><strong id="ref-bonus">₦0</strong><span>Bonus earned</span></div>
+</div>
+</div>
+<div class="card">
+<div class="card-header"><div class="card-title">Recent Activity</div></div>
+<div class="tx-list" id="tx-list">
+<div class="tx-row"><div class="tx-left"><div class="tx-dot dot-a"></div><div><div class="tx-name">No activity yet</div><div class="tx-date">Complete tasks to earn</div></div></div><div style="color:var(--muted)">—</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══ MY TASKS VIEW ═══ -->
+<div class="view" id="view-tasks">
+<div class="greeting"><h1>My Tasks</h1><p>Everything available to complete today.</p></div>
+<div class="card"><div class="task-list" id="task-list-full"></div></div>
+</div>
+
+<!-- ═══ EARNINGS VIEW ═══ -->
+<div class="view" id="view-earnings">
+<div class="greeting"><h1>Earnings</h1><p>Your full earnings breakdown.</p></div>
+<div class="metrics" style="margin-bottom:1.4rem">
+<div class="metric"><div class="metric-label">Total (USD)</div><div class="metric-value" id="e-total-usd">$0.00</div></div>
+<div class="metric"><div class="metric-label">Total (NGN)</div><div class="metric-value" id="e-total-ngn">₦0</div></div>
+<div class="metric"><div class="metric-label">Today</div><div class="metric-value" id="e-today">₦0</div></div>
+</div>
+<div class="card"><div class="card-header"><div class="card-title">Earnings Activity</div></div><div class="tx-list" id="tx-list-full"></div></div>
+</div>
+
+<!-- ═══ REFERRALS VIEW ═══ -->
+<div class="view" id="view-referrals">
+<div class="greeting"><h1>Referrals</h1><p>Invite friends, earn bonuses.</p></div>
+<div class="ref-box" style="max-width:480px">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code-2">Loading...</div>
+<button class="ref-copy" onclick="copyRef()">Copy</button>
+</div>
+<div class="ref-stats">
+<div class="ref-stat"><strong id="ref-count-2">0</strong><span>Referrals</span></div>
+<div class="ref-stat"><strong id="ref-bonus-2">₦0</strong><span>Bonus earned</span></div>
+</div>
+</div>
+</div>
+
+<!-- ═══ HISTORY VIEW ═══ -->
+<div class="view" id="view-history">
+<div class="greeting"><h1>History</h1><p>Task completions and withdrawal requests.</p></div>
+<div class="card"><div class="card-header"><div class="card-title">All Activity</div></div><div class="tx-list" id="tx-list-history"></div></div>
+</div>
+
+<!-- ═══ PROFILE VIEW ═══ -->
+<div class="view" id="view-profile">
+<div class="greeting"><h1>Profile</h1><p>Your account details.</p></div>
+<div class="card">
+<div class="profile-grid">
+<div class="profile-field"><label>Full Name</label><div id="p-name">--</div></div>
+<div class="profile-field"><label>Plan</label><div id="p-plan">--</div></div>
+<div class="profile-field"><label>Bank</label><div id="p-bank">--</div></div>
+<div class="profile-field"><label>Account Number</label><div id="p-acct">--</div></div>
+<div class="profile-field"><label>Account Name</label><div id="p-acct-name">--</div></div>
+<div class="profile-field"><label>Referral Code</label><div id="p-ref">--</div></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="modal-overlay" id="withdraw-modal">
+<div class="modal">
+<div class="modal-head">
+<div class="modal-title">🏦 Withdraw Earnings</div>
+<button class="modal-close" onclick="closeWithdraw()">×</button>
+</div>
+<div id="w-status-box" class="info-box info-green"></div>
+<div class="form-group"><label>Amount to Withdraw (₦)</label><input type="number" id="w-amount" placeholder="e.g. 30000" min="1"/></div>
+<div class="form-group"><label>Your Bank</label><input type="text" id="w-bank" readonly/></div>
+<div class="form-group"><label>Account Number</label><input type="text" id="w-acct" readonly/></div>
+<div class="form-group"><label>Account Name</label><input type="text" id="w-acct-name" readonly/></div>
+<div class="info-box info-gold">
+⏱ Withdrawals processed within 24 hours on business days.<br>
+📅 Available: Mon–Fri · 10:00 AM – 4:00 PM only.<br>
+💰 Basic minimum: $45 · Classic minimum: $40 (~₦90,000)
+</div>
+<button class="modal-btn" id="w-submit-btn" onclick="submitWithdrawal()">Request Withdrawal</button>
+<button class="modal-cancel" onclick="closeWithdraw()">Cancel</button>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://xdqvrtzsjztwoydckcjt.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_UPGhYl-XgPzpqsXxK9JvsA_9jZOQLfu';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const USD_RATE = 1500;
+const FIRST_WITHDRAW_USD = 45;
+const CLASSIC_WITHDRAW_USD = 40;
+const REPEAT_WITHDRAW_USD = 20;
+
+const ADSTERRA_SMARTLINK = 'https://www.effectivecpmnetwork.com/gx1q7jgr?key=0889f96dbbcb9239cd3e3ecd4d3ff2aa';
+const CPALEAD_OFFERWALL_URL = 'https://www.cdnflyer.com/wall/dkW3fhbQ';
+let currentUserId = null;
+
+function openOfferwall(){
+  // Open the tab IMMEDIATELY (synchronously) so browsers don't block it as a popup.
+  const win = window.open('', '_blank');
+  if(currentUserId){
+    win.location.href = CPALEAD_OFFERWALL_URL + '?subid=' + currentUserId;
+  } else {
+    supabaseClient.auth.getUser().then(({data:{user}}) => {
+      if(!user){ win.close(); window.location.href='/index.html'; return; }
+      win.location.href = CPALEAD_OFFERWALL_URL + '?subid=' + user.id;
+    });
+  }
+}
+
+const TASKS = [
+{id:0,icon:'🎯', name:'Complete Offers', desc:'Install apps, sign up for trials — bigger rewards', earn:{basic:0, classic:0}, isOfferwall:true},
+{id:1,icon:'📺', name:'Watch Ad Video', desc:'Watch a 30-second ad', earn:{basic:50, classic:200}, isAd:true, waitSec:15},
+{id:2,icon:'📋', name:'Fill Daily Survey', desc:'Answer 5 quick questions', earn:{basic:100,classic:400}},
+{id:3,icon:'❤️', name:'Like & Follow Task', desc:'Like 3 posts, follow 2 pages', earn:{basic:50, classic:200}},
+{id:4,icon:'🎬', name:'Watch YouTube Video', desc:'Watch a 2-minute video', earn:{basic:75, classic:300}, isAd:true, waitSec:20},
+{id:5,icon:'🔁', name:'Share Social Post', desc:'Share to your timeline', earn:{basic:75, classic:300}},
+{id:6,icon:'📝', name:'Write a Review', desc:'Leave a product review', earn:{basic:150,classic:600}},
+];
+
+let adTimers = {}; // {taskId: {ready:bool, remaining:sec, intervalId}}
+
+let userData=null, userPlan='basic', completedTasks=new Set();
+let todayEarnings=0, totalNgn=0, refBonus=0;
+let activityFeed=[]; // {name, amount, time, type}
+
+// ── VIEW ROUTER ──────────────────────────────────────────────────
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  document.querySelectorAll('.s-item[data-view]').forEach(b=>b.classList.remove('active'));
+  const btn=document.querySelector(`.s-item[data-view="${name}"]`);
+  if(btn) btn.classList.add('active');
+  const titles={dashboard:'Dashboard',tasks:'My Tasks',earnings:'Earnings',referrals:'Referrals',history:'History',profile:'Profile'};
+  document.getElementById('page-title').textContent=titles[name]||'Dashboard';
+  if(name==='tasks') renderTasks('task-list-full');
+  if(name==='earnings') renderEarningsView();
+  if(name==='referrals') renderReferralsView();
+  if(name==='history') renderHistoryView();
+  if(name==='profile') renderProfileView();
+}
+
+function getMinWithdrawUsd(){
+  const wc = (userData && userData.withdraw_count) || 0;
+  if(wc > 0) return REPEAT_WITHDRAW_USD;
+  return (userData && userData.plan === 'classic') ? CLASSIC_WITHDRAW_USD : FIRST_WITHDRAW_USD;
+}
+
+function isWithdrawalOpen(){
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours();
+  const min = now.getMinutes();
+  const isWeekday = day >= 1 && day <= 5;
+  const timeOk = (hour > 10) || (hour === 10 && min >= 0);
+  const timeEnd = hour < 16;
+  return isWeekday && timeOk && timeEnd;
+}
+
+function updateWithdrawalBanner(){
+  const banner = document.getElementById('window-banner');
+  const msg = document.getElementById('window-msg');
+  const icon = document.getElementById('window-icon');
+  const btn = document.getElementById('withdraw-btn');
+  const totalUsd = totalNgn / USD_RATE;
+  const minUsd = getMinWithdrawUsd();
+
+  if(!isWithdrawalOpen()){
+    banner.className='window-banner window-closed';
+    icon.textContent='🔒';
+    msg.textContent='Withdrawal window closed. Opens Mon–Fri, 10:00 AM – 4:00 PM.';
+    btn.disabled=true;
+  } else if(totalUsd < minUsd){
+    banner.className='window-banner window-closed';
+    icon.textContent='💰';
+    const needed=(minUsd - totalUsd).toFixed(2);
+    msg.textContent=`You need $${needed} more to reach the $${minUsd} minimum. Keep completing tasks!`;
+    btn.disabled=true;
+  } else {
+    banner.className='window-banner window-open';
+    icon.textContent='✅';
+    msg.textContent='Withdrawal window is OPEN! You can withdraw now (Mon–Fri, 10am–4pm).';
+    btn.disabled=false;
+  }
+}
+
+async function init(){
+  const {data:{user}} = await supabaseClient.auth.getUser();
+  if(!user){window.location.href='/index.html';return;}
+
+  currentUserId = user.id;
+  userData = user.user_metadata;
+  userPlan = userData.plan||'basic';
+  const name = userData.full_name||'User';
+  const initials = name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('user-initials').textContent=initials;
+  document.getElementById('user-name').textContent=name;
+  document.getElementById('user-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1)+' Member';
+  document.getElementById('plan-badge').textContent=userPlan==='classic'?'👑 Classic':'💼 Basic';
+  document.getElementById('daily-limit').textContent='Limit: '+(userPlan==='classic'?'₦2,000':'₦500')+'/day';
+
+  const hour=new Date().getHours();
+  const greet=hour<12?'Good morning':hour<17?'Good afternoon':'Good evening';
+  document.getElementById('greeting-text').textContent=greet+', '+name.split(' ')[0]+'! 👋';
+
+  totalNgn = userData.earnings_ngn||0;
+  refBonus = userData.ref_bonus||0;
+  updateMetrics();
+
+  const refCode=user.id.replace(/-/g,'').slice(0,8).toUpperCase();
+  document.getElementById('ref-code').textContent=refCode;
+  document.getElementById('ref-bonus').textContent='₦'+refBonus.toLocaleString();
+
+  document.getElementById('w-bank').value=userData.bank_name||'';
+  document.getElementById('w-acct').value=userData.account_number||'';
+  document.getElementById('w-acct-name').value=userData.account_name||'';
+
+  renderTasks('task-list');
+  updateWithdrawalBanner();
+  setInterval(updateWithdrawalBanner, 60000);
+}
+
+function updateMetrics(){
+  const usd=(totalNgn/USD_RATE);
+  const minUsd = getMinWithdrawUsd();
+  const pctT = Math.min((usd/minUsd)*100,100);
+  document.getElementById('total-usd').textContent='$'+usd.toFixed(2);
+  document.getElementById('total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
+  document.getElementById('orb-ring').style.setProperty('--pct', pctT.toFixed(1)+'%');
+  document.getElementById('progress-text').textContent='$'+usd.toFixed(2)+' of $'+minUsd+' target';
+  document.getElementById('today-earn').textContent='₦'+todayEarnings.toLocaleString();
+  document.getElementById('tasks-counter').textContent=completedTasks.size+'/6 done';
+  document.getElementById('tasks-badge').textContent=6-completedTasks.size;
+  document.getElementById('ref-earn').textContent='₦'+refBonus.toLocaleString();
+  updateWithdrawalBanner();
+}
+
+function renderTasks(targetId){
+  const list=document.getElementById(targetId);
+  if(!list) return;
+  list.innerHTML=TASKS.map(t=>{
+    const done = completedTasks.has(t.id);
+    const timer = adTimers[t.id];
+    let statusHtml, clickAttr, earnHtml;
+
+    if(t.isOfferwall){
+      earnHtml = '<div class="t-earn" style="color:var(--gold)">Varies</div>';
+      statusHtml = '<div class="t-status ts-available">Browse →</div>';
+      clickAttr = `onclick="openOfferwall()"`;
+    } else {
+      earnHtml = `<div class="t-earn">+₦${t.earn[userPlan]}</div>`;
+      if(done){
+        statusHtml = '<div class="t-status ts-done">Done ✓</div>';
+        clickAttr = '';
+      } else if(t.isAd && timer && timer.ready){
+        statusHtml = '<div class="t-status ts-available" style="background:rgba(0,229,160,.2);color:#00E5A0">Claim ✓</div>';
+        clickAttr = `onclick="claimAdTask(${t.id})"`;
+      } else if(t.isAd && timer && !timer.ready){
+        statusHtml = `<div class="t-status ts-available">Watching ${timer.remaining}s...</div>`;
+        clickAttr = '';
+      } else if(t.isAd){
+        statusHtml = '<div class="t-status ts-available">Start</div>';
+        clickAttr = `onclick="startAdTask(${t.id})"`;
+      } else {
+        statusHtml = '<div class="t-status ts-available">Start</div>';
+        clickAttr = `onclick="completeTask(${t.id})"`;
+      }
+    }
+
+    return `
+<div class="task-item${done?' done':''}" id="task-${t.id}" ${clickAttr}>
+<div class="t-icon">${t.icon}</div>
+<div style="flex:1">
+<div class="t-name">${t.name}</div>
+<div class="t-desc">${t.desc}</div>
+</div>
+<div style="text-align:right">
+${earnHtml}
+${statusHtml}
+</div>
+</div>`;
+  }).join('');
+}
+
+// ── AD TASK FLOW (Adsterra SmartLink) ─────────────────────────────
+function startAdTask(id){
+  if(completedTasks.has(id)) return;
+  const task=TASKS.find(t=>t.id===id);
+  window.open(ADSTERRA_SMARTLINK, '_blank');
+  adTimers[id] = { ready:false, remaining:task.waitSec };
+  renderTasks('task-list'); renderTasks('task-list-full');
+
+  const iv = setInterval(()=>{
+    const t = adTimers[id];
+    if(!t) { clearInterval(iv); return; }
+    t.remaining--;
+    if(t.remaining<=0){
+      t.ready = true;
+      clearInterval(iv);
+    }
+    renderTasks('task-list'); renderTasks('task-list-full');
+  }, 1000);
+  adTimers[id].intervalId = iv;
+}
+
+function claimAdTask(id){
+  const timer = adTimers[id];
+  if(!timer || !timer.ready) return;
+  delete adTimers[id];
+  completeTask(id);
+}
+
+function completeTask(id){
+  if(completedTasks.has(id)){alert('Already done today! Come back tomorrow.');return;}
+  const task=TASKS.find(t=>t.id===id);
+  const earn=task.earn[userPlan];
+  const limit=userPlan==='classic'?2000:1000;
+  if(todayEarnings+earn>limit){alert('Daily limit reached! Come back tomorrow.\nYour limit: ₦'+limit.toLocaleString()+'/day');return;}
+  completedTasks.add(id);
+  todayEarnings+=earn;
+  totalNgn+=earn;
+  updateMetrics();
+  renderTasks('task-list');
+  renderTasks('task-list-full');
+
+  activityFeed.unshift({name:task.name, amount:earn, time:'Just now', type:'earn'});
+  addActivityRow(document.getElementById('tx-list'), task.name, earn);
+  addActivityRow(document.getElementById('tx-list-full'), task.name, earn);
+  addActivityRow(document.getElementById('tx-list-history'), task.name, earn);
+
+  supabaseClient.auth.updateUser({data:{earnings_ngn:totalNgn}});
+}
+
+function addActivityRow(container, name, amount){
+  if(!container) return;
+  if(container.children.length===1 && container.children[0].querySelector && container.children[0].querySelector('.tx-dot.dot-a')) container.innerHTML='';
+  const row=document.createElement('div');
+  row.className='tx-row';
+  row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-g"></div><div><div class="tx-name">${name}</div><div class="tx-date">Just now</div></div></div><div class="tx-in">+₦${amount}</div>`;
+  container.prepend(row);
+}
+
+function renderEarningsView(){
+  document.getElementById('e-total-usd').textContent='$'+(totalNgn/USD_RATE).toFixed(2);
+  document.getElementById('e-total-ngn').textContent='₦'+Math.round(totalNgn).toLocaleString();
+  document.getElementById('e-today').textContent='₦'+todayEarnings.toLocaleString();
+  const c=document.getElementById('tx-list-full');
+  if(c.children.length===0){
+    c.innerHTML='<div class="empty-state"><div class="e-icon">💸</div><h3>No earnings yet</h3><p>Complete a task to see it here.</p></div>';
+  }
+}
+
+function renderReferralsView(){
+  const code=document.getElementById('ref-code').textContent;
+  document.getElementById('ref-code-2').textContent=code;
+  document.getElementById('ref-count-2').textContent=document.getElementById('ref-count').textContent;
+  document.getElementById('ref-bonus-2').textContent=document.getElementById('ref-bonus').textContent;
+}
+
+function renderHistoryView(){
+  const c=document.getElementById('tx-list-history');
+  if(c.children.length===0){
+    c.innerHTML='<div class="empty-state"><div class="e-icon">📜</div><h3>No history yet</h3><p>Your task and withdrawal activity will show up here.</p></div>';
+  }
+}
+
+function renderProfileView(){
+  document.getElementById('p-name').textContent=userData.full_name||'--';
+  document.getElementById('p-plan').textContent=userPlan.charAt(0).toUpperCase()+userPlan.slice(1);
+  document.getElementById('p-bank').textContent=userData.bank_name||'--';
+  document.getElementById('p-acct').textContent=userData.account_number||'--';
+  document.getElementById('p-acct-name').textContent=userData.account_name||'--';
+  document.getElementById('p-ref').textContent=document.getElementById('ref-code').textContent;
+}
+
+function copyRef(){
+  const code=document.getElementById('ref-code').textContent;
+  const url=window.location.origin+'/index.html?ref='+code;
+  navigator.clipboard.writeText(url).then(()=>alert('Referral link copied!\n\n'+url));
+}
+
+function openWithdraw(){
+  const totalUsd=totalNgn/USD_RATE;
+  const box=document.getElementById('w-status-box');
+  const btn=document.getElementById('w-submit-btn');
+  const open=isWithdrawalOpen();
+  const minRequired = getMinWithdrawUsd();
+  const eligible = totalUsd >= minRequired;
+
+  if(!open){
+    box.className='info-box info-red';
+    box.textContent='🔒 Withdrawal window is closed. Available Mon–Fri, 10:00 AM – 4:00 PM only.';
+    btn.disabled=true;
+  } else if(!eligible){
+    box.className='info-box info-red';
+    box.textContent=`💰 You need $${(minRequired-totalUsd).toFixed(2)} more to reach the $${minRequired} minimum. Keep earning!`;
+    btn.disabled=true;
+  } else {
+    box.className='info-box info-green';
+    box.textContent=`✅ Window is open! Balance: ₦${Math.round(totalNgn).toLocaleString()} ($${totalUsd.toFixed(2)}). Min this withdrawal: $${minRequired}. Enter amount below.`;
+    btn.disabled=false;
+  }
+  document.getElementById('withdraw-modal').classList.add('show');
+}
+
+function closeWithdraw(){document.getElementById('withdraw-modal').classList.remove('show')}
+
+async function submitWithdrawal(){
+  if(!isWithdrawalOpen()){alert('Withdrawal window is closed. Please try Mon–Fri between 10am and 4pm.');return;}
+  const totalUsd=totalNgn/USD_RATE;
+  const minReq = getMinWithdrawUsd();
+  if(totalUsd<minReq){alert('You need at least $'+minReq+' to withdraw.');return;}
+  const amount=parseInt(document.getElementById('w-amount').value);
+  if(!amount||amount<1000){alert('Minimum withdrawal amount is ₦1,000.');return;}
+  if(amount>totalNgn){alert('Insufficient balance. Your balance: ₦'+Math.round(totalNgn).toLocaleString());return;}
+
+  const btn=document.getElementById('w-submit-btn');
+  btn.disabled=true;btn.textContent='Submitting...';
+
+  const {data:{user}}=await supabaseClient.auth.getUser();
+  const {error}=await supabaseClient.from('withdrawals').insert({
+    user_id:user.id,
+    amount,
+    bank:userData.bank_name,
+    account_number:userData.account_number,
+    account_name:userData.account_name,
+    status:'pending',
+    requested_at:new Date().toISOString()
+  });
+
+  if(error){
+    alert('Error: '+error.message);
+    btn.disabled=false;btn.textContent='Request Withdrawal';
+    return;
+  }
+
+  await supabaseClient.auth.updateUser({data:{withdraw_count:(userData.withdraw_count||0)+1, earnings_ngn: totalNgn - amount}});
+  totalNgn -= amount;
+  userData.withdraw_count = (userData.withdraw_count||0)+1;
+
+  const wRow=(container)=>{
+    if(!container) return;
+    if(container.children.length===1 && container.children[0].querySelector && container.children[0].querySelector('.tx-dot.dot-a')) container.innerHTML='';
+    const row=document.createElement('div');
+    row.className='tx-row';
+    row.innerHTML=`<div class="tx-left"><div class="tx-dot dot-r"></div><div><div class="tx-name">Withdrawal requested</div><div class="tx-date">Just now · pending</div></div></div><div style="color:var(--coral);font-weight:800">-₦${amount.toLocaleString()}</div>`;
+    container.prepend(row);
+  };
+  wRow(document.getElementById('tx-list-history'));
+  wRow(document.getElementById('tx-list-full'));
+
+  updateMetrics();
+  closeWithdraw();
+  alert('✅ Withdrawal request of ₦'+amount.toLocaleString()+' submitted!\n\nYou will receive payment within 24 hours to your '+userData.bank_name+' account.\n\nThank you for using DigiEarn!');
+  btn.disabled=false;btn.textContent='Request Withdrawal';
+}
+
+async function handleLogout(){
+  await supabaseClient.auth.signOut();
+  window.location.href='/index.html';
+}
+
+init();
+
+// ── Refresh balance when user comes back from the offerwall tab ────
+window.addEventListener('focus', async () => {
+  if(!currentUserId) return;
+  const {data:{user}} = await supabaseClient.auth.getUser();
+  if(!user) return;
+  const freshNgn = user.user_metadata.earnings_ngn || 0;
+  if(freshNgn !== totalNgn){
+    totalNgn = freshNgn;
+    userData = user.user_metadata;
+    updateMetrics();
+  }
+});
+
+</script>
+<script type="text/javascript">
+if (typeof aclib !== 'undefined') { aclib.runAutoTag({ zoneId: 'd4s64aqfhd' }); }
+</script>
+</body>
+</html>
