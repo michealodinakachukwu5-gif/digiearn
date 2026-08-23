@@ -75,6 +75,10 @@ body{
 .metric-value{font-size:21px;font-weight:800}
 .metric-sub{font-size:11.5px;color:var(--muted);margin-top:3px}
 .two-col{display:grid;grid-template-columns:1fr 320px;gap:1.4rem;margin-bottom:1.25rem}
+.offerwall-banner{background:linear-gradient(120deg,#3B2A78,#1A1035);border-radius:22px;padding:1.4rem 1.8rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-shadow:0 20px 45px -20px rgba(124,92,255,.4), inset 0 1px 0 rgba(255,255,255,.08);border:1px solid var(--glass-brd)}
+.offerwall-banner h3{font-size:16px;font-weight:800;margin-bottom:4px}
+.offerwall-banner p{font-size:12.5px;color:var(--muted)}
+.offerwall-btn{background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;padding:11px 22px;border-radius:14px;font-size:13.5px;font-weight:800;border:none;cursor:pointer;white-space:nowrap;box-shadow:0 10px 24px -8px var(--mint-glow)}
 .card{background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--glass-brd);border-radius:22px;padding:1.4rem;box-shadow:0 20px 45px -22px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06)}
 .card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
 .card-title{font-size:15.5px;font-weight:800}
@@ -111,6 +115,174 @@ body{
 .empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
 .empty-state .e-icon{font-size:40px;margin-bottom:.75rem}
 .empty-state h3{color:var(--text);font-size:15px;margin-bottom:4px}
+.empty-state p{font-size:13px}
+.simple-list{display:flex;flex-direction:column;gap:10px}
+.simple-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--glass-brd)}
+.simple-row .l-name{font-weight:700;font-size:13.5px}
+.simple-row .l-sub{font-size:11.5px;color:var(--muted);margin-top:2px}
+.profile-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.profile-field{background:rgba(255,255,255,.04);border:1px solid var(--glass-brd);border-radius:14px;padding:1rem 1.2rem}
+.profile-field label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.profile-field div{font-size:14.5px;font-weight:700;margin-top:4px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,6,25,.75);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:linear-gradient(160deg,#241454,#1A1035);border:1px solid var(--glass-brd);border-radius:24px;padding:1.9rem;width:100%;max-width:420px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem}
+.modal-title{font-size:19px;font-weight:800}
+.modal-close{background:rgba(255,255,255,.08);border:none;width:30px;height:30px;border-radius:10px;font-size:18px;cursor:pointer;color:var(--text)}
+.form-group{margin-bottom:1rem}
+.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:5px;color:var(--muted)}
+.form-group input{width:100%;padding:11px 14px;border:1.5px solid var(--glass-brd);border-radius:12px;font-family:'Manrope',sans-serif;font-size:14px;color:var(--text);outline:none;background:rgba(255,255,255,.05)}
+.form-group input:focus{border-color:var(--mint)}
+.info-box{border-radius:14px;padding:11px 15px;font-size:12.5px;margin-bottom:1rem;line-height:1.6}
+.info-green{background:rgba(0,229,160,.12);color:#6FFFCB;border:1px solid rgba(0,229,160,.35)}
+.info-red{background:rgba(255,107,107,.12);color:#FFA0A0;border:1px solid rgba(255,107,107,.35)}
+.info-gold{background:rgba(255,176,32,.12);color:var(--gold);border:1px solid rgba(255,176,32,.35)}
+.modal-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--mint),#00B37E);color:#04261C;border:none;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 12px 26px -10px var(--mint-glow)}
+.modal-btn:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+.modal-cancel{width:100%;padding:11px;background:rgba(255,255,255,.05);border:1px solid var(--glass-brd);border-radius:14px;font-size:13px;cursor:pointer;margin-top:9px;color:var(--text)}
+@media(max-width:900px){.metrics{grid-template-columns:1fr 1fr}.two-col{grid-template-columns:1fr}.sidebar{display:none}.orb-section{flex-direction:column;text-align:center}.profile-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<!-- Ad network scripts removed for this test build — Adsterra/aclib/BidVertiser were the suspected source of the "supabase already declared" crash. Re-add later ONE at a time if you want to confirm which one it was. -->
+<!-- ═══ AD NETWORKS ═══ -->
+<script src="https://pl29481740.effectivecpmnetwork.com/24/6f/e9/246fe9f99fb36c5e4b89096a8d2c151e.js"></script>
+<script type="text/javascript" src="https://cdn.ad-maven.com/aclib.min.js"></script>
+<!-- ════════════════ -->
+</head>
+<body>
+<div class="sidebar">
+<div class="s-panel">
+<div class="s-logo">Digi<span>Earn</span></div>
+<div class="s-nav">
+<button class="s-item active" data-view="dashboard" onclick="showView('dashboard')"><span class="s-icon">⊞</span> Dashboard</button>
+<button class="s-item" data-view="tasks" onclick="showView('tasks')"><span class="s-icon">✅</span> My Tasks <span class="s-badge" id="tasks-badge">6</span></button>
+<button class="s-item" data-view="earnings" onclick="showView('earnings')"><span class="s-icon">💰</span> Earnings</button>
+<button class="s-item" data-view="referrals" onclick="showView('referrals')"><span class="s-icon">👥</span> Referrals</button>
+<button class="s-item" onclick="openOfferwall()"><span class="s-icon">🎯</span> Earn More</button>
+<button class="s-item" onclick="openWithdraw()"><span class="s-icon">🏦</span> Withdraw</button>
+<button class="s-item" data-view="history" onclick="showView('history')"><span class="s-icon">📜</span> History</button>
+<button class="s-item" data-view="profile" onclick="showView('profile')"><span class="s-icon">👤</span> Profile</button>
+<button class="s-item" onclick="handleLogout()"><span class="s-icon">🚪</span> Logout</button>
+</div>
+<div class="s-user">
+<div class="s-avatar" id="user-initials">--</div>
+<div><div class="s-name" id="user-name">Loading...</div><div class="s-plan" id="user-plan">--</div></div>
+</div>
+</div>
+</div>
+<div class="main">
+<div class="topbar">
+<div class="page-title" id="page-title">Dashboard</div>
+<div class="topbar-right">
+<span class="plan-badge" id="plan-badge">--</span>
+<button class="withdraw-btn" id="withdraw-btn" onclick="openWithdraw()">🏦 Withdraw</button>
+</div>
+</div>
+<div class="content">
+
+<!-- ═══ DASHBOARD VIEW ═══ -->
+<div class="view active" id="view-dashboard">
+<div class="greeting">
+<h1 id="greeting-text">Good day! 👋</h1>
+<p id="greeting-sub">Complete your tasks to earn today.</p>
+</div>
+<div class="window-banner" id="window-banner">
+<span id="window-icon">⏳</span>
+<span id="window-msg">Checking withdrawal window...</span>
+</div>
+<div class="orb-section">
+<div class="orb-wrap">
+<div class="orb-glow"></div>
+<div class="orb-ring" id="orb-ring">
+<div class="orb-inner">
+<div class="orb-usd" id="total-usd">$0.00</div>
+<div class="orb-label">Balance</div>
+</div>
+</div>
+</div>
+<div class="orb-details">
+<h2>Total Earnings</h2>
+<div class="orb-ngn" id="total-ngn">₦0</div>
+<div class="orb-sub" id="progress-text">$0 of $45 target</div>
+</div>
+</div>
+<div class="metrics">
+<div class="metric">
+<div class="metric-label">Today's Earnings</div>
+<div class="metric-value" id="today-earn">₦0</div>
+<div class="metric-sub" id="daily-limit">Limit: ₦500/day</div>
+</div>
+<div class="metric">
+<div class="metric-label">Referral Bonus</div>
+<div class="metric-value" id="ref-earn">₦0</div>
+<div class="metric-sub">From referrals</div>
+</div>
+<div class="metric">
+<div class="metric-label">Tasks Complete</div>
+<div class="metric-value" id="tasks-counter">0/6 done</div>
+<div class="metric-sub">Resets daily</div>
+</div>
+</div>
+<div class="offerwall-banner">
+<div>
+<h3>🎯 Complete Offers, Earn More</h3>
+<p>Install apps, sign up for trials, and complete other offers for bigger rewards.</p>
+</div>
+<button class="offerwall-btn" onclick="openOfferwall()">Browse Offers →</button>
+</div>
+<div class="two-col">
+<div class="card">
+<div class="card-header"><div class="card-title">Today's Tasks</div></div>
+<div class="task-list" id="task-list"></div>
+</div>
+<div>
+<div class="ref-box">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code">Loading...</div>
+<button class="ref-copy" onclick="copyRef()">Copy</button>
+</div>
+<div class="ref-stats">
+<div class="ref-stat"><strong id="ref-count">0</strong><span>Referrals</span></div>
+<div class="ref-stat"><strong id="ref-bonus">₦0</strong><span>Bonus earned</span></div>
+</div>
+</div>
+<div class="card">
+<div class="card-header"><div class="card-title">Recent Activity</div></div>
+<div class="tx-list" id="tx-list">
+<div class="tx-row"><div class="tx-left"><div class="tx-dot dot-a"></div><div><div class="tx-name">No activity yet</div><div class="tx-date">Complete tasks to earn</div></div></div><div style="color:var(--muted)">—</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══ MY TASKS VIEW ═══ -->
+<div class="view" id="view-tasks">
+<div class="greeting"><h1>My Tasks</h1><p>Everything available to complete today.</p></div>
+<div class="card"><div class="task-list" id="task-list-full"></div></div>
+</div>
+
+<!-- ═══ EARNINGS VIEW ═══ -->
+<div class="view" id="view-earnings">
+<div class="greeting"><h1>Earnings</h1><p>Your full earnings breakdown.</p></div>
+<div class="metrics" style="margin-bottom:1.4rem">
+<div class="metric"><div class="metric-label">Total (USD)</div><div class="metric-value" id="e-total-usd">$0.00</div></div>
+<div class="metric"><div class="metric-label">Total (NGN)</div><div class="metric-value" id="e-total-ngn">₦0</div></div>
+<div class="metric"><div class="metric-label">Today</div><div class="metric-value" id="e-today">₦0</div></div>
+</div>
+<div class="card"><div class="card-header"><div class="card-title">Earnings Activity</div></div><div class="tx-list" id="tx-list-full"></div></div>
+</div>
+
+<!-- ═══ REFERRALS VIEW ═══ -->
+<div class="view" id="view-referrals">
+<div class="greeting"><h1>Referrals</h1><p>Invite friends, earn bonuses.</p></div>
+<div class="ref-box" style="max-width:480px">
+<div class="ref-title">Your Referral Link 🔗</div>
+<div class="ref-code-wrap">
+<div class="ref-code" id="ref-code-2">Loading...</div>
+<button class="re.empty-state h3{color:var(--text);font-size:15px;margin-bottom:4px}
 .empty-state p{font-size:13px}
 .simple-list{display:flex;flex-direction:column;gap:10px}
 .simple-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--glass-brd)}
